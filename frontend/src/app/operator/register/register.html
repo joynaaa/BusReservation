@@ -1,0 +1,664 @@
+<div class="register-page">
+
+  <div class="register-card">
+
+    <!-- ================= LOGO ================= -->
+
+    <div class="logo">
+      🚌 BusGo
+    </div>
+
+
+    <h1>
+      Bus Operator Registration
+    </h1>
+
+
+    <p class="subtitle">
+      Register your bus service with BusGo
+    </p>
+
+
+    <form
+      (ngSubmit)="register()"
+      #registerForm="ngForm"
+    >
+
+
+      <!-- ================================================= -->
+      <!-- ACCOUNT DETAILS -->
+      <!-- ================================================= -->
+
+      <div class="section-title">
+        Account Details
+      </div>
+
+
+      <!-- Username -->
+
+      <label>
+        Username *
+      </label>
+
+      <input
+        type="text"
+        name="username"
+        [(ngModel)]="operator.username"
+        placeholder="Enter username"
+        (input)="submitted = true"
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !validateUsername()
+        "
+      >
+        Username must contain 4–30 letters, numbers or underscores.
+      </div>
+
+
+      <!-- Email -->
+
+      <label>
+        Email *
+      </label>
+
+      <input
+        type="email"
+        name="email"
+        [(ngModel)]="operator.email"
+        placeholder="Enter email"
+        (input)="submitted = true"
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !validateEmail()
+        "
+      >
+        Enter a valid email address.
+      </div>
+
+
+      <!-- Phone -->
+
+      <label>
+        Phone Number *
+      </label>
+
+      <input
+        type="tel"
+        name="phone"
+        [(ngModel)]="operator.phone"
+        placeholder="Enter 10-digit phone number"
+        maxlength="10"
+        (input)="submitted = true"
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !validatePhone()
+        "
+      >
+        Enter a valid 10-digit Indian phone number.
+      </div>
+
+
+      <!-- Password -->
+
+      <label>
+        Password *
+      </label>
+
+      <input
+        type="password"
+        name="password"
+        [(ngModel)]="operator.password"
+        placeholder="Minimum 8 characters"
+        (input)="submitted = true"
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !validatePassword()
+        "
+      >
+        Password must contain at least 8 characters and one number.
+      </div>
+
+
+      <!-- Confirm Password -->
+
+      <label>
+        Confirm Password *
+      </label>
+
+      <input
+        type="password"
+        name="password2"
+        [(ngModel)]="operator.password2"
+        placeholder="Confirm password"
+        (input)="submitted = true"
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          operator.password !== operator.password2
+        "
+      >
+        Passwords do not match.
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- OPERATOR DETAILS -->
+      <!-- ================================================= -->
+
+      <div class="section-title">
+        Operator Details
+      </div>
+
+
+      <!-- Owner / Contact Person -->
+
+      <label>
+        Owner / Contact Person *
+      </label>
+
+      <input
+        type="text"
+        name="full_name"
+        [(ngModel)]="operator.full_name"
+        placeholder="Enter owner or contact person name"
+        (input)="submitted = true"
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !validateName()
+        "
+      >
+        Name must contain 3–50 letters.
+      </div>
+
+
+      <!-- Company -->
+
+      <label>
+        Company / Agency Name *
+      </label>
+
+      <input
+        type="text"
+        name="company_name"
+        [(ngModel)]="operator.company_name"
+        placeholder="Enter company or agency name"
+        (input)="submitted = true"
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !validateCompany()
+        "
+      >
+        Enter a valid company name.
+      </div>
+
+
+      <!-- Operator Type -->
+
+      <label>
+        Operator Type *
+      </label>
+
+      <select
+        name="operator_type"
+        [(ngModel)]="operator.operator_type"
+        (change)="submitted = true"
+      >
+
+        <option value="">
+          Select operator type
+        </option>
+
+        <option value="INDIVIDUAL">
+          Individual Operator
+        </option>
+
+        <option value="AGENCY">
+          Travel Agency
+        </option>
+
+        <option value="COMPANY">
+          Bus Company
+        </option>
+
+      </select>
+
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !operator.operator_type
+        "
+      >
+        Please select operator type.
+      </div>
+
+
+      <!-- Business Phone -->
+
+      <label>
+        Business Phone *
+      </label>
+
+      <input
+        type="tel"
+        name="business_phone"
+        [(ngModel)]="operator.business_phone"
+        placeholder="Enter business phone number"
+        maxlength="10"
+        (input)="submitted = true"
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !validateBusinessPhone()
+        "
+      >
+        Enter a valid 10-digit Indian phone number.
+      </div>
+
+
+      <!-- Business Email -->
+
+      <label>
+        Business Email
+      </label>
+
+      <input
+        type="email"
+        name="business_email"
+        [(ngModel)]="operator.business_email"
+        placeholder="Enter business email"
+      >
+
+
+
+      <!-- ================================================= -->
+      <!-- BUSINESS ADDRESS -->
+      <!-- ================================================= -->
+
+      <div class="section-title">
+        Business Address
+      </div>
+
+
+      <!-- Address -->
+
+      <label>
+        Address *
+      </label>
+
+      <textarea
+        name="address"
+        [(ngModel)]="operator.address"
+        placeholder="Enter company / office address"
+        (input)="submitted = true"
+      ></textarea>
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !validateAddress()
+        "
+      >
+        Address must contain at least 10 characters.
+      </div>
+
+
+      <!-- City -->
+
+      <label>
+        City *
+      </label>
+
+      <input
+        type="text"
+        name="city"
+        [(ngModel)]="operator.city"
+        placeholder="Enter city"
+        (input)="submitted = true"
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !validateCity()
+        "
+      >
+        Enter a valid city.
+      </div>
+
+
+      <!-- State -->
+
+      <label>
+        State *
+      </label>
+
+      <input
+        type="text"
+        name="state"
+        [(ngModel)]="operator.state"
+        placeholder="Enter state"
+        (input)="submitted = true"
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !validateState()
+        "
+      >
+        Enter a valid state.
+      </div>
+
+
+      <!-- PIN -->
+
+      <label>
+        PIN Code *
+      </label>
+
+      <input
+        type="text"
+        name="pin_code"
+        [(ngModel)]="operator.pin_code"
+        placeholder="Enter 6-digit PIN code"
+        maxlength="6"
+        (input)="submitted = true"
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !validatePinCode()
+        "
+      >
+        Enter a valid 6-digit PIN code.
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- OPERATOR INFORMATION -->
+      <!-- ================================================= -->
+
+      <div class="section-title">
+        Operator Information
+      </div>
+
+
+      <!-- Number of Buses -->
+
+      <label>
+        Number of Buses *
+      </label>
+
+      <input
+        type="number"
+        name="number_of_buses"
+        [(ngModel)]="operator.number_of_buses"
+        placeholder="Enter number of buses"
+        min="1"
+        (input)="submitted = true"
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !validateNumberOfBuses()
+        "
+      >
+        Number of buses must be at least 1.
+      </div>
+
+
+      <!-- Experience -->
+
+      <label>
+        Years of Experience *
+      </label>
+
+      <input
+        type="number"
+        name="years_of_experience"
+        [(ngModel)]="operator.years_of_experience"
+        placeholder="Enter years of experience"
+        min="0"
+        (input)="submitted = true"
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !validateExperience()
+        "
+      >
+        Enter valid years of experience.
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- OPERATOR VERIFICATION DOCUMENTS -->
+      <!-- ================================================= -->
+
+      <div class="section-title">
+        Operator Verification Documents
+      </div>
+
+
+      <p class="document-info">
+        Upload documents for admin verification.
+      </p>
+
+
+      <!-- Government ID -->
+
+      <label>
+        Government ID *
+      </label>
+
+      <input
+        type="file"
+        name="government_id"
+        accept=".pdf,.jpg,.jpeg,.png"
+        (change)="
+          onFileSelected(
+            $event,
+            'government_id'
+          )
+        "
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !operator.government_id
+        "
+      >
+        Government ID is required.
+      </div>
+
+
+      <!-- Business Registration -->
+
+      <label>
+        Business Registration Certificate *
+      </label>
+
+      <input
+        type="file"
+        name="business_registration"
+        accept=".pdf,.jpg,.jpeg,.png"
+        (change)="
+          onFileSelected(
+            $event,
+            'business_registration'
+          )
+        "
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !operator.business_registration
+        "
+      >
+        Business registration certificate is required.
+      </div>
+
+
+      <!-- Transport Permit -->
+
+      <label>
+        Transport / Operator Permit *
+      </label>
+
+      <input
+        type="file"
+        name="transport_permit"
+        accept=".pdf,.jpg,.jpeg,.png"
+        (change)="
+          onFileSelected(
+            $event,
+            'transport_permit'
+          )
+        "
+      >
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          !operator.transport_permit
+        "
+      >
+        Transport / operator permit is required.
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- AGREEMENT -->
+      <!-- ================================================= -->
+
+      <div class="agreement">
+
+
+        <!-- Information Confirmation -->
+
+        <label class="checkbox-label">
+
+          <input
+            type="checkbox"
+            name="information_confirmed"
+            [(ngModel)]="operator.information_confirmed"
+          >
+
+          <span>
+            I confirm that the information provided is correct.
+          </span>
+
+        </label>
+
+
+        
+
+      </div>
+
+
+      <!-- Agreement Error -->
+
+      <div
+        class="error-message"
+        *ngIf="
+          submitted &&
+          (
+            !operator.information_confirmed
+          )
+        "
+      >
+        Please accept confirmations before registration.
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- SUBMIT -->
+      <!-- ================================================= -->
+
+      <button
+        type="submit"
+        [disabled]="loading"
+      >
+
+        {{
+          loading
+            ? 'Submitting Registration...'
+            : 'Submit Operator Registration'
+        }}
+
+      </button>
+
+
+    </form>
+
+
+
+    <!-- ================================================= -->
+    <!-- LOGIN -->
+    <!-- ================================================= -->
+
+    <p class="login-link">
+
+      Already have an operator account?
+
+      <a routerLink="/login">
+        Login
+      </a>
+
+    </p>
+
+
+  </div>
+
+</div>

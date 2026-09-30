@@ -1,0 +1,204 @@
+<div class="register-container">
+
+  <div class="register-card">
+
+
+<h2>Create Account</h2>
+
+<p class="subtitle">
+  Bus Reservation System
+</p>
+
+<form (ngSubmit)="register()" #registerForm="ngForm">
+
+  <!-- Username -->
+  <label>Username</label>
+
+  <input
+    type="text"
+    placeholder="Enter username"
+    [(ngModel)]="username"
+    name="username"
+    #usernameInput="ngModel"
+    required
+    minlength="3"
+  >
+
+  <div
+    class="field-error"
+    *ngIf="usernameInput.invalid && usernameInput.touched">
+
+    <span *ngIf="usernameInput.errors?.['required']">
+      Username is required.
+    </span>
+
+    <span *ngIf="usernameInput.errors?.['minlength']">
+      Username must be at least 3 characters.
+    </span>
+
+  </div>
+
+
+  <!-- Email -->
+  <label>Email</label>
+
+  <input
+    type="email"
+    placeholder="Enter email"
+    [(ngModel)]="email"
+    name="email"
+    #emailInput="ngModel"
+    required
+    email
+  >
+
+  <div
+    class="field-error"
+    *ngIf="emailInput.invalid && emailInput.touched">
+
+    <span *ngIf="emailInput.errors?.['required']">
+      Email is required.
+    </span>
+
+    <span *ngIf="emailInput.errors?.['email']">
+      Please enter a valid email address.
+    </span>
+
+  </div>
+
+
+  <!-- Password -->
+  <label>Password</label>
+
+  <input
+    type="password"
+    placeholder="Enter password"
+    [(ngModel)]="password"
+    name="password"
+    #passwordInput="ngModel"
+    required
+    minlength="8"
+  >
+
+  <div
+    class="field-error"
+    *ngIf="passwordInput.touched">
+
+    <span *ngIf="passwordInput.errors?.['required']">
+      Password is required.
+    </span>
+
+    <span *ngIf="passwordInput.errors?.['minlength']">
+      Password must be at least 8 characters.
+    </span>
+
+    <span *ngIf="password && !hasLetter()">
+      Password must contain at least one letter.
+    </span>
+
+    <span *ngIf="password && !hasNumber()">
+      Password must contain at least one number.
+    </span>
+
+    <span *ngIf="password && !hasSpecialCharacter()">
+      Password must contain at least one special character.
+    </span>
+
+  </div>
+
+
+  <!-- Confirm Password -->
+  <label>Confirm Password</label>
+
+  <input
+    type="password"
+    placeholder="Confirm password"
+    [(ngModel)]="password2"
+    name="password2"
+    #confirmPasswordInput="ngModel"
+    required
+  >
+
+  <div
+    class="field-error"
+    *ngIf="confirmPasswordInput.touched">
+
+    <span *ngIf="confirmPasswordInput.errors?.['required']">
+      Please confirm your password.
+    </span>
+
+    <span
+      *ngIf="
+        password2 &&
+        password !== password2
+      "
+    >
+      Passwords do not match.
+    </span>
+
+  </div>
+
+
+  <!-- Password Requirements -->
+  <div class="password-rules">
+
+    <p [class.valid]="hasMinimumLength()">
+      {{ hasMinimumLength() ? '✓' : '○' }}
+      At least 8 characters
+    </p>
+
+    <p [class.valid]="hasLetter()">
+      {{ hasLetter() ? '✓' : '○' }}
+      At least one letter
+    </p>
+
+    <p [class.valid]="hasNumber()">
+      {{ hasNumber() ? '✓' : '○' }}
+      At least one number
+    </p>
+
+    <p [class.valid]="hasSpecialCharacter()">
+      {{ hasSpecialCharacter() ? '✓' : '○' }}
+      At least one special character
+    </p>
+
+  </div>
+
+
+  <button
+    type="submit"
+    [disabled]="registerForm.invalid || !isPasswordValid() || password !== password2">
+
+    Register
+
+  </button>
+
+</form>
+
+
+<!-- Success Message -->
+<p class="success" *ngIf="message">
+  {{ message }}
+</p>
+
+
+<!-- Error Message -->
+<p class="error" *ngIf="errorMessage">
+  {{ errorMessage }}
+</p>
+
+
+<p class="login-link">
+
+  Already have an account?
+
+  <a routerLink="/login">
+    Login
+  </a>
+
+</p>
+
+
+  </div>
+
+</div>

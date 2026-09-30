@@ -1,0 +1,258 @@
+<div class="reviews-page">
+
+  <nav class="navbar">
+
+    <div class="logo">
+      🚌 Bus Reservation System
+    </div>
+
+    <div class="nav-links">
+
+      <button
+        type="button"
+        (click)="goHome()">
+
+        Home
+
+      </button>
+
+      <button
+        type="button"
+        (click)="goToBookings()">
+
+        My Bookings
+
+      </button>
+
+    </div>
+
+  </nav>
+
+
+  <main class="reviews-container">
+
+
+    <!-- BUS HEADER -->
+
+    <div
+      class="bus-header"
+      *ngIf="reviews.length > 0">
+
+      <div class="bus-icon">
+        🚌
+      </div>
+
+      <div>
+
+        <h1>
+          {{ busName }}
+        </h1>
+
+        <p>
+          {{ busNumber }}
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- RATING SUMMARY -->
+
+    <div
+      class="rating-summary"
+      *ngIf="
+        !loading &&
+        reviews.length > 0
+      ">
+
+      <div class="average-rating">
+
+        <strong>
+          {{ getAverageRating() | number:'1.1-1' }}
+        </strong>
+
+        <div class="big-stars">
+
+          <ng-container
+            *ngFor="let star of stars">
+
+            <span
+              [class.filled]="
+                star <= getAverageRating()
+              ">
+
+              {{ star <= getAverageRating()
+                ? '★'
+                : '☆' }}
+
+            </span>
+
+          </ng-container>
+
+        </div>
+
+      </div>
+
+      <div class="review-count">
+
+        <strong>
+          {{ reviews.length }}
+        </strong>
+
+        <span>
+          Reviews
+        </span>
+
+      </div>
+
+    </div>
+
+
+    <!-- LOADING -->
+
+    <div
+      class="loading"
+      *ngIf="loading">
+
+      <div class="spinner"></div>
+
+      <p>
+        Loading reviews...
+      </p>
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    <div
+      class="error"
+      *ngIf="
+        !loading &&
+        errorMessage
+      ">
+
+      {{ errorMessage }}
+
+    </div>
+
+
+    <!-- NO REVIEWS -->
+
+    <div
+      class="empty"
+      *ngIf="
+        !loading &&
+        !errorMessage &&
+        reviews.length === 0
+      ">
+
+      <div class="empty-icon">
+        ⭐
+      </div>
+
+      <h2>
+        No Reviews Yet
+      </h2>
+
+      <p>
+        This bus has not received any reviews yet.
+      </p>
+
+    </div>
+
+
+    <!-- REVIEWS -->
+
+    <div
+      class="review-list"
+      *ngIf="
+        !loading &&
+        reviews.length > 0
+      ">
+
+      <h2>
+        Customer Reviews
+      </h2>
+
+
+      <div
+        class="review-card"
+        *ngFor="let review of reviews">
+
+
+        <div class="review-user">
+
+          <div class="user-icon">
+
+            {{
+              review.username
+                ?.charAt(0)
+                ?.toUpperCase()
+            }}
+
+          </div>
+
+          <div>
+
+            <h3>
+              {{ review.username }}
+            </h3>
+
+            <small>
+              {{ review.created_at
+                | date:'dd MMM yyyy' }}
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <div class="stars">
+
+          <ng-container
+            *ngFor="let star of stars">
+
+            <span
+              [class.filled]="
+                star <= review.rating
+              ">
+
+              {{ star <= review.rating
+                ? '★'
+                : '☆' }}
+
+            </span>
+
+          </ng-container>
+
+        </div>
+
+
+        <p class="comment">
+
+          "{{ review.comment }}"
+
+        </p>
+
+
+        <div class="journey">
+
+          {{ review.source }}
+
+          →
+
+          {{ review.destination }}
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

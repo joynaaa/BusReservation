@@ -1,0 +1,226 @@
+
+<div class="notifications-page">
+<nav class="navbar">
+
+  <div class="logo">
+    🚌 Bus Reservation System
+  </div>
+
+  <div class="nav-links">
+
+    <button
+      type="button"
+      class="active">
+      🔔 Notifications
+    </button>
+
+  </div>
+
+</nav>
+  <div class="notification-container">
+
+    <!-- HEADER -->
+
+    <div class="notification-header">
+
+      <div>
+
+        <h1>Notifications</h1>
+
+        <p>
+          Stay updated with your bookings and payments.
+        </p>
+
+      </div>
+
+      <button
+        class="mark-all-btn"
+        *ngIf="unreadCount > 0"
+        (click)="markAllAsRead()">
+
+        Mark all as read
+
+      </button>
+
+    </div>
+
+
+    <!-- LOADING -->
+
+    <div
+      class="loading"
+      *ngIf="loading">
+
+      Loading notifications...
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    <div
+      class="error"
+      *ngIf="errorMessage">
+
+      {{ errorMessage }}
+
+    </div>
+
+
+    <!-- EMPTY -->
+
+    <div
+      class="empty"
+      *ngIf="
+        !loading &&
+        !errorMessage &&
+        notifications.length === 0
+      ">
+
+      <div class="empty-icon">
+        🔔
+      </div>
+
+      <h2>No notifications</h2>
+
+      <p>
+        You don't have any notifications yet.
+      </p>
+
+    </div>
+
+
+    <!-- NOTIFICATIONS -->
+
+    <div
+      class="notification-list"
+      *ngIf="
+        !loading &&
+        notifications.length > 0
+      ">
+
+      <div
+        class="notification-card"
+        *ngFor="
+          let notification of notifications
+        "
+        [class.unread]="!notification.is_read"
+        (click)="markAsRead(notification)">
+
+
+        <!-- ICON -->
+
+        <div class="notification-icon">
+
+          <span
+            *ngIf="
+              notification.notification_type ===
+              'BOOKING'
+            ">
+
+            🚌
+
+          </span>
+
+          <span
+            *ngIf="
+              notification.notification_type ===
+              'PAYMENT'
+            ">
+
+            💳
+
+          </span>
+
+          <span
+            *ngIf="
+              notification.notification_type ===
+              'TICKET'
+            ">
+
+            🎫
+
+          </span>
+
+          <span
+            *ngIf="
+              notification.notification_type ===
+              'CANCELLATION'
+            ">
+
+            ❌
+
+          </span>
+
+          <span
+            *ngIf="
+              notification.notification_type ===
+              'REMINDER'
+            ">
+
+            ⏰
+
+          </span>
+
+          <span
+            *ngIf="
+              notification.notification_type ===
+              'GENERAL'
+            ">
+
+            🔔
+
+          </span>
+
+        </div>
+
+
+        <!-- CONTENT -->
+
+        <div class="notification-content">
+
+          <h3>
+            {{ notification.title }}
+          </h3>
+
+          <p>
+            {{ notification.message }}
+          </p>
+
+          <small>
+            {{ notification.created_at | date:'dd MMM yyyy, hh:mm a' }}
+          </small>
+
+        </div>
+
+
+        <!-- UNREAD -->
+
+        <div
+          class="unread-dot"
+          *ngIf="!notification.is_read">
+
+        </div>
+
+
+        <!-- DELETE -->
+
+        <button
+          class="delete-btn"
+          (click)="
+            $event.stopPropagation();
+            deleteNotification(notification)
+          ">
+
+          ×
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+

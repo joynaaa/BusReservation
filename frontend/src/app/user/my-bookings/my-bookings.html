@@ -1,0 +1,535 @@
+<div class="bookings-page">
+
+  <!-- ==========================================
+       NAVBAR
+  =========================================== -->
+
+  <nav class="navbar">
+
+    <div class="logo">
+      🚌 Bus Reservation System
+    </div>
+
+    <div class="nav-links">
+
+      <button
+        type="button"
+        (click)="goHome()">
+
+        Home
+
+      </button>
+
+      <button
+        type="button"
+        class="active">
+
+        My Bookings
+
+      </button>
+
+    </div>
+
+  </nav>
+
+
+  <!-- ==========================================
+       MAIN
+  =========================================== -->
+
+  <main class="bookings-container">
+
+    <h1>
+      My Bookings
+    </h1>
+
+    <p class="subtitle">
+      View and manage your bus bookings
+    </p>
+
+
+    <!-- ==========================================
+         LOADING
+    =========================================== -->
+
+    <div
+      class="loading"
+      *ngIf="loading">
+
+      <div class="spinner"></div>
+
+      <p>
+        Loading your bookings...
+      </p>
+
+    </div>
+
+
+    <!-- ==========================================
+         ERROR
+    =========================================== -->
+
+    <div
+      class="error"
+      *ngIf="!loading && errorMessage">
+
+      {{ errorMessage }}
+
+    </div>
+
+
+    <!-- ==========================================
+         NO BOOKINGS
+    =========================================== -->
+
+    <div
+      class="no-bookings"
+      *ngIf="
+        !loading &&
+        !errorMessage &&
+        bookings.length === 0
+      ">
+
+      <div class="empty-icon">
+        🚌
+      </div>
+
+      <h2>
+        No Bookings Found
+      </h2>
+
+      <p>
+        You haven't booked any bus tickets yet.
+      </p>
+
+      <button
+        type="button"
+        class="search-btn"
+        (click)="goHome()">
+
+        Search Buses
+
+      </button>
+
+    </div>
+
+
+    <!-- ==========================================
+         BOOKINGS
+    =========================================== -->
+
+    <div
+      class="booking-list"
+      *ngIf="
+        !loading &&
+        bookings.length > 0
+      ">
+
+
+      <!-- ==========================================
+           EACH BOOKING
+      =========================================== -->
+
+      <div
+        class="booking-card"
+        *ngFor="let booking of bookings">
+
+
+        <!-- ==========================================
+             BOOKING HEADER
+        =========================================== -->
+
+        <div class="booking-header">
+
+          <div class="booking-title">
+
+            <h2>
+              Booking #{{ booking.id }}
+            </h2>
+
+            <p
+              class="booking-date"
+              *ngIf="booking.booking_date">
+
+              Booked on:
+              {{ booking.booking_date | date:'dd MMM yyyy, hh:mm a' }}
+
+            </p>
+
+          </div>
+
+
+          <!-- STATUS -->
+
+          <span
+            class="status"
+            [ngClass]="{
+
+              'confirmed':
+                booking.status === 'CONFIRMED',
+
+              'cancelled':
+                booking.status === 'CANCELLED'
+
+            }">
+
+            {{ booking.status }}
+
+          </span>
+
+        </div>
+
+
+        <!-- ==========================================
+             JOURNEY
+        =========================================== -->
+
+        <div class="journey">
+
+          <div class="location">
+
+            <span class="label">
+              FROM
+            </span>
+
+            <strong>
+              {{ booking.source }}
+            </strong>
+
+          </div>
+
+
+          <div class="arrow">
+            →
+          </div>
+
+
+          <div class="location">
+
+            <span class="label">
+              TO
+            </span>
+
+            <strong>
+              {{ booking.destination }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             TRAVEL DATE
+        ========================================== -->
+
+        <div class="travel-date">
+
+          <span>
+            Travel Date
+          </span>
+
+          <strong>
+            {{ booking.travel_date | date:'dd MMM yyyy' }}
+          </strong>
+
+        </div>
+
+
+        <!-- ==========================================
+             BOOKING DETAILS
+        =========================================== -->
+
+        <div class="booking-details">
+
+
+          <!-- BUS -->
+
+          <div class="detail">
+
+            <span>
+              Bus
+            </span>
+
+            <strong>
+              {{ booking.bus_name }}
+            </strong>
+
+          </div>
+
+
+          <!-- BUS NUMBER -->
+
+          <div class="detail">
+
+            <span>
+              Bus Number
+            </span>
+
+            <strong>
+              {{ booking.bus_number || 'N/A' }}
+            </strong>
+
+          </div>
+
+
+          <!-- SEATS -->
+
+          <div class="detail">
+
+            <span>
+              Seat
+            </span>
+
+            <strong>
+
+              <ng-container
+                *ngIf="
+                  booking.booked_seats &&
+                  booking.booked_seats.length > 0
+                ">
+
+                <ng-container
+                  *ngFor="
+                    let bookedSeat
+                    of booking.booked_seats;
+                    let last = last
+                  ">
+
+                  {{ bookedSeat.seat_number }}
+
+                  <span *ngIf="!last">
+                    ,
+                  </span>
+
+                </ng-container>
+
+              </ng-container>
+
+
+              <span
+                *ngIf="
+                  !booking.booked_seats ||
+                  booking.booked_seats.length === 0
+                ">
+
+                N/A
+
+              </span>
+
+            </strong>
+
+          </div>
+
+
+          <!-- ======================================
+               TICKET FARE
+          ======================================= -->
+
+          <div class="detail">
+
+            <span>
+              Ticket Fare
+            </span>
+
+            <strong class="amount">
+
+              ₹{{ booking.total_amount }}
+
+            </strong>
+
+          </div>
+
+
+          <!-- ======================================
+               TOTAL AMOUNT
+          ======================================= -->
+
+          <div class="detail total-detail">
+
+            <span>
+              Total Amount
+            </span>
+
+            <strong class="total-amount">
+
+              ₹{{ booking.total_amount }}
+
+            </strong>
+
+          </div>
+
+
+          <!-- ======================================
+               PAYMENT STATUS
+          ======================================= -->
+
+          <div class="detail">
+
+            <span>
+              Payment Status
+            </span>
+
+            <strong
+              [class.success-text]="
+                booking.payment_status === 'PAID'
+              "
+              [class.pending-text]="
+                booking.payment_status === 'PENDING'
+              "
+              [class.cancelled-text]="
+                booking.payment_status === 'FAILED' ||
+                booking.payment_status === 'REFUNDED'
+              ">
+
+              {{ booking.payment_status }}
+
+            </strong>
+
+          </div>
+
+
+          <!-- ======================================
+               BOOKING STATUS
+          ======================================= -->
+
+          <div class="detail">
+
+            <span>
+              Booking Status
+            </span>
+
+            <strong
+              [class.success-text]="
+                booking.status === 'CONFIRMED'
+              "
+              [class.cancelled-text]="
+                booking.status === 'CANCELLED'
+              ">
+
+              {{ booking.status }}
+
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             FARE SUMMARY
+        =========================================== -->
+
+        <div class="fare-summary">
+
+          <div class="fare-summary-header">
+            Fare Summary
+          </div>
+
+
+          <div class="fare-row">
+
+            <span>
+              Ticket Fare
+            </span>
+
+            <strong>
+              ₹{{ booking.total_amount }}
+            </strong>
+
+          </div>
+
+
+          <div class="fare-divider"></div>
+
+
+          <div class="fare-row final-row">
+
+            <span>
+              Total Amount
+            </span>
+
+            <strong>
+              ₹{{ booking.total_amount }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- ==========================================
+             ACTION BUTTONS
+        =========================================== -->
+
+        <div class="booking-actions">
+
+
+          <!-- VIEW TICKET -->
+
+          <button
+            type="button"
+            class="ticket-btn"
+            *ngIf="
+              booking.status === 'CONFIRMED'
+            "
+            (click)="viewTicket(booking)">
+
+            🎫 VIEW TICKET
+
+          </button>
+
+
+          <!-- CANCEL -->
+
+          <button
+            type="button"
+            class="cancel-btn"
+            *ngIf="
+              booking.status === 'CONFIRMED'
+            "
+            (click)="cancelBooking(booking)">
+
+            ✕ CANCEL
+
+          </button>
+
+
+          <!-- REVIEW -->
+
+          <button
+            type="button"
+            class="review-btn"
+            *ngIf="
+              booking.status === 'CONFIRMED'
+            "
+            (click)="writeReview(booking)">
+
+            ⭐ REVIEW
+
+          </button>
+
+
+          <!-- CANCELLED -->
+
+          <button
+            type="button"
+            class="cancelled-btn"
+            *ngIf="
+              booking.status === 'CANCELLED'
+            "
+            disabled>
+
+            CANCELLED
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

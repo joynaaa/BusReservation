@@ -1,0 +1,392 @@
+<div class="reports-container">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+<div class="page-header">
+
+  <div class="header-left">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goToDashboard()">
+
+      ← Back to Dashboard
+
+    </button>
+
+    <div>
+
+      <h1>
+        Reports
+      </h1>
+
+      <p>
+        View booking and revenue reports for your buses.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+  <!-- =====================================================
+       ERROR
+  ====================================================== -->
+
+  <div
+    class="error-message"
+    *ngIf="errorMessage">
+
+    {{ errorMessage }}
+
+  </div>
+
+
+
+  <!-- =====================================================
+       LOADING
+  ====================================================== -->
+
+  <div
+    class="loading"
+    *ngIf="loading">
+
+    Loading reports...
+
+  </div>
+
+
+
+  <ng-container *ngIf="!loading">
+
+
+    <!-- ===================================================
+         SUMMARY CARDS
+    ==================================================== -->
+
+    <div class="summary-cards">
+
+      <div class="summary-card">
+
+        <h3>
+          Total Bookings
+        </h3>
+
+        <p>
+          {{ totalBookings }}
+        </p>
+
+      </div>
+
+
+      <div class="summary-card">
+
+        <h3>
+          Total Revenue
+        </h3>
+
+        <p>
+          ₹{{ totalRevenue | number:'1.0-2' }}
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ===================================================
+         POPULAR BUSES
+    ==================================================== -->
+
+    <div class="report-section">
+
+      <h2>
+        Popular Buses
+      </h2>
+
+
+      <div
+        class="empty"
+        *ngIf="popularBuses.length === 0">
+
+        No bus booking data available.
+
+      </div>
+
+
+      <table
+        *ngIf="popularBuses.length > 0">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Bus
+            </th>
+
+            <th>
+              Bus Number
+            </th>
+
+            <th>
+              Bookings
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let bus of popularBuses">
+
+            <td>
+
+              {{ bus.schedule__bus__bus_name }}
+
+            </td>
+
+            <td>
+
+              {{ bus.schedule__bus__bus_number }}
+
+            </td>
+
+            <td>
+
+              {{ bus.booking_count }}
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+
+    <!-- ===================================================
+         POPULAR ROUTES
+    ==================================================== -->
+
+    <div class="report-section">
+
+      <h2>
+        Popular Routes
+      </h2>
+
+
+      <div
+        class="empty"
+        *ngIf="popularRoutes.length === 0">
+
+        No route booking data available.
+
+      </div>
+
+
+      <table
+        *ngIf="popularRoutes.length > 0">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Source
+            </th>
+
+            <th>
+              Destination
+            </th>
+
+            <th>
+              Bookings
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let route of popularRoutes">
+
+            <td>
+
+              {{ route.schedule__route__source }}
+
+            </td>
+
+            <td>
+
+              {{ route.schedule__route__destination }}
+
+            </td>
+
+            <td>
+
+              {{ route.booking_count }}
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+
+    <!-- ===================================================
+         DAILY BOOKINGS
+    ==================================================== -->
+
+    <div class="report-section">
+
+      <h2>
+        Daily Bookings
+      </h2>
+
+
+      <div
+        class="empty"
+        *ngIf="dailyBookings.length === 0">
+
+        No daily booking data available.
+
+      </div>
+
+
+      <table
+        *ngIf="dailyBookings.length > 0">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Date
+            </th>
+
+            <th>
+              Bookings
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let day of dailyBookings">
+
+            <td>
+
+              {{ day.day | date:'dd-MM-yyyy' }}
+
+            </td>
+
+            <td>
+
+              {{ day.booking_count }}
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+
+    <!-- ===================================================
+         MONTHLY BOOKINGS
+    ==================================================== -->
+
+    <div class="report-section">
+
+      <h2>
+        Monthly Bookings
+      </h2>
+
+
+      <div
+        class="empty"
+        *ngIf="monthlyBookings.length === 0">
+
+        No monthly booking data available.
+
+      </div>
+
+
+      <table
+        *ngIf="monthlyBookings.length > 0">
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Month
+            </th>
+
+            <th>
+              Bookings
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let month of monthlyBookings">
+
+            <td>
+
+              {{ month.month | date:'MMMM yyyy' }}
+
+            </td>
+
+            <td>
+
+              {{ month.booking_count }}
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+  </ng-container>
+
+</div>

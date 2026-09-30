@@ -1,0 +1,447 @@
+<div class="page-header">
+
+  <div class="header-left">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goToDashboard()">
+
+      ← Back to Dashboard
+
+    </button>
+
+    <div>
+      <h1>Manage Users</h1>
+
+      <p>
+        View and manage registered users.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+<div class="table-container">
+
+  <table>
+
+    <thead>
+
+      <tr>
+
+        <th>#</th>
+
+        <th>User</th>
+
+        <th>Email</th>
+
+        <th>Phone</th>
+
+        <th>Address</th>
+
+        <th>Role</th>
+
+        <th>Actions</th>
+
+      </tr>
+
+    </thead>
+
+
+    <tbody>
+
+      <tr
+        *ngFor="
+          let user of users;
+          let i = index
+        "
+      >
+
+        <!-- NUMBER -->
+
+        <td>
+
+          {{ i + 1 }}
+
+        </td>
+
+
+        <!-- ========================= -->
+        <!-- USER -->
+        <!-- ========================= -->
+
+        <td>
+
+          <ng-container
+            *ngIf="
+              editingUserId !== user.id;
+              else editUserName
+            "
+          >
+
+            <div class="user-info">
+
+              <div class="user-avatar">
+
+                {{
+                  user.username
+                    ?.charAt(0)
+                    ?.toUpperCase() || 'U'
+                }}
+
+              </div>
+
+              <div>
+
+                <div class="username">
+
+                  {{ user.username }}
+
+                </div>
+
+                <div class="fullname">
+
+                  {{ user.full_name || '-' }}
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </ng-container>
+
+
+          <ng-template #editUserName>
+
+            <input
+              class="edit-input"
+              type="text"
+              [(ngModel)]="editingUser.username"
+              (blur)="validateUsername()"
+              maxlength="150"
+              placeholder="Username"
+              [class.invalid]="usernameError"
+            />
+
+
+            <small
+              class="field-error"
+              *ngIf="usernameError"
+            >
+
+              {{ usernameError }}
+
+            </small>
+
+          </ng-template>
+
+        </td>
+
+
+        <!-- ========================= -->
+        <!-- EMAIL -->
+        <!-- ========================= -->
+
+        <td>
+
+          <ng-container
+            *ngIf="
+              editingUserId !== user.id;
+              else editEmail
+            "
+          >
+
+            <span class="email">
+
+              {{ user.email || '-' }}
+
+            </span>
+
+          </ng-container>
+
+
+          <ng-template #editEmail>
+
+            <input
+              class="edit-input"
+              type="email"
+              [(ngModel)]="editingUser.email"
+              (blur)="validateEmail()"
+              maxlength="254"
+              placeholder="Email"
+              [class.invalid]="emailError"
+            />
+
+
+            <small
+              class="field-error"
+              *ngIf="emailError"
+            >
+
+              {{ emailError }}
+
+            </small>
+
+          </ng-template>
+
+        </td>
+
+
+        <!-- ========================= -->
+        <!-- PHONE -->
+        <!-- ========================= -->
+
+        <td>
+
+          <ng-container
+            *ngIf="
+              editingUserId !== user.id;
+              else editPhone
+            "
+          >
+
+            {{ user.phone || '-' }}
+
+          </ng-container>
+
+
+          <ng-template #editPhone>
+
+            <input
+              class="edit-input"
+              type="tel"
+              [(ngModel)]="editingUser.phone"
+              (blur)="validatePhone()"
+              maxlength="10"
+              inputmode="numeric"
+              placeholder="10 digit phone"
+              [class.invalid]="phoneError"
+            />
+
+
+            <small
+              class="field-error"
+              *ngIf="phoneError"
+            >
+
+              {{ phoneError }}
+
+            </small>
+
+          </ng-template>
+
+        </td>
+
+
+        <!-- ========================= -->
+        <!-- ADDRESS -->
+        <!-- ========================= -->
+
+        <td>
+
+          <ng-container
+            *ngIf="
+              editingUserId !== user.id;
+              else editAddress
+            "
+          >
+
+            <span class="address">
+
+              {{ user.address || '-' }}
+
+            </span>
+
+          </ng-container>
+
+
+          <ng-template #editAddress>
+
+            <input
+              class="edit-input"
+              type="text"
+              [(ngModel)]="editingUser.address"
+              (blur)="validateAddress()"
+              maxlength="255"
+              placeholder="Address"
+              [class.invalid]="addressError"
+            />
+
+
+            <small
+              class="field-error"
+              *ngIf="addressError"
+            >
+
+              {{ addressError }}
+
+            </small>
+
+          </ng-template>
+
+        </td>
+
+
+        <!-- ========================= -->
+        <!-- ROLE -->
+        <!-- ========================= -->
+
+        <td>
+
+          <span class="role-badge">
+
+            USER
+
+          </span>
+
+        </td>
+
+
+        <!-- ========================= -->
+        <!-- ACTIONS -->
+        <!-- ========================= -->
+
+        <td>
+
+          <!-- NORMAL MODE -->
+
+          <div
+            class="actions"
+            *ngIf="
+              editingUserId !== user.id
+            "
+          >
+
+            <button
+              type="button"
+              class="edit-btn"
+              (click)="editUser(user)"
+            >
+
+              ✏️ Edit
+
+            </button>
+
+
+            <button
+              type="button"
+              class="delete-btn"
+              (click)="deleteUser(user)"
+              [disabled]="deleting"
+            >
+
+              🗑️ Delete
+
+            </button>
+
+          </div>
+
+
+          <!-- EDIT MODE -->
+
+          <div
+            class="actions"
+            *ngIf="
+              editingUserId === user.id
+            "
+          >
+
+            <button
+              type="button"
+              class="save-btn"
+              (click)="updateUser()"
+              [disabled]="!isFormValid() || saving"
+            >
+
+              💾
+
+              <span *ngIf="!saving">
+                Save
+              </span>
+
+              <span *ngIf="saving">
+                Saving...
+              </span>
+
+            </button>
+
+
+            <button
+              type="button"
+              class="cancel-btn"
+              (click)="cancelEdit()"
+              [disabled]="saving"
+            >
+
+              Cancel
+
+            </button>
+
+          </div>
+
+        </td>
+
+      </tr>
+
+
+      <!-- ========================= -->
+      <!-- EMPTY -->
+      <!-- ========================= -->
+
+      <tr
+        *ngIf="users.length === 0 && !loading"
+      >
+
+        <td
+          colspan="7"
+          class="empty"
+        >
+
+          <div class="empty-icon">
+            👥
+          </div>
+
+          <h3>
+            No registered users found
+          </h3>
+
+          <p>
+            Normal users registered in the system
+            will appear here.
+          </p>
+
+        </td>
+
+      </tr>
+
+
+      <!-- ========================= -->
+      <!-- LOADING -->
+      <!-- ========================= -->
+
+      <tr
+        *ngIf="loading"
+      >
+
+        <td
+          colspan="7"
+          class="empty"
+        >
+
+          <div class="spinner"></div>
+
+          <p>
+            Loading users...
+          </p>
+
+        </td>
+
+      </tr>
+
+    </tbody>
+
+  </table>
+
+</div>

@@ -1,0 +1,237 @@
+<div class="operator-page">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+
+    <div class="logo">
+      🚌 BusGo
+    </div>
+
+    <div class="operator-title">
+      Bus Operator
+    </div>
+
+    <nav>
+
+      <a
+        routerLink="/operator/dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }">
+        🏠 Dashboard
+      </a>
+
+      <a
+        routerLink="/operator/buses"
+        routerLinkActive="active">
+        🚍 Manage Buses
+      </a>
+
+      <a
+        routerLink="/operator/routes"
+        routerLinkActive="active">
+        🛣️ Manage Routes
+      </a>
+
+      <a
+        routerLink="/operator/manage-schedules"
+        routerLinkActive="active">
+        📅 Manage Schedules
+      </a>
+
+      <a
+        routerLink="/operator/seats"
+        routerLinkActive="active">
+        💺 Manage Seats
+      </a>
+
+      <!-- NEW -->
+      <a
+        routerLink="/operator/bookings"
+        routerLinkActive="active">
+        🎫 My Bus Bookings
+      </a>
+
+      <a
+        routerLink="/operator/reports"
+        routerLinkActive="active">
+        📊 Reports
+      </a>
+<a
+  routerLink="/operator/profile"
+  routerLinkActive="active">
+  👤 Profile
+</a>
+    </nav>
+
+    <button
+      class="logout-btn"
+      (click)="logout()">
+      🚪 Logout
+    </button>
+
+  </aside>
+
+
+  <!-- MAIN CONTENT -->
+  <main class="main-content">
+
+    <div class="page-header">
+
+      <div>
+        <h1>
+          Bus Operator Dashboard
+        </h1>
+
+        <p>
+          Welcome back, {{ username }} 👋
+        </p>
+      </div>
+
+    </div>
+
+
+    <!-- STAT CARDS -->
+    <div class="stats-grid">
+
+      <div class="stat-card">
+
+        <div class="icon">
+          🚍
+        </div>
+
+        <div>
+          <h3>Total Buses</h3>
+          <h2>{{ totalBuses }}</h2>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="icon">
+          📅
+        </div>
+
+        <div>
+          <h3>Total Schedules</h3>
+          <h2>{{ totalSchedules }}</h2>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="icon">
+          🎫
+        </div>
+
+        <div>
+          <h3>Today's Bookings</h3>
+          <h2>{{ todaysBookings }}</h2>
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="icon">
+          💰
+        </div>
+
+        <div>
+          <h3>Revenue</h3>
+          <h2>₹{{ revenue }}</h2>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- QUICK ACTIONS -->
+    <div class="section-card">
+
+      <h2>
+        Quick Actions
+      </h2>
+
+      <div class="quick-actions">
+
+        <a routerLink="/operator/buses">
+
+          <span>🚍</span>
+
+          <strong>
+            Manage Buses
+          </strong>
+
+        </a>
+
+
+        <a routerLink="/operator/routes">
+
+          <span>🛣️</span>
+
+          <strong>
+            Manage Routes
+          </strong>
+
+        </a>
+
+
+        <a routerLink="/operator/manage-schedules">
+
+          <span>📅</span>
+
+          <strong>
+            Manage Schedules
+          </strong>
+
+        </a>
+
+
+        <a routerLink="/operator/seats">
+
+          <span>💺</span>
+
+          <strong>
+            Manage Seats
+          </strong>
+
+        </a>
+
+
+        <!-- NEW BOOKING ACTION -->
+        <a
+          routerLink="/operator/bookings"
+          class="booking-action">
+
+          <span>🎫</span>
+
+          <strong>
+            My Bus Bookings
+          </strong>
+
+        </a>
+
+
+        <a routerLink="/operator/reports">
+
+          <span>📊</span>
+
+          <strong>
+            View Reports
+          </strong>
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>

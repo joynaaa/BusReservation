@@ -1,0 +1,642 @@
+/* =========================================================
+   MANAGE FARES PAGE
+   ========================================================= */
+
+.fare-page {
+  min-height: 100vh;
+
+  padding: 40px;
+
+  background: linear-gradient(
+    135deg,
+    #eef9fb,
+    #f7fbfc
+  );
+
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  color: #263238;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.page-header {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 18px;
+
+  margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   BACK TO DASHBOARD
+   ========================================================= */
+
+.back-btn {
+  border: 1px solid rgba(3, 107, 125, 0.20);
+
+  background: rgba(255, 255, 255, 0.88);
+
+  color: #036b7d;
+
+  padding: 10px 16px;
+
+  border-radius: 10px;
+
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  box-shadow:
+    0 4px 12px rgba(3, 107, 125, 0.08);
+
+  transition: all 0.25s ease;
+}
+
+.back-btn:hover {
+  background: #036b7d;
+
+  color: #ffffff;
+
+  transform: translateX(-2px);
+
+  box-shadow:
+    0 7px 18px rgba(3, 107, 125, 0.20);
+}
+
+
+/* =========================================================
+   PAGE TITLE
+   ========================================================= */
+
+.page-header h1 {
+  margin: 0;
+
+  font-size: 30px;
+
+  font-weight: 700;
+
+  color: #036b7d;
+}
+
+.page-header p {
+  margin: 7px 0 0;
+
+  color: #607d8b;
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   SUCCESS MESSAGE
+   ========================================================= */
+
+.success-message {
+  margin-bottom: 22px;
+
+  padding: 14px 18px;
+
+  border-radius: 10px;
+
+  border: 1px solid #b7dfc5;
+
+  background: #edf9f1;
+
+  color: #24733b;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  box-shadow:
+    0 5px 15px rgba(36, 115, 59, 0.08);
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+   ========================================================= */
+
+.error-message {
+  margin-bottom: 22px;
+
+  padding: 14px 18px;
+
+  border-radius: 10px;
+
+  border: 1px solid #efc2c2;
+
+  background: #fff1f1;
+
+  color: #c62828;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  box-shadow:
+    0 5px 15px rgba(198, 40, 40, 0.07);
+}
+
+
+/* =========================================================
+   FARE CARD
+   ========================================================= */
+
+.fare-card {
+  background: rgba(255, 255, 255, 0.90);
+
+  border: 1px solid rgba(3, 107, 125, 0.12);
+
+  border-radius: 18px;
+
+  padding: 28px;
+
+  margin-bottom: 28px;
+
+  box-shadow:
+    0 12px 35px rgba(3, 107, 125, 0.10);
+
+  backdrop-filter: blur(12px);
+
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.fare-card h2 {
+  margin: 0 0 25px;
+
+  font-size: 21px;
+
+  font-weight: 700;
+
+  color: #036b7d;
+}
+
+
+/* =========================================================
+   FORM GRID
+   ========================================================= */
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(4, minmax(0, 1fr));
+
+  gap: 20px;
+
+  align-items: end;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+  display: flex;
+
+  flex-direction: column;
+}
+
+.form-group label {
+  margin-bottom: 8px;
+
+  color: #37474f;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   INPUTS AND SELECTS
+   ========================================================= */
+
+.form-group input,
+.form-group select,
+.stop-select {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border: 1px solid #cfdfe3;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #263238;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  outline: none;
+
+  transition: all 0.2s ease;
+}
+
+.form-group input::placeholder {
+  color: #9aaeb5;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.stop-select:focus {
+  border-color: #0097a7;
+
+  box-shadow:
+    0 0 0 3px rgba(0, 151, 167, 0.10);
+}
+
+.form-group select,
+.stop-select {
+  cursor: pointer;
+}
+
+.form-group select:disabled,
+.stop-select:disabled,
+.form-group input:disabled {
+  background: #f1f5f6;
+
+  color: #90a4ae;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   FIELD INFORMATION
+   ========================================================= */
+
+.field-info {
+  margin-top: 7px;
+
+  color: #78909c;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   FIELD ERROR
+   ========================================================= */
+
+.field-error {
+  margin-top: 7px;
+
+  color: #c62828;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   BUTTON GROUP
+   ========================================================= */
+
+.button-group {
+  justify-content: flex-end;
+}
+
+
+/* =========================================================
+   SAVE FARE BUTTON
+   ========================================================= */
+
+.button-group button {
+  width: 100%;
+
+  min-height: 44px;
+
+  border: none;
+
+  padding: 12px 20px;
+
+  border-radius: 10px;
+
+  background: linear-gradient(
+    135deg,
+    #036b7d,
+    #0097a7
+  );
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 16px rgba(3, 107, 125, 0.20);
+
+  transition: all 0.25s ease;
+}
+
+.button-group button:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 9px 22px rgba(3, 107, 125, 0.28);
+}
+
+.button-group button:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading {
+  padding: 45px 25px;
+
+  text-align: center;
+
+  color: #607d8b;
+
+  font-size: 14px;
+}
+
+.loading::before {
+  content: "";
+
+  display: inline-block;
+
+  width: 18px;
+
+  height: 18px;
+
+  margin-right: 9px;
+
+  vertical-align: middle;
+
+  border: 2px solid #cdecef;
+
+  border-top-color: #036b7d;
+
+  border-radius: 50%;
+
+  animation: fareSpin 0.8s linear infinite;
+}
+
+@keyframes fareSpin {
+
+  to {
+    transform: rotate(360deg);
+  }
+
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.fare-card table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+.fare-card thead {
+  background: #f3f9fa;
+}
+
+.fare-card th {
+  padding: 15px 18px;
+
+  text-align: left;
+
+  color: #455a64;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.fare-card td {
+  padding: 17px 18px;
+
+  border-top: 1px solid #edf2f3;
+
+  color: #37474f;
+
+  font-size: 14px;
+
+  vertical-align: middle;
+}
+
+.fare-card tbody tr {
+  transition: background 0.2s ease;
+}
+
+.fare-card tbody tr:hover {
+  background: #f7fcfd;
+}
+
+
+/* =========================================================
+   FARE AMOUNT
+   ========================================================= */
+
+.fare-card td:nth-child(3) {
+  color: #036b7d;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+   ========================================================= */
+
+.delete-btn {
+  border: none;
+
+  padding: 8px 13px;
+
+  border-radius: 7px;
+
+  background: #fdeaea;
+
+  color: #c62828;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #f8d3d3;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty {
+  padding: 55px 25px;
+
+  text-align: center;
+
+  color: #78909c;
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1000px) {
+
+  .fare-page {
+    padding: 30px 22px;
+  }
+
+  .form-grid {
+    grid-template-columns:
+      repeat(2, minmax(0, 1fr));
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  .fare-page {
+    padding: 24px 15px;
+  }
+
+  .page-header {
+    gap: 14px;
+  }
+
+  .back-btn {
+    width: fit-content;
+  }
+
+  .page-header h1 {
+    font-size: 25px;
+  }
+
+  .page-header p {
+    font-size: 14px;
+  }
+
+  .fare-card {
+    padding: 20px;
+
+    border-radius: 15px;
+  }
+
+  .fare-card h2 {
+    font-size: 19px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+
+    gap: 18px;
+  }
+
+  .button-group {
+    margin-top: 2px;
+  }
+
+  .fare-card {
+    overflow: hidden;
+  }
+
+  .fare-card table {
+    min-width: 650px;
+  }
+
+  .fare-card:has(table) {
+    overflow-x: auto;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .fare-page {
+    padding: 20px 12px;
+  }
+
+  .back-btn {
+    padding: 9px 13px;
+
+    font-size: 12px;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+  }
+
+  .page-header p {
+    font-size: 13px;
+  }
+
+  .fare-card {
+    padding: 17px;
+  }
+
+  .fare-card h2 {
+    font-size: 18px;
+  }
+
+  .fare-card th,
+  .fare-card td {
+    padding: 13px 14px;
+  }
+}

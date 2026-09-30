@@ -1,0 +1,933 @@
+<div class="index-page">
+
+  <!-- ===================================================== -->
+  <!-- NAVBAR -->
+  <!-- ===================================================== -->
+
+  <nav class="navbar">
+
+    <div class="logo">
+      🚌 BusGo
+    </div>
+
+    <div class="nav-buttons">
+
+      <a
+        routerLink="/login"
+        class="login-btn">
+
+        Login
+
+      </a>
+
+      <a
+        routerLink="/register"
+        class="register-btn">
+
+        Register
+
+      </a>
+
+    </div>
+
+  </nav>
+
+
+  <!-- ===================================================== -->
+  <!-- SEARCH SECTION -->
+  <!-- ===================================================== -->
+
+  <section class="search-section">
+
+    <div class="search-content">
+
+
+      <!-- PAGE TITLE -->
+
+      <h1>
+        Search Your Bus
+      </h1>
+
+      <p>
+        Find and book your bus tickets easily
+      </p>
+
+
+      <!-- ================================================= -->
+      <!-- SEARCH CARD -->
+      <!-- ================================================= -->
+
+      <div class="search-card">
+
+
+        <!-- ============================= -->
+        <!-- FROM -->
+        <!-- ============================= -->
+
+        <div class="form-group autocomplete">
+
+          <label>
+            From
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="source"
+            (input)="onFromInput()"
+            (focus)="onFromInput()"
+            placeholder="Enter source"
+            autocomplete="off"
+          >
+
+
+          <!-- FROM CITY DROPDOWN -->
+
+          <div
+            class="city-dropdown"
+            *ngIf="showFromDropdown">
+
+
+            <div
+              class="city-option"
+              *ngFor="
+                let city of filteredFromCities
+              "
+              (click)="selectFromCity(city)">
+
+              📍 {{ city }}
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- TO -->
+        <!-- ============================= -->
+
+        <div class="form-group autocomplete">
+
+          <label>
+            To
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="destination"
+            (input)="onToInput()"
+            (focus)="onToInput()"
+            placeholder="Enter destination"
+            autocomplete="off"
+          >
+
+
+          <!-- TO CITY DROPDOWN -->
+
+          <div
+            class="city-dropdown"
+            *ngIf="showToDropdown">
+
+
+            <div
+              class="city-option"
+              *ngFor="
+                let city of filteredToCities
+              "
+              (click)="selectToCity(city)">
+
+              📍 {{ city }}
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- TRAVEL DATE -->
+        <!-- ============================= -->
+
+        <div class="form-group">
+
+          <label>
+            Travel Date
+          </label>
+
+          <input
+            type="date"
+            [(ngModel)]="travelDate"
+            [min]="today"
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <!-- ============================= -->
+        <!-- SEARCH BUTTON -->
+        <!-- ============================= -->
+
+        <button
+          type="button"
+          class="search-btn"
+          (click)="searchBuses()">
+
+          🔍 Search Bus
+
+        </button>
+
+
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- LOADING -->
+      <!-- ================================================= -->
+
+      <div
+        class="loading"
+        *ngIf="loading">
+
+        🔄 Searching available buses...
+
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- ERROR -->
+      <!-- ================================================= -->
+
+      <div
+        class="error"
+        *ngIf="errorMessage">
+
+        {{ errorMessage }}
+
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- BUS RESULTS -->
+      <!-- ================================================= -->
+
+      <div
+        class="bus-results"
+        *ngIf="searchPerformed">
+
+
+        <!-- ============================= -->
+        <!-- RESULTS HEADER -->
+        <!-- ============================= -->
+
+        <div class="results-header">
+
+          <div>
+
+            <h2>
+              Available Buses
+            </h2>
+
+            <p>
+
+              {{ source }}
+
+              <span>
+                →
+              </span>
+
+              {{ destination }}
+
+              <span>
+                |
+              </span>
+
+              {{ travelDate }}
+
+            </p>
+
+          </div>
+
+
+          <!-- BUS COUNT -->
+
+          <div class="bus-count">
+
+            {{ buses.length }}
+
+            {{ buses.length === 1 ? 'Bus' : 'Buses' }}
+
+          </div>
+
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- AVAILABLE BUS LIST -->
+        <!-- ================================================= -->
+
+        <div
+          class="bus-list"
+          *ngIf="buses.length > 0">
+
+
+          <!-- ================================================= -->
+          <!-- BUS CARD -->
+          <!-- ================================================= -->
+
+          <div
+            class="bus-card"
+            *ngFor="let bus of buses">
+
+
+            <!-- ============================= -->
+            <!-- BUS INFORMATION -->
+            <!-- ============================= -->
+
+            <div class="bus-main">
+
+
+              <div class="bus-icon-small">
+
+                🚌
+
+              </div>
+
+
+              <div class="bus-details">
+
+                <h3>
+
+                  {{
+                    bus.bus_name ||
+                    bus.bus ||
+                    'Bus'
+                  }}
+
+                </h3>
+
+
+                <p>
+
+                  Bus Number:
+
+                  <strong>
+
+                    {{
+                      bus.bus_number ||
+                      '-'
+                    }}
+
+                  </strong>
+
+                </p>
+
+
+                <span class="bus-type">
+
+                  {{
+                    bus.bus_type ||
+                    'Bus'
+                  }}
+
+                </span>
+
+              </div>
+
+
+            </div>
+
+
+            <!-- ============================= -->
+            <!-- JOURNEY INFORMATION -->
+            <!-- ============================= -->
+
+            <div class="journey-details">
+
+
+              <!-- DEPARTURE -->
+
+              <div class="time-location">
+
+                <strong>
+
+                  {{
+                    bus.departure_time ||
+                    '--'
+                  }}
+
+                </strong>
+
+                <span>
+
+                  {{ source }}
+
+                </span>
+
+              </div>
+
+
+              <!-- ARROW -->
+
+              <div class="journey-arrow">
+
+                ─────→
+
+              </div>
+
+
+              <!-- ARRIVAL -->
+
+              <div class="time-location">
+
+                <strong>
+
+                  {{
+                    bus.arrival_time ||
+                    '--'
+                  }}
+
+                </strong>
+
+                <span>
+
+                  {{ destination }}
+
+                </span>
+
+              </div>
+
+
+            </div>
+
+
+            <!-- ============================= -->
+            <!-- FARE + VIEW SEATS -->
+            <!-- ============================= -->
+
+            <div class="bus-fare">
+
+
+              <span>
+
+                Starting from
+
+              </span>
+
+
+              <strong>
+
+                ₹{{ bus.fare }}
+
+              </strong>
+
+
+              <!-- VIEW SEATS -->
+
+              <button
+                type="button"
+                class="select-seat-btn"
+                (click)="selectBus(bus)">
+
+                View Seats
+
+              </button>
+
+
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- NO BUSES -->
+        <!-- ================================================= -->
+
+        <div
+          class="no-buses"
+          *ngIf="buses.length === 0">
+
+
+          <div class="no-bus-icon">
+
+            🚌
+
+          </div>
+
+
+          <h3>
+
+            No buses found
+
+          </h3>
+
+
+          <p>
+
+            No buses are available for
+
+            <strong>
+              {{ source }}
+            </strong>
+
+            →
+
+            <strong>
+              {{ destination }}
+            </strong>
+
+            on
+
+            <strong>
+              {{ travelDate }}
+            </strong>.
+
+          </p>
+
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- FEATURES -->
+  <!-- ===================================================== -->
+
+  <section class="features">
+
+
+    <h2>
+
+      Everything You Need for Your Journey
+
+    </h2>
+
+
+    <p class="subtitle">
+
+      Simple, fast and convenient bus booking
+
+    </p>
+
+
+    <div class="feature-container">
+
+
+      <!-- ============================= -->
+      <!-- SEARCH -->
+      <!-- ============================= -->
+
+      <div class="feature-card">
+
+        <div class="feature-icon">
+
+          🔍
+
+        </div>
+
+        <h3>
+
+          Easy Bus Search
+
+        </h3>
+
+        <p>
+
+          Search buses by source, destination
+          and travel date.
+
+        </p>
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- SEAT -->
+      <!-- ============================= -->
+
+      <div class="feature-card">
+
+        <div class="feature-icon">
+
+          💺
+
+        </div>
+
+        <h3>
+
+          Choose Your Seat
+
+        </h3>
+
+        <p>
+
+          View available seats and select
+          your preferred seat.
+
+        </p>
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- PAYMENT -->
+      <!-- ============================= -->
+
+      <div class="feature-card">
+
+        <div class="feature-icon">
+
+          💳
+
+        </div>
+
+        <h3>
+
+          Easy Payment
+
+        </h3>
+
+        <p>
+
+          Complete your booking using
+          convenient payment options.
+
+        </p>
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- TICKET -->
+      <!-- ============================= -->
+
+      <div class="feature-card">
+
+        <div class="feature-icon">
+
+          🎫
+
+        </div>
+
+        <h3>
+
+          Digital Ticket
+
+        </h3>
+
+        <p>
+
+          Get your booking details and ticket
+          after successful payment.
+
+        </p>
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- REVIEWS -->
+      <!-- ============================= -->
+
+      <div class="feature-card">
+
+        <div class="feature-icon">
+
+          ⭐
+
+        </div>
+
+        <h3>
+
+          Bus Reviews
+
+        </h3>
+
+        <p>
+
+          Check ratings and reviews from
+          other passengers.
+
+        </p>
+
+      </div>
+
+
+      <!-- ============================= -->
+      <!-- AI -->
+      <!-- ============================= -->
+
+      <div class="feature-card">
+
+        <div class="feature-icon">
+
+          🤖
+
+        </div>
+
+        <h3>
+
+          AI Assistant
+
+        </h3>
+
+        <p>
+
+          Get quick answers about buses,
+          bookings and your journey.
+
+        </p>
+
+      </div>
+
+
+    </div>
+
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- BUS OPERATOR -->
+  <!-- ===================================================== -->
+
+  <section class="operator-section">
+
+
+    <div class="operator-content">
+
+
+      <div class="operator-icon">
+
+        🚌
+
+      </div>
+
+
+      <div>
+
+
+        <h2>
+
+          Are You a Bus Operator?
+
+        </h2>
+
+
+        <p>
+
+          Join BusGo and manage your buses,
+          routes, schedules, seats and bookings
+          from one place.
+
+        </p>
+
+
+        <div class="operator-features">
+
+          <span>
+            ✓ Manage Buses
+          </span>
+
+          <span>
+            ✓ Manage Routes
+          </span>
+
+          <span>
+            ✓ Manage Schedules
+          </span>
+
+          <span>
+            ✓ Manage Seats
+          </span>
+
+          <span>
+            ✓ View Reports
+          </span>
+
+        </div>
+
+
+        <a
+          routerLink="/operator/register"
+          class="operator-btn">
+
+          Register as Bus Operator
+
+        </a>
+
+
+      </div>
+
+
+    </div>
+
+
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- HOW IT WORKS -->
+  <!-- ===================================================== -->
+
+  <section class="how-section">
+
+
+    <h2>
+
+      How It Works
+
+    </h2>
+
+
+    <p class="subtitle">
+
+      Book your bus in four simple steps
+
+    </p>
+
+
+    <div class="steps">
+
+
+      <!-- STEP 1 -->
+
+      <div class="step">
+
+        <span>
+          1
+        </span>
+
+        <h3>
+          Search
+        </h3>
+
+        <p>
+
+          Enter your source, destination
+          and travel date.
+
+        </p>
+
+      </div>
+
+
+      <!-- STEP 2 -->
+
+      <div class="step">
+
+        <span>
+          2
+        </span>
+
+        <h3>
+          Select
+        </h3>
+
+        <p>
+
+          Choose a bus and view
+          available seats.
+
+        </p>
+
+      </div>
+
+
+      <!-- STEP 3 -->
+
+      <div class="step">
+
+        <span>
+          3
+        </span>
+
+        <h3>
+          Book
+        </h3>
+
+        <p>
+
+          Login or register, then enter
+          passenger details.
+
+        </p>
+
+      </div>
+
+
+      <!-- STEP 4 -->
+
+      <div class="step">
+
+        <span>
+          4
+        </span>
+
+        <h3>
+          Travel
+        </h3>
+
+        <p>
+
+          Get your ticket and enjoy
+          your journey.
+
+        </p>
+
+      </div>
+
+
+    </div>
+
+
+  </section>
+
+
+  <!-- ===================================================== -->
+  <!-- FOOTER -->
+  <!-- ===================================================== -->
+
+  <footer>
+
+
+    <h3>
+
+      🚌 BusGo
+
+    </h3>
+
+
+    <p>
+
+      Your simple and smart bus reservation platform.
+
+    </p>
+
+
+    <p class="copyright">
+
+      © 2026 BusGo. All Rights Reserved.
+
+    </p>
+
+
+  </footer>
+
+
+</div>

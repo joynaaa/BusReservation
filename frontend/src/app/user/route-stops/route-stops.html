@@ -1,0 +1,419 @@
+<div class="route-page">
+
+  <!-- =====================================================
+       NAVBAR
+  ====================================================== -->
+
+  <nav class="navbar">
+
+    <!-- LOGO -->
+    <div class="logo">
+      🚌 Bus Reservation System
+    </div>
+
+
+    <!-- NAVIGATION -->
+    <div class="nav-links">
+
+     
+
+      <button
+        type="button"
+        (click)="goHome()">
+        Home
+      </button>
+
+      <button
+        type="button"
+        (click)="goToBookings()">
+        My Bookings
+      </button>
+
+    </div>
+
+  </nav>
+
+
+  <!-- =====================================================
+       PAGE HEADING
+  ====================================================== -->
+
+  <div class="page-heading">
+
+    <h1>Bus Route & Stops</h1>
+
+    <p>
+      View all boarding and dropping points
+    </p>
+
+  </div>
+
+
+  <!-- =====================================================
+       ROUTE SUMMARY
+  ====================================================== -->
+
+  <div class="route-card">
+
+    <div class="route-summary">
+
+
+      <!-- STARTING POINT -->
+
+      <div class="location">
+
+        <span class="location-dot"></span>
+
+        <div>
+
+          <span class="label">
+            STARTING FROM
+          </span>
+
+          <strong>
+            {{
+              stops.length > 0
+                ? stops[0].stop_name
+                : 'Loading...'
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- ROUTE ARROW -->
+
+      <div class="route-arrow">
+
+        <span></span>
+
+        <div>
+          →
+        </div>
+
+        <span></span>
+
+      </div>
+
+
+      <!-- DESTINATION -->
+
+      <div class="location">
+
+        <span class="location-dot destination"></span>
+
+        <div>
+
+          <span class="label">
+            ENDING AT
+          </span>
+
+          <strong>
+            {{
+              stops.length > 0
+                ? stops[stops.length - 1].stop_name
+                : 'Loading...'
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       LOADING
+  ====================================================== -->
+
+  <div
+    *ngIf="loading"
+    class="status-card">
+
+    <div class="loader"></div>
+
+    <p>
+      Loading route stops...
+    </p>
+
+  </div>
+
+
+  <!-- =====================================================
+       ERROR
+  ====================================================== -->
+
+  <div
+    *ngIf="!loading && errorMessage"
+    class="error-card">
+
+    <div class="error-icon">
+      !
+    </div>
+
+    <div>
+
+      <h3>
+        Unable to load route
+      </h3>
+
+      <p>
+        {{ errorMessage }}
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       ROUTE STOPS
+  ====================================================== -->
+
+  <div
+    *ngIf="!loading && stops.length > 0"
+    class="stops-container">
+
+
+    <!-- HEADER -->
+
+    <div class="stops-header">
+
+      <div>
+
+        <h2>
+          Route Stops
+        </h2>
+
+        <p>
+          {{ stops.length }} stops on this route
+        </p>
+
+      </div>
+
+
+      <div class="stop-count">
+        {{ stops.length }}
+      </div>
+
+    </div>
+
+
+    <!-- ===================================================
+         STOP LIST
+    ==================================================== -->
+
+    <div class="stop-list">
+
+      <div
+        class="stop-item"
+        *ngFor="let stop of stops; let i = index">
+
+
+        <!-- TIMELINE -->
+
+        <div class="timeline">
+
+          <div
+            class="stop-number"
+            [class.first-stop]="i === 0"
+            [class.last-stop]="i === stops.length - 1">
+
+
+            <!-- FIRST STOP -->
+
+            <span *ngIf="i === 0">
+              ●
+            </span>
+
+
+            <!-- MIDDLE STOP -->
+
+            <span *ngIf="i > 0 && i < stops.length - 1">
+              {{ i + 1 }}
+            </span>
+
+
+            <!-- LAST STOP -->
+
+            <span *ngIf="i === stops.length - 1">
+              ●
+            </span>
+
+          </div>
+
+
+          <!-- CONNECTING LINE -->
+
+          <div
+            class="timeline-line"
+            *ngIf="i < stops.length - 1">
+          </div>
+
+        </div>
+
+
+        <!-- =================================================
+             STOP CONTENT
+        ================================================== -->
+
+        <div class="stop-content">
+
+
+          <div class="stop-main">
+
+
+            <!-- STOP NAME -->
+
+            <div class="stop-name-section">
+
+              <h3>
+                {{ stop.stop_name }}
+              </h3>
+
+              <span class="stop-order">
+                Stop {{ stop.stop_order }}
+              </span>
+
+            </div>
+
+
+            <!-- TIME -->
+
+            <div class="stop-time">
+
+              <div *ngIf="stop.arrival_time">
+
+                <span>
+                  Arrival
+                </span>
+
+                <strong>
+                  {{ stop.arrival_time }}
+                </strong>
+
+              </div>
+
+
+              <div *ngIf="stop.departure_time">
+
+                <span>
+                  Departure
+                </span>
+
+                <strong>
+                  {{ stop.departure_time }}
+                </strong>
+
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <!-- =================================================
+               STOP TYPES
+          ================================================== -->
+
+          <div class="stop-options">
+
+
+            <!-- BOARDING -->
+
+            <span
+              class="boarding"
+              *ngIf="stop.is_boarding_point">
+
+              <span class="small-dot"></span>
+
+              Boarding Point
+
+            </span>
+
+
+            <!-- DROPPING -->
+
+            <span
+              class="dropping"
+              *ngIf="stop.is_dropping_point">
+
+              <span class="small-dot"></span>
+
+              Dropping Point
+
+            </span>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       NO STOPS
+  ====================================================== -->
+
+  <div
+    *ngIf="
+      !loading &&
+      stops.length === 0 &&
+      !errorMessage
+    "
+    class="status-card">
+
+    <div class="empty-icon">
+      📍
+    </div>
+
+    <h3>
+      No stops available
+    </h3>
+
+    <p>
+      No stops have been configured for this route.
+    </p>
+
+  </div>
+
+
+  <!-- =====================================================
+       FOOTER INFORMATION
+  ====================================================== -->
+
+  <div
+    *ngIf="!loading && stops.length > 0"
+    class="info-card">
+
+
+    <div class="info-icon">
+      ℹ
+    </div>
+
+
+    <div>
+
+      <strong>
+        Travel information
+      </strong>
+
+      <p>
+        Please arrive at your selected boarding point
+        a few minutes before the scheduled departure time.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>

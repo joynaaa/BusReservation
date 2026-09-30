@@ -1,0 +1,598 @@
+<div class="payment-page">
+
+  <!-- ================================================= -->
+  <!-- NAVBAR -->
+  <!-- ================================================= -->
+
+  <nav class="navbar">
+
+    <div class="logo">
+      🚌 BusGo
+    </div>
+
+    <div class="secure-payment">
+      🔒 Secure Payment
+    </div>
+
+  </nav>
+
+
+  <!-- ================================================= -->
+  <!-- MAIN -->
+  <!-- ================================================= -->
+
+  <div class="payment-container">
+
+    <h1>Payment</h1>
+
+    <p class="subtitle">
+      Choose your preferred payment method
+    </p>
+
+
+    <!-- ================================================= -->
+    <!-- SUCCESS OVERLAY -->
+    <!-- ================================================= -->
+
+    <div
+      class="success-card"
+      *ngIf="paymentSuccess"
+    >
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <h2>
+        Payment Successful
+      </h2>
+
+      <p>
+        Your payment has been successfully processed.
+      </p>
+
+      <span>
+        Redirecting you to your ticket...
+      </span>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- PAYMENT CONTENT -->
+    <!-- ================================================= -->
+
+    <div
+      class="payment-layout"
+      *ngIf="!paymentSuccess"
+    >
+
+
+      <!-- ================================================= -->
+      <!-- LEFT SIDE -->
+      <!-- ================================================= -->
+
+      <div class="payment-left">
+
+
+        <!-- ============================================= -->
+        <!-- PAYMENT METHODS -->
+        <!-- ============================================= -->
+
+        <div class="card">
+
+          <h2>
+            Payment Methods
+          </h2>
+
+
+          <!-- =========================================== -->
+          <!-- UPI -->
+          <!-- =========================================== -->
+
+          <div
+            class="payment-option"
+            [class.active]="paymentMethod === 'UPI'"
+            (click)="selectPaymentMethod('UPI')"
+          >
+
+            <div class="method-icon upi-icon">
+              UPI
+            </div>
+
+            <div class="method-content">
+
+              <strong>
+                UPI
+              </strong>
+
+              <span>
+                Google Pay, PhonePe, Paytm & more
+              </span>
+
+            </div>
+
+            <div class="method-arrow">
+
+              <span
+                *ngIf="paymentMethod === 'UPI'"
+              >
+                ✓
+              </span>
+
+              <span
+                *ngIf="paymentMethod !== 'UPI'"
+              >
+                ›
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- =========================================== -->
+          <!-- CARD -->
+          <!-- =========================================== -->
+
+          <div
+            class="payment-option"
+            [class.active]="paymentMethod === 'CARD'"
+            (click)="selectPaymentMethod('CARD')"
+          >
+
+            <div class="method-icon card-icon">
+              💳
+            </div>
+
+            <div class="method-content">
+
+              <strong>
+                Credit / Debit Card
+              </strong>
+
+              <span>
+                Visa, Mastercard, RuPay
+              </span>
+
+            </div>
+
+            <div class="method-arrow">
+
+              <span
+                *ngIf="paymentMethod === 'CARD'"
+              >
+                ✓
+              </span>
+
+              <span
+                *ngIf="paymentMethod !== 'CARD'"
+              >
+                ›
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- =========================================== -->
+          <!-- NET BANKING -->
+          <!-- =========================================== -->
+
+          <div
+            class="payment-option"
+            [class.active]="paymentMethod === 'NETBANKING'"
+            (click)="selectPaymentMethod('NETBANKING')"
+          >
+
+            <div class="method-icon bank-icon">
+              🏦
+            </div>
+
+            <div class="method-content">
+
+              <strong>
+                Net Banking
+              </strong>
+
+              <span>
+                All major banks supported
+              </span>
+
+            </div>
+
+            <div class="method-arrow">
+
+              <span
+                *ngIf="paymentMethod === 'NETBANKING'"
+              >
+                ✓
+              </span>
+
+              <span
+                *ngIf="paymentMethod !== 'NETBANKING'"
+              >
+                ›
+              </span>
+
+            </div>
+
+          </div>
+
+
+          <!-- =========================================== -->
+          <!-- WALLET -->
+          <!-- =========================================== -->
+
+          <div
+            class="payment-option"
+            [class.active]="paymentMethod === 'WALLET'"
+            (click)="selectPaymentMethod('WALLET')"
+          >
+
+            <div class="method-icon wallet-icon">
+              👛
+            </div>
+
+            <div class="method-content">
+
+              <strong>
+                Wallets
+              </strong>
+
+              <span>
+                Paytm Wallet and other wallets
+              </span>
+
+            </div>
+
+            <div class="method-arrow">
+
+              <span
+                *ngIf="paymentMethod === 'WALLET'"
+              >
+                ✓
+              </span>
+
+              <span
+                *ngIf="paymentMethod !== 'WALLET'"
+              >
+                ›
+              </span>
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- CARD PAYMENT -->
+        <!-- ================================================= -->
+
+        <div
+          class="card stripe-card"
+          *ngIf="paymentMethod === 'CARD'"
+        >
+
+          <h2>
+            Card Details
+          </h2>
+
+          <p class="stripe-info">
+
+            Enter your card details securely.
+
+          </p>
+
+
+          <div
+            id="card-element"
+            class="stripe-element"
+          ></div>
+
+
+          <!-- STRIPE ERROR -->
+
+          <div
+            class="stripe-error"
+            *ngIf="stripeError"
+          >
+
+            {{ stripeError }}
+
+          </div>
+
+
+          <div class="test-mode">
+
+            🧪 Stripe Test Mode
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- UPI INFORMATION -->
+        <!-- ================================================= -->
+
+        <div
+          class="card method-info"
+          *ngIf="paymentMethod === 'UPI'"
+        >
+
+          <div class="info-icon">
+            📱
+          </div>
+
+          <div>
+
+            <h3>
+              UPI Payment
+            </h3>
+
+            <p>
+              UPI payment can be connected to a supported
+              payment gateway.
+            </p>
+
+            <span>
+              Google Pay • PhonePe • Paytm • BHIM
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- NET BANKING INFORMATION -->
+        <!-- ================================================= -->
+
+        <div
+          class="card method-info"
+          *ngIf="paymentMethod === 'NETBANKING'"
+        >
+
+          <div class="info-icon">
+            🏦
+          </div>
+
+          <div>
+
+            <h3>
+              Net Banking
+            </h3>
+
+            <p>
+              Select your bank from the available
+              net banking options.
+            </p>
+
+            <span>
+              SBI • HDFC • ICICI • Axis • Other Banks
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- WALLET INFORMATION -->
+        <!-- ================================================= -->
+
+        <div
+          class="card method-info"
+          *ngIf="paymentMethod === 'WALLET'"
+        >
+
+          <div class="info-icon">
+            👛
+          </div>
+
+          <div>
+
+            <h3>
+              Wallet Payment
+            </h3>
+
+            <p>
+              Choose your preferred wallet at checkout.
+            </p>
+
+            <span>
+              Paytm • Other Supported Wallets
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- ERROR -->
+        <!-- ================================================= -->
+
+        <div
+          class="error-message"
+          *ngIf="errorMessage"
+        >
+
+          ⚠️
+
+          <span>
+            {{ errorMessage }}
+          </span>
+
+        </div>
+
+
+      </div>
+
+
+      <!-- ================================================= -->
+      <!-- RIGHT SIDE -->
+      <!-- ================================================= -->
+
+      <div class="payment-right">
+
+
+        <!-- ================================================= -->
+        <!-- TRAVEL SUMMARY -->
+        <!-- ================================================= -->
+
+        <div class="card summary-card">
+
+          <h2>
+            Trip Summary
+          </h2>
+
+
+          <div class="route-summary">
+
+            <div class="route-point">
+
+              <span>
+                FROM
+              </span>
+
+              <strong>
+                {{ fromStop || 'Selected Boarding Point' }}
+              </strong>
+
+            </div>
+
+
+            <div class="route-arrow">
+              →
+            </div>
+
+
+            <div class="route-point">
+
+              <span>
+                TO
+              </span>
+
+              <strong>
+                {{ toStop || 'Selected Dropping Point' }}
+              </strong>
+
+            </div>
+
+          </div>
+
+
+          <div class="summary-line"></div>
+
+
+          <div class="summary-row">
+
+            <span>
+              Booking ID
+            </span>
+
+            <strong>
+              #{{ bookingId }}
+            </strong>
+
+          </div>
+
+
+        </div>
+
+
+        <!-- ================================================= -->
+        <!-- FARE SUMMARY -->
+        <!-- ================================================= -->
+
+        <div class="card fare-card">
+
+          <h2>
+            Fare Details
+          </h2>
+
+
+          <div class="fare-row">
+
+            <span>
+              Stop Fare
+            </span>
+
+            <strong>
+              ₹{{ ticketPrice | number:'1.2-2' }}
+            </strong>
+
+          </div>
+
+
+          <div class="summary-line"></div>
+
+
+          <div class="fare-row total-row">
+
+            <span>
+              Total Amount
+            </span>
+
+            <strong>
+              ₹{{ totalAmount | number:'1.2-2' }}
+            </strong>
+
+          </div>
+
+
+          <!-- ============================================= -->
+          <!-- PAY BUTTON -->
+          <!-- ============================================= -->
+
+          <button
+            class="pay-btn"
+            [disabled]="processing || paymentMethod !== 'CARD'"
+            (click)="payNow()"
+          >
+
+            <span
+              *ngIf="!processing"
+            >
+
+              Pay ₹{{ totalAmount | number:'1.2-2' }}
+
+            </span>
+
+
+            <span
+              *ngIf="processing"
+              class="processing-content"
+            >
+
+              <span class="spinner"></span>
+
+              Processing Payment...
+
+            </span>
+
+          </button>
+
+
+          <p class="secure-note">
+
+            🔒 Your payment information is encrypted
+            and securely processed.
+
+          </p>
+
+        </div>
+
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>

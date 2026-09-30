@@ -1,0 +1,290 @@
+<div class="seat-page">
+
+  <!-- =====================================================
+       PAGE HEADER
+  ====================================================== -->
+<div class="page-header">
+
+  <div class="header-left">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goToDashboard()">
+
+      ← Back to Dashboard
+
+    </button>
+
+    <div>
+
+      <h1>Manage Seats</h1>
+
+      <p>
+        View seat availability for your buses and schedules.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+  <!-- =====================================================
+       ERROR MESSAGE
+  ====================================================== -->
+
+  <div
+    class="error-message"
+    *ngIf="errorMessage">
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- =====================================================
+       SELECTION CARD
+  ====================================================== -->
+
+  <div class="selection-card">
+
+
+    <!-- ===================================================
+         BUS
+    ==================================================== -->
+
+    <div class="form-group">
+
+      <label>
+        Select Bus
+      </label>
+
+
+      <select
+        [(ngModel)]="selectedBus"
+        (change)="loadSchedules()">
+
+        <option value="">
+          Select Bus
+        </option>
+
+
+        <option
+          *ngFor="let bus of buses"
+          [value]="bus.id">
+
+          {{ bus.bus_name }}
+          -
+          {{ bus.bus_number }}
+
+        </option>
+
+      </select>
+
+
+      <!-- Loading buses -->
+
+      <small
+        *ngIf="loadingBuses">
+
+        Loading buses...
+
+      </small>
+
+
+      <!-- No buses -->
+
+      <small
+        *ngIf="
+          !loadingBuses &&
+          buses.length === 0
+        ">
+
+        No buses found.
+
+      </small>
+
+    </div>
+
+
+
+    <!-- ===================================================
+         SCHEDULE
+    ==================================================== -->
+
+    <div class="form-group">
+
+      <label>
+        Select Schedule
+      </label>
+
+
+      <select
+        [(ngModel)]="selectedSchedule"
+        (change)="loadSeats()"
+        [disabled]="
+          !selectedBus ||
+          loadingSchedules
+        ">
+
+        <option value="">
+
+          {{
+            loadingSchedules
+              ? 'Loading schedules...'
+              : 'Select Schedule'
+          }}
+
+        </option>
+
+
+        <option
+          *ngFor="let schedule of schedules"
+          [value]="schedule.id">
+
+          {{ schedule.source }}
+
+          →
+
+          {{ schedule.destination }}
+
+          | Bus #{{ schedule.bus }}
+
+        </option>
+
+      </select>
+
+
+      <!-- No schedules -->
+
+      <small
+        *ngIf="
+          selectedBus &&
+          !loadingSchedules &&
+          schedules.length === 0
+        ">
+
+        No schedules found for this bus.
+
+      </small>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =====================================================
+       SEAT CARD
+  ====================================================== -->
+
+  <div
+    class="seat-card"
+    *ngIf="selectedSchedule">
+
+
+    <h2>
+      Seat Layout
+    </h2>
+
+
+    <!-- ===================================================
+         LEGEND
+    ==================================================== -->
+
+    <div class="legend">
+
+      <span>
+        🟢 Available
+      </span>
+
+      <span>
+        🔴 Booked
+      </span>
+
+    </div>
+
+
+    <!-- Loading seats -->
+
+    <div
+      class="loading"
+      *ngIf="loadingSeats">
+
+      Loading seats...
+
+    </div>
+
+
+    <!-- ===================================================
+         SEAT GRID
+    ==================================================== -->
+
+    <div
+      class="seat-grid"
+      *ngIf="!loadingSeats && seats.length > 0"
+      [style.grid-template-columns]="
+        'repeat(' + seatsPerRow + ', 90px)'
+      ">
+
+
+      <div
+        *ngFor="let seat of seats"
+        class="seat"
+
+        [class.booked]="
+          seat.status === 'BOOKED'
+        "
+
+        [class.available]="
+          seat.status === 'AVAILABLE'
+        ">
+
+
+        <strong>
+
+          {{ seat.seat_number }}
+
+        </strong>
+
+
+        <div class="seat-type">
+
+          {{ seat.seat_type }}
+
+        </div>
+
+
+        <span>
+
+          {{ seat.status }}
+
+        </span>
+
+
+      </div>
+
+    </div>
+
+
+    <!-- ===================================================
+         NO SEATS
+    ==================================================== -->
+
+    <div
+      class="empty"
+      *ngIf="
+        !loadingSeats &&
+        selectedSchedule &&
+        seats.length === 0
+      ">
+
+      No seats found for this schedule.
+
+    </div>
+
+  </div>
+
+</div>

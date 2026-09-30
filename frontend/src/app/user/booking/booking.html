@@ -1,0 +1,283 @@
+<div class="booking-page">
+
+  <!-- NAVBAR -->
+
+  <nav class="navbar">
+
+
+<div class="logo">
+  🚌 Bus Reservation System
+</div>
+
+<button
+  class="back-btn"
+  (click)="goBack()">
+
+  ← Back
+
+</button>
+
+  </nav>
+
+  <!-- MAIN -->
+
+  <div class="container">
+
+
+<h1>Booking Confirmation</h1>
+
+<p class="subtitle">
+  Review your passenger details before confirming
+</p>
+
+
+<!-- ERROR -->
+
+<div
+  class="error"
+  *ngIf="errorMessage">
+
+  {{ errorMessage }}
+
+</div>
+
+
+<!-- PASSENGER DETAILS -->
+
+<div
+  class="passenger-card"
+  *ngFor="let passenger of passengers; let i = index">
+
+  <div class="passenger-header">
+
+    <h2>
+      Passenger {{ i + 1 }}
+    </h2>
+
+    <span class="seat">
+      Seat {{ passenger.seatId }}
+    </span>
+
+  </div>
+
+
+  <div class="details">
+
+    <div>
+      <span>Name</span>
+      <strong>
+        {{ passenger.passengerName }}
+      </strong>
+    </div>
+
+    <div>
+      <span>Age</span>
+      <strong>
+        {{ passenger.age }}
+      </strong>
+    </div>
+
+    <div>
+      <span>Gender</span>
+      <strong>
+        {{ passenger.gender }}
+      </strong>
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- CONFIRM BUTTON -->
+
+<button
+  class="confirm-btn"
+  *ngIf="!booking"
+  [disabled]="loading"
+  (click)="confirmBooking()">
+
+  {{ loading
+    ? 'CREATING BOOKING...'
+    : 'CONFIRM BOOKING'
+  }}
+
+</button>
+
+
+<!-- BOOKING SUCCESS -->
+
+<div
+  class="success-card"
+  *ngIf="booking">
+
+  <div class="success-icon">
+    ✓
+  </div>
+
+  <h2>
+    Booking Confirmed!
+  </h2>
+
+  <p>
+    Your bus booking has been created successfully.
+  </p>
+
+
+  <div class="booking-details">
+
+    <div>
+      <span>Booking ID</span>
+
+      <strong>
+        #{{ booking.id }}
+      </strong>
+    </div>
+
+
+    <div>
+      <span>Booking Status</span>
+
+      <strong class="status">
+        {{ booking.status }}
+      </strong>
+    </div>
+
+
+    <div>
+      <span>Total Amount</span>
+
+      <strong class="amount">
+        ₹{{ booking.total_amount }}
+      </strong>
+    </div>
+
+  </div>
+<!-- ============================= -->
+<!-- TRAVEL DETAILS -->
+<!-- ============================= -->
+
+<div class="travel-details">
+
+  <h3>
+    Journey Details
+  </h3>
+
+  <div class="travel-route">
+
+    <div class="travel-stop">
+
+      <span>
+        From
+      </span>
+
+      <strong>
+        {{ fromStopName || 'Selected Boarding Point' }}
+      </strong>
+
+    </div>
+
+
+    <div class="route-arrow">
+      →
+    </div>
+
+
+    <div class="travel-stop">
+
+      <span>
+        To
+      </span>
+
+      <strong>
+        {{ toStopName || 'Selected Dropping Point' }}
+      </strong>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<!-- ============================= -->
+<!-- STOP FARE -->
+<!-- ============================= -->
+
+<div class="fare-details">
+
+  <h3>
+    Fare Details
+  </h3>
+
+  <div class="fare-row">
+
+    <span>
+      Stop Fare
+    </span>
+
+    <strong>
+      ₹{{ fare }}
+    </strong>
+
+  </div>
+
+ 
+  <div class="fare-line"></div>
+
+  <div class="fare-row total">
+
+    <span>
+      Total Amount
+    </span>
+
+    <strong>
+      ₹{{ booking.total_amount }}
+    </strong>
+
+  </div>
+
+</div>
+
+  <!-- SELECTED SEATS -->
+
+  <div class="selected-seats">
+
+    <h3>
+      Selected Seats
+    </h3>
+
+    <div
+      class="seat-list"
+      *ngFor="let seat of booking.booked_seats">
+
+      <span>
+        Seat ID: {{ seat.seat }}
+      </span>
+
+      <span>
+        {{ seat.passenger_name }}
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- PAYMENT -->
+
+  <button
+    class="payment-btn"
+    (click)="goToPayment()"
+     *ngIf="booking">
+
+    CONTINUE TO PAYMENT →
+
+  </button>
+
+</div>
+
+
+  </div>
+
+</div>

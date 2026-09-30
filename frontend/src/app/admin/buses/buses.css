@@ -1,0 +1,959 @@
+/* =========================================================
+   MANAGE BUSES PAGE
+   ========================================================= */
+
+:host {
+  display: block;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+/* =========================================================
+   MAIN PAGE
+   ========================================================= */
+
+.page {
+  min-height: 100vh;
+  padding: 32px;
+
+  box-sizing: border-box;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eef9fb 0%,
+      #f7fbfc 50%,
+      #edf7f8 100%
+    );
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 24px;
+
+  margin-bottom: 28px;
+  padding: 24px 28px;
+
+  background: rgba(255, 255, 255, 0.90);
+
+  border: 1px solid rgba(3, 107, 125, 0.10);
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 28px rgba(3, 107, 125, 0.08);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+
+/* =========================================================
+   HEADER LEFT
+   ========================================================= */
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  gap: 14px;
+}
+
+
+/* =========================================================
+   HEADING CONTENT
+   ========================================================= */
+
+.heading-content {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.heading-content h1 {
+  margin: 0;
+
+  color: #034f5e;
+
+  font-size: 28px;
+  font-weight: 700;
+
+  line-height: 1.2;
+
+  letter-spacing: -0.4px;
+}
+
+.heading-content p {
+  margin: 0;
+
+  color: #6b7c82;
+
+  font-size: 14px;
+  font-weight: 400;
+}
+
+
+/* =========================================================
+   BACK TO DASHBOARD BUTTON
+   ========================================================= */
+
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 10px 17px;
+
+  border: 1px solid rgba(3, 107, 125, 0.20);
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #036b7d;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.back-btn:hover {
+  background: #036b7d;
+  color: #ffffff;
+
+  transform: translateX(-2px);
+
+  box-shadow:
+    0 6px 16px rgba(3, 107, 125, 0.20);
+}
+
+.back-btn:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================================================
+   ADD BUS BUTTON
+   ========================================================= */
+
+.add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 12px 22px;
+
+  border: none;
+  border-radius: 10px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #036b7d,
+      #0097a7
+    );
+
+  color: #ffffff;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  box-shadow:
+    0 6px 18px rgba(3, 107, 125, 0.20);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.add-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 10px 24px rgba(3, 107, 125, 0.28);
+}
+
+.add-btn:active {
+  transform: scale(0.97);
+}
+
+
+/* =========================================================
+   ADD / EDIT FORM CARD
+   ========================================================= */
+
+.form-card {
+  margin-bottom: 28px;
+  padding: 28px;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  border: 1px solid rgba(3, 107, 125, 0.10);
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 28px rgba(3, 107, 125, 0.08);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  animation: fadeIn 0.3s ease;
+}
+
+.form-card h2 {
+  margin: 0 0 24px;
+
+  color: #034f5e;
+
+  font-size: 21px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   FORM GRID
+   ========================================================= */
+
+.form-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 22px;
+}
+
+.form-grid > div {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =========================================================
+   LABELS
+   ========================================================= */
+
+.form-grid label {
+  margin-bottom: 8px;
+
+  color: #344f56;
+
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.required {
+  color: #e53935;
+  margin-left: 2px;
+}
+
+
+/* =========================================================
+   INPUTS
+   ========================================================= */
+
+.form-grid input,
+.form-grid select {
+  width: 100%;
+  height: 44px;
+
+  box-sizing: border-box;
+
+  padding: 0 13px;
+
+  border: 1px solid #d5e3e6;
+  border-radius: 9px;
+
+  outline: none;
+
+  background: #ffffff;
+
+  color: #263b40;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  font-size: 14px;
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.form-grid input::placeholder {
+  color: #9aaeb3;
+}
+
+.form-grid input:focus,
+.form-grid select:focus {
+  border-color: #036b7d;
+
+  background: #ffffff;
+
+  box-shadow:
+    0 0 0 3px rgba(3, 107, 125, 0.10);
+}
+
+.form-grid input.invalid,
+.form-grid select.invalid {
+  border-color: #e53935;
+
+  background: #fff8f8;
+}
+
+
+/* =========================================================
+   HINT
+   ========================================================= */
+
+.hint {
+  margin-top: 6px;
+
+  color: #819398;
+
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   FIELD ERROR
+   ========================================================= */
+
+.field-error {
+  margin-top: 6px;
+
+  color: #d32f2f;
+
+  font-size: 12px;
+  font-weight: 500;
+}
+
+
+/* =========================================================
+   FORM ACTIONS
+   ========================================================= */
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  gap: 12px;
+
+  margin-top: 26px;
+  padding-top: 22px;
+
+  border-top: 1px solid #e4edef;
+}
+
+
+/* =========================================================
+   SAVE BUTTON
+   ========================================================= */
+
+.save-btn {
+  min-width: 120px;
+
+  padding: 11px 20px;
+
+  border: none;
+  border-radius: 9px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #036b7d,
+      #0097a7
+    );
+
+  color: #ffffff;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.save-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 7px 18px rgba(3, 107, 125, 0.22);
+}
+
+.save-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.save-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   CANCEL BUTTON
+   ========================================================= */
+
+.cancel-btn {
+  min-width: 120px;
+
+  padding: 11px 20px;
+
+  border: 1px solid #d4e1e4;
+  border-radius: 9px;
+
+  background: #ffffff;
+  color: #52676d;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: #f2f7f8;
+
+  border-color: #b9ced2;
+}
+
+.cancel-btn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.cancel-btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  min-height: 180px;
+
+  padding: 25px;
+
+  box-sizing: border-box;
+
+  background: rgba(255, 255, 255, 0.88);
+
+  border: 1px solid rgba(3, 107, 125, 0.08);
+  border-radius: 18px;
+
+  color: #036b7d;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  box-shadow:
+    0 8px 28px rgba(3, 107, 125, 0.06);
+}
+
+
+/* =========================================================
+   TABLE CONTAINER
+   ========================================================= */
+
+.table-container {
+  width: 100%;
+
+  overflow-x: auto;
+
+  background: rgba(255, 255, 255, 0.92);
+
+  border: 1px solid rgba(3, 107, 125, 0.10);
+  border-radius: 18px;
+
+  box-shadow:
+    0 8px 28px rgba(3, 107, 125, 0.08);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+table {
+  width: 100%;
+
+  min-width: 1250px;
+
+  border-collapse: collapse;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
+
+thead {
+  background:
+    linear-gradient(
+      135deg,
+      #034f5e,
+      #036b7d
+    );
+}
+
+thead th {
+  padding: 15px 14px;
+
+  color: #ffffff;
+
+  text-align: left;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  letter-spacing: 0.3px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE BODY
+   ========================================================= */
+
+tbody td {
+  padding: 15px 14px;
+
+  color: #52676d;
+
+  border-bottom: 1px solid #edf2f3;
+
+  vertical-align: middle;
+}
+
+tbody tr {
+  transition: background 0.2s ease;
+}
+
+tbody tr:hover {
+  background: #f4fafb;
+}
+
+tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   BUS NAME
+   ========================================================= */
+
+tbody td strong {
+  color: #034f5e;
+
+  font-size: 14px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   DOCUMENTS
+   ========================================================= */
+
+.documents {
+  min-width: 150px;
+}
+
+.document-links {
+  display: flex;
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+.document-links a {
+  color: #036b7d;
+
+  text-decoration: none;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  transition: color 0.2s ease;
+}
+
+.document-links a:hover {
+  color: #0097a7;
+
+  text-decoration: underline;
+}
+
+.document-links span {
+  color: #9aa8ac;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   STATUS BADGES
+   ========================================================= */
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 10px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* PENDING */
+
+.status.pending {
+  color: #9a6700;
+  background: #fff7d6;
+}
+
+
+/* ACTIVE */
+
+.status.active {
+  color: #177245;
+  background: #e5f7ed;
+}
+
+
+/* INACTIVE */
+
+.status.inactive {
+  color: #647278;
+  background: #edf1f2;
+}
+
+
+/* REJECTED */
+
+.status.rejected {
+  color: #c62828;
+  background: #fdeaea;
+}
+
+
+/* =========================================================
+   REJECTION REASON
+   ========================================================= */
+
+.rejection-reason {
+  max-width: 180px;
+
+  margin-top: 7px;
+  padding: 7px 9px;
+
+  border-radius: 7px;
+
+  background: #fff5f5;
+
+  color: #b71c1c;
+
+  font-size: 11px;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   ACTIONS
+   ========================================================= */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: 7px;
+
+  min-width: 230px;
+}
+
+.actions button {
+  padding: 7px 11px;
+
+  border: none;
+  border-radius: 7px;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  font-size: 11px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
+}
+
+.actions button:hover {
+  transform: translateY(-1px);
+}
+
+
+/* EDIT */
+
+.actions .edit {
+  background: #e7f4f6;
+  color: #036b7d;
+}
+
+.actions .edit:hover {
+  background: #d4edf0;
+}
+
+
+/* APPROVE */
+
+.actions .approve {
+  background: #e4f6eb;
+  color: #167044;
+}
+
+.actions .approve:hover {
+  background: #d1efdc;
+}
+
+
+/* REJECT */
+
+.actions .reject {
+  background: #fff0f0;
+  color: #c62828;
+}
+
+.actions .reject:hover {
+  background: #ffe0e0;
+}
+
+
+/* TOGGLE */
+
+.actions .toggle {
+  background: #fff7df;
+  color: #9a6700;
+}
+
+.actions .toggle:hover {
+  background: #ffefbf;
+}
+
+
+/* DELETE */
+
+.actions .delete {
+  background: #fdeaea;
+  color: #c62828;
+}
+
+.actions .delete:hover {
+  background: #fbd4d4;
+}
+
+
+/* =========================================================
+   NO DATA
+   ========================================================= */
+
+.no-data {
+  padding: 45px 20px !important;
+
+  text-align: center;
+
+  color: #8a9da2 !important;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   ANIMATION
+   ========================================================= */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .page {
+    padding: 22px;
+  }
+
+  .page-header {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .header-left {
+    width: 100%;
+  }
+
+  .add-btn {
+    width: 100%;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+/* =========================================================
+   RESPONSIVE - MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .page {
+    padding: 15px;
+  }
+
+  .page-header {
+    padding: 20px;
+
+    border-radius: 14px;
+  }
+
+  .heading-content h1 {
+    font-size: 23px;
+  }
+
+  .heading-content p {
+    font-size: 13px;
+  }
+
+  .back-btn {
+    width: 100%;
+  }
+
+  .add-btn {
+    width: 100%;
+  }
+
+  .form-card {
+    padding: 20px;
+
+    border-radius: 14px;
+  }
+
+  .form-card h2 {
+    font-size: 19px;
+  }
+
+  .form-actions {
+    flex-direction: column;
+  }
+
+  .save-btn,
+  .cancel-btn {
+    width: 100%;
+  }
+
+  .table-container {
+    border-radius: 12px;
+  }
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .page {
+    padding: 10px;
+  }
+
+  .page-header {
+    padding: 16px;
+  }
+
+  .heading-content h1 {
+    font-size: 21px;
+  }
+
+  .back-btn,
+  .add-btn {
+    font-size: 13px;
+    padding: 10px 14px;
+  }
+
+  .form-card {
+    padding: 16px;
+  }
+}

@@ -1,0 +1,968 @@
+/* =========================================================
+   MANAGE SCHEDULES PAGE
+   ========================================================= */
+
+.manage-schedules-page {
+  min-height: 100vh;
+  padding: 40px;
+
+  background: linear-gradient(
+    135deg,
+    #eef9fb,
+    #f7fbfc
+  );
+
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  color: #263238;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.page-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+
+  gap: 20px;
+
+  margin-bottom: 28px;
+}
+
+
+/* =========================================================
+   HEADER LEFT
+   ========================================================= */
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 18px;
+}
+
+
+/* =========================================================
+   BACK TO DASHBOARD
+   ========================================================= */
+
+.back-btn {
+  border: 1px solid rgba(3, 107, 125, 0.20);
+
+  background: rgba(255, 255, 255, 0.88);
+
+  color: #036b7d;
+
+  padding: 10px 16px;
+
+  border-radius: 10px;
+
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  box-shadow:
+    0 4px 12px rgba(3, 107, 125, 0.08);
+
+  transition: all 0.25s ease;
+}
+
+.back-btn:hover {
+  background: #036b7d;
+
+  color: #ffffff;
+
+  transform: translateX(-2px);
+
+  box-shadow:
+    0 7px 18px rgba(3, 107, 125, 0.20);
+}
+
+
+/* =========================================================
+   PAGE HEADING
+   ========================================================= */
+
+.page-header h1 {
+  margin: 0;
+
+  font-size: 30px;
+
+  font-weight: 700;
+
+  color: #036b7d;
+}
+
+.page-header p {
+  margin: 7px 0 0;
+
+  color: #607d8b;
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   SUCCESS MESSAGE
+   ========================================================= */
+
+.success-message {
+  margin-bottom: 22px;
+
+  padding: 14px 18px;
+
+  border-radius: 10px;
+
+  border: 1px solid #b7dfc5;
+
+  background: #edf9f1;
+
+  color: #24733b;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  box-shadow:
+    0 5px 15px rgba(36, 115, 59, 0.08);
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+   ========================================================= */
+
+.error-message {
+  margin-bottom: 22px;
+
+  padding: 14px 18px;
+
+  border-radius: 10px;
+
+  border: 1px solid #efc2c2;
+
+  background: #fff1f1;
+
+  color: #c62828;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  box-shadow:
+    0 5px 15px rgba(198, 40, 40, 0.07);
+}
+
+
+/* =========================================================
+   APPROVAL INFORMATION
+   ========================================================= */
+
+.approval-info {
+  margin-bottom: 28px;
+
+  padding: 22px 25px;
+
+  background: rgba(255, 249, 230, 0.92);
+
+  border: 1px solid #f0dfaa;
+
+  border-left: 5px solid #e5a900;
+
+  border-radius: 14px;
+
+  box-shadow:
+    0 8px 22px rgba(166, 106, 0, 0.08);
+}
+
+.approval-info strong {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #8a6200;
+
+  font-size: 16px;
+}
+
+.approval-info p {
+  margin: 5px 0;
+
+  color: #6d5b2a;
+
+  font-size: 14px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   CREATE / EDIT SCHEDULE CARD
+   ========================================================= */
+
+.schedule-card {
+  background: rgba(255, 255, 255, 0.88);
+
+  border: 1px solid rgba(3, 107, 125, 0.12);
+
+  border-radius: 18px;
+
+  padding: 28px;
+
+  margin-bottom: 28px;
+
+  box-shadow:
+    0 12px 35px rgba(3, 107, 125, 0.10);
+
+  backdrop-filter: blur(12px);
+
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.schedule-card h2 {
+  margin: 0 0 25px;
+
+  font-size: 21px;
+
+  font-weight: 700;
+
+  color: #036b7d;
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+  margin-bottom: 22px;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #37474f;
+
+  font-size: 14px;
+
+  font-weight: 600;
+}
+
+.form-group select {
+  width: 100%;
+
+  box-sizing: border-box;
+
+  padding: 12px 14px;
+
+  border: 1px solid #cfdfe3;
+
+  border-radius: 10px;
+
+  background: #ffffff;
+
+  color: #263238;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  outline: none;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.form-group select:focus {
+  border-color: #0097a7;
+
+  box-shadow:
+    0 0 0 3px rgba(0, 151, 167, 0.10);
+}
+
+.form-group select:disabled {
+  background: #f1f5f6;
+
+  color: #90a4ae;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   ITEM COUNT
+   ========================================================= */
+
+.item-count {
+  display: block;
+
+  margin-top: 7px;
+
+  color: #78909c;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   OPERATING DAYS
+   ========================================================= */
+
+.days-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(7, minmax(70px, 1fr));
+
+  gap: 10px;
+}
+
+.day-item {
+  display: flex !important;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 7px;
+
+  padding: 10px 8px;
+
+  border: 1px solid #d6e5e8;
+
+  border-radius: 9px;
+
+  background: #f8fcfd;
+
+  color: #455a64 !important;
+
+  font-size: 13px !important;
+
+  font-weight: 600 !important;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.day-item:hover {
+  border-color: #0097a7;
+
+  background: #eaf8fa;
+
+  color: #036b7d !important;
+}
+
+.day-item input {
+  width: 16px;
+  height: 16px;
+
+  accent-color: #036b7d;
+
+  cursor: pointer;
+}
+
+.day-item:has(input:checked) {
+  background: #e5f5f7;
+
+  border-color: #0097a7;
+
+  color: #036b7d !important;
+}
+
+
+/* =========================================================
+   ACTIVE OPTION
+   ========================================================= */
+
+.active-option {
+  margin-bottom: 24px;
+
+  padding: 14px 16px;
+
+  border: 1px solid #d6e5e8;
+
+  border-radius: 10px;
+
+  background: #f7fbfc;
+}
+
+.active-option label {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  color: #37474f;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+}
+
+.active-option input {
+  width: 17px;
+  height: 17px;
+
+  accent-color: #036b7d;
+
+  cursor: pointer;
+}
+
+
+/* =========================================================
+   CREATE / UPDATE BUTTON
+   ========================================================= */
+
+.create-btn {
+  width: 100%;
+
+  border: none;
+
+  padding: 13px 20px;
+
+  border-radius: 10px;
+
+  background: linear-gradient(
+    135deg,
+    #036b7d,
+    #0097a7
+  );
+
+  color: #ffffff;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 6px 16px rgba(3, 107, 125, 0.20);
+
+  transition: all 0.25s ease;
+}
+
+.create-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 9px 22px rgba(3, 107, 125, 0.28);
+}
+
+.create-btn:disabled {
+  opacity: 0.55;
+
+  cursor: not-allowed;
+
+  box-shadow: none;
+}
+
+
+/* =========================================================
+   CANCEL EDIT
+   ========================================================= */
+
+.cancel-edit-btn {
+  width: 100%;
+
+  margin-top: 10px;
+
+  padding: 11px 20px;
+
+  border: none;
+
+  border-radius: 9px;
+
+  background: #edf3f5;
+
+  color: #455a64;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.25s ease;
+}
+
+.cancel-edit-btn:hover:not(:disabled) {
+  background: #dfeaec;
+}
+
+.cancel-edit-btn:disabled {
+  opacity: 0.6;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   EXISTING SCHEDULES
+   ========================================================= */
+
+.schedule-list {
+  background: rgba(255, 255, 255, 0.90);
+
+  border: 1px solid rgba(3, 107, 125, 0.12);
+
+  border-radius: 18px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 12px 35px rgba(3, 107, 125, 0.10);
+
+  backdrop-filter: blur(12px);
+
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.schedule-list h2 {
+  margin: 0;
+
+  padding: 22px 25px;
+
+  border-bottom: 1px solid #e5eef0;
+
+  background: rgba(247, 251, 252, 0.85);
+
+  color: #263238;
+
+  font-size: 20px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading {
+  padding: 45px 25px;
+
+  text-align: center;
+
+  color: #607d8b;
+
+  font-size: 14px;
+}
+
+.loading::before {
+  content: "";
+
+  display: inline-block;
+
+  width: 18px;
+  height: 18px;
+
+  margin-right: 9px;
+
+  vertical-align: middle;
+
+  border: 2px solid #cdecef;
+
+  border-top-color: #036b7d;
+
+  border-radius: 50%;
+
+  animation: scheduleSpin 0.8s linear infinite;
+}
+
+@keyframes scheduleSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   EMPTY MESSAGE
+   ========================================================= */
+
+.empty-message {
+  padding: 55px 25px;
+
+  text-align: center;
+
+  color: #78909c;
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   TABLE CONTAINER
+   ========================================================= */
+
+.table-container {
+  width: 100%;
+
+  overflow-x: auto;
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.table-container table {
+  width: 100%;
+
+  min-width: 900px;
+
+  border-collapse: collapse;
+}
+
+.table-container thead {
+  background: #f3f9fa;
+}
+
+.table-container th {
+  padding: 15px 18px;
+
+  text-align: left;
+
+  color: #455a64;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+.table-container td {
+  padding: 17px 18px;
+
+  border-top: 1px solid #edf2f3;
+
+  color: #37474f;
+
+  font-size: 14px;
+
+  vertical-align: middle;
+}
+
+.table-container tbody tr {
+  transition: background 0.2s ease;
+}
+
+.table-container tbody tr:hover {
+  background: #f7fcfd;
+}
+
+.table-container td strong {
+  color: #263238;
+
+  font-weight: 600;
+}
+
+.table-container td small {
+  color: #78909c;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   SAVED DAYS
+   ========================================================= */
+
+.saved-days {
+  display: flex;
+
+  flex-wrap: wrap;
+
+  gap: 5px;
+
+  min-width: 120px;
+}
+
+.day-badge {
+  display: inline-block;
+
+  padding: 5px 8px;
+
+  border-radius: 6px;
+
+  background: #e5f5f7;
+
+  color: #036b7d;
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+.no-days {
+  color: #9aaeb5;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   STATUS
+   ========================================================= */
+
+.status {
+  display: inline-block;
+
+  padding: 6px 11px;
+
+  border-radius: 20px;
+
+  font-size: 12px;
+
+  font-weight: 600;
+}
+
+.status.active {
+  background: #e8f7ed;
+
+  color: #278044;
+}
+
+.status.inactive {
+  background: #f1f3f4;
+
+  color: #78909c;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.action-buttons {
+  white-space: nowrap;
+}
+
+.manage-fare-btn,
+.edit-btn,
+.delete-btn {
+  border: none;
+
+  padding: 8px 12px;
+
+  margin-right: 6px;
+
+  border-radius: 7px;
+
+  font-family: inherit;
+
+  font-size: 12px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+
+/* =========================================================
+   MANAGE FARES
+   ========================================================= */
+
+.manage-fare-btn {
+  background: #e5f5f7;
+
+  color: #036b7d;
+}
+
+.manage-fare-btn:hover {
+  background: #cdecef;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   EDIT
+   ========================================================= */
+
+.edit-btn {
+  background: #fff4df;
+
+  color: #a66a00;
+}
+
+.edit-btn:hover {
+  background: #ffe8bb;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DELETE
+   ========================================================= */
+
+.delete-btn {
+  background: #fdeaea;
+
+  color: #c62828;
+}
+
+.delete-btn:hover {
+  background: #f8d3d3;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .manage-schedules-page {
+    padding: 30px 22px;
+  }
+
+  .days-grid {
+    grid-template-columns:
+      repeat(4, minmax(70px, 1fr));
+  }
+
+  .table-container {
+    overflow-x: auto;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 650px) {
+
+  .manage-schedules-page {
+    padding: 24px 15px;
+  }
+
+  .page-header {
+    flex-direction: column;
+
+    align-items: stretch;
+  }
+
+  .header-left {
+    gap: 14px;
+  }
+
+  .back-btn {
+    width: fit-content;
+  }
+
+  .page-header h1 {
+    font-size: 25px;
+  }
+
+  .page-header p {
+    font-size: 14px;
+  }
+
+  .schedule-card {
+    padding: 20px;
+
+    border-radius: 15px;
+  }
+
+  .schedule-card h2 {
+    font-size: 19px;
+  }
+
+  .days-grid {
+    grid-template-columns:
+      repeat(2, 1fr);
+  }
+
+  .schedule-list h2 {
+    padding: 18px;
+
+    font-size: 18px;
+  }
+
+  .approval-info {
+    padding: 18px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .manage-schedules-page {
+    padding: 20px 12px;
+  }
+
+  .back-btn {
+    padding: 9px 13px;
+
+    font-size: 12px;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+  }
+
+  .page-header p {
+    font-size: 13px;
+  }
+
+  .schedule-card {
+    padding: 17px;
+  }
+
+  .days-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .day-item {
+    padding: 9px 5px;
+
+    font-size: 12px !important;
+  }
+
+  .schedule-list h2 {
+    font-size: 17px;
+  }
+
+  .table-container th,
+  .table-container td {
+    padding: 13px 14px;
+  }
+
+  .manage-fare-btn,
+  .edit-btn,
+  .delete-btn {
+    margin-bottom: 5px;
+  }
+}

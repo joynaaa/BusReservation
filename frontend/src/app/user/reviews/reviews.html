@@ -1,0 +1,254 @@
+<div class="reviews-page">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+
+    <div class="logo">
+      🚌 Bus Reservation System
+    </div>
+
+    <div class="nav-links">
+
+      <button
+        type="button"
+        (click)="goHome()">
+
+        Home
+
+      </button>
+
+      <button
+        type="button"
+        (click)="goToBookings()">
+
+        My Bookings
+
+      </button>
+
+    </div>
+
+  </nav>
+
+
+  <div class="review-container">
+
+    <!-- REVIEW FORM -->
+    <div
+      class="review-card"
+      *ngIf="!submittedReview">
+
+      <div class="review-header">
+
+        <div class="review-icon">
+          ⭐
+        </div>
+
+        <h1>
+          How was your journey?
+        </h1>
+
+        <p>
+          Your feedback helps us improve our service.
+        </p>
+
+      </div>
+
+
+      <div class="booking-info">
+
+        Booking #{{ bookingId }}
+
+      </div>
+
+
+      <!-- ERROR -->
+      <div
+        class="error"
+        *ngIf="errorMessage">
+
+        {{ errorMessage }}
+
+      </div>
+
+
+      <!-- RATING -->
+      <div class="rating-section">
+
+        <label>
+          Rate your experience
+        </label>
+
+        <div class="stars">
+
+          <button
+            type="button"
+            *ngFor="let star of stars"
+            [class.selected]="star <= rating"
+            (click)="selectRating(star)">
+
+            {{ star <= rating ? '★' : '☆' }}
+
+          </button>
+
+        </div>
+
+        <p
+          class="rating-text"
+          *ngIf="rating > 0">
+
+          You selected
+          {{ rating }}
+          out of 5 stars
+
+        </p>
+
+      </div>
+
+
+      <!-- COMMENT -->
+      <div class="comment-section">
+
+        <label for="comment">
+          Comment
+        </label>
+
+        <textarea
+          id="comment"
+          [(ngModel)]="comment"
+          placeholder="Tell us about your journey..."
+          rows="5">
+        </textarea>
+
+      </div>
+
+
+      <!-- SUBMIT -->
+      <button
+        type="button"
+        class="submit-btn"
+        (click)="submitReview()"
+        [disabled]="loading">
+
+        {{
+          loading
+            ? 'Submitting...'
+            : 'SUBMIT REVIEW'
+        }}
+
+      </button>
+
+
+      <button
+        type="button"
+        class="back-btn"
+        (click)="goToBookings()">
+
+        Back to My Bookings
+
+      </button>
+
+    </div>
+
+
+    <!-- SUCCESS REVIEW -->
+    <div
+      class="review-card submitted-card"
+      *ngIf="submittedReview">
+
+      <div class="success-icon">
+        ✓
+      </div>
+
+      <h1>
+        Review Submitted!
+      </h1>
+
+      <p class="success-message">
+        Thank you for sharing your experience.
+      </p>
+
+
+      <div class="submitted-info">
+
+        <div class="info-row">
+
+          <span>
+            Booking
+          </span>
+
+          <strong>
+            #{{ submittedReview.booking }}
+          </strong>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <span>
+            Your Rating
+          </span>
+
+          <strong class="stars-display">
+
+            <ng-container
+              *ngFor="let star of stars">
+
+              {{ star <= submittedReview.rating
+                ? '★'
+                : '☆' }}
+
+            </ng-container>
+
+          </strong>
+
+        </div>
+
+
+        <div class="info-row">
+
+          <span>
+            Comment
+          </span>
+
+          <strong>
+            {{ submittedReview.comment }}
+          </strong>
+
+        </div>
+
+
+        <div
+          class="info-row"
+          *ngIf="submittedReview.created_at">
+
+          <span>
+            Submitted
+          </span>
+
+          <strong>
+            {{
+              submittedReview.created_at
+              | date:'dd MMM yyyy, hh:mm a'
+            }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <button
+        type="button"
+        class="submit-btn"
+        (click)="goToBookings()">
+
+        BACK TO MY BOOKINGS
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

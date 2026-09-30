@@ -1,0 +1,1227 @@
+/* =========================================================
+   BUSGO HOME PAGE
+   MODERN GLASSMORPHISM UI
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+.home-page {
+  min-height: 100vh;
+  color: #173f51;
+
+  background:
+    radial-gradient(
+      circle at 10% 5%,
+      rgba(0, 188, 212, 0.18),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 15%,
+      rgba(3, 107, 125, 0.16),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 80%,
+      rgba(0, 150, 136, 0.10),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #eef9fb,
+      #f7fbfc 45%,
+      #edf7f8
+    );
+
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.navbar {
+  position: sticky;
+  top: 15px;
+  z-index: 1000;
+
+  width: calc(100% - 40px);
+  max-width: 1450px;
+
+  margin: 15px auto;
+
+  padding: 15px 22px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.58);
+
+  border: 1px solid rgba(255, 255, 255, 0.78);
+
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+
+  box-shadow:
+    0 12px 35px rgba(0, 70, 90, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.90);
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.logo {
+  font-size: 21px;
+  font-weight: 800;
+
+  color: #036b7d;
+
+  letter-spacing: -0.4px;
+}
+
+
+/* =========================================================
+   NAV LINKS
+   ========================================================= */
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.nav-links a {
+  padding: 9px 13px;
+
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  color: #56737e;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  transition: all 0.25s ease;
+}
+
+.nav-links a:hover {
+  color: #036b7d;
+
+  background: rgba(3, 107, 125, 0.08);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   NOTIFICATION
+   ========================================================= */
+
+.notification-btn {
+  position: relative;
+
+  width: 40px;
+  height: 40px;
+
+  margin-left: 5px;
+
+  border: none;
+  border-radius: 11px;
+
+  cursor: pointer;
+
+  font-size: 17px;
+
+  background: rgba(255, 255, 255, 0.55);
+
+  border: 1px solid rgba(3, 107, 125, 0.10);
+
+  transition: all 0.25s ease;
+}
+
+.notification-btn:hover {
+  background: rgba(3, 107, 125, 0.08);
+
+  transform: translateY(-2px);
+}
+
+
+/* Notification count */
+
+.notification-count {
+  position: absolute;
+
+  top: -4px;
+  right: -4px;
+
+  min-width: 18px;
+  height: 18px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2px 5px;
+
+  border-radius: 50%;
+
+  color: white;
+
+  background: #e05252;
+
+  font-size: 9px;
+  font-weight: 700;
+
+  border: 2px solid white;
+}
+
+
+/* =========================================================
+   LOGOUT
+   ========================================================= */
+
+.logout-btn {
+  padding: 9px 17px;
+
+  margin-left: 4px;
+
+  border: none;
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  color: #ffffff;
+
+  background: linear-gradient(
+    135deg,
+    #036b7d,
+    #0097a7
+  );
+
+  font-size: 12px;
+  font-weight: 700;
+
+  box-shadow:
+    0 6px 15px rgba(3, 107, 125, 0.18);
+
+  transition: all 0.25s ease;
+}
+
+.logout-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 9px 20px rgba(3, 107, 125, 0.25);
+}
+
+
+/* =========================================================
+   HERO
+   ========================================================= */
+
+.hero {
+  position: relative;
+
+  padding: 75px 20px 70px;
+
+  text-align: center;
+}
+
+.hero-content {
+  max-width: 1150px;
+  margin: auto;
+}
+
+.hero h1 {
+  margin: 0 0 10px;
+
+  font-size: clamp(38px, 5vw, 58px);
+
+  font-weight: 800;
+
+  letter-spacing: -2px;
+
+  color: #173f51;
+}
+
+.hero p {
+  margin: 0 0 25px;
+
+  color: #718994;
+
+  font-size: 16px;
+}
+
+
+/* =========================================================
+   AI BUTTON
+   ========================================================= */
+
+.ai-btn {
+  padding: 11px 20px;
+
+  margin-bottom: 28px;
+
+  border: 1px solid rgba(3, 107, 125, 0.15);
+
+  border-radius: 30px;
+
+  color: #036b7d;
+
+  background: rgba(255, 255, 255, 0.52);
+
+  backdrop-filter: blur(12px);
+
+  font-size: 13px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 8px 20px rgba(0, 70, 90, 0.08);
+
+  transition: all 0.3s ease;
+}
+
+.ai-btn:hover {
+  color: white;
+
+  background: linear-gradient(
+    135deg,
+    #036b7d,
+    #0097a7
+  );
+
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 12px 25px rgba(3, 107, 125, 0.25);
+}
+
+
+/* =========================================================
+   SEARCH CARD
+   ========================================================= */
+
+.search-card {
+  display: grid;
+
+  grid-template-columns:
+    1fr 1fr 1fr auto;
+
+  gap: 16px;
+
+  align-items: end;
+
+  padding: 27px;
+
+  text-align: left;
+
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.53);
+
+  border: 1px solid rgba(255, 255, 255, 0.78);
+
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  box-shadow:
+    0 25px 60px rgba(0, 70, 90, 0.11),
+    inset 0 1px 0 rgba(255, 255, 255, 0.90);
+}
+
+
+/* =========================================================
+   FORM GROUP
+   ========================================================= */
+
+.form-group {
+  position: relative;
+}
+
+.form-group label {
+  display: block;
+
+  margin-bottom: 8px;
+
+  color: #315a68;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.form-group input,
+.filter-group input,
+.filter-group select {
+  width: 100%;
+
+  height: 50px;
+
+  padding: 0 14px;
+
+  border: 1px solid rgba(3, 107, 125, 0.15);
+
+  border-radius: 13px;
+
+  outline: none;
+
+  color: #173b4d;
+
+  background: rgba(255, 255, 255, 0.68);
+
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  font-size: 13px;
+
+  transition: all 0.25s ease;
+}
+
+.form-group input::placeholder,
+.filter-group input::placeholder {
+  color: #91a7af;
+}
+
+.form-group input:focus,
+.filter-group input:focus,
+.filter-group select:focus {
+  border-color: rgba(3, 107, 125, 0.60);
+
+  background: rgba(255, 255, 255, 0.92);
+
+  box-shadow:
+    0 0 0 4px rgba(3, 107, 125, 0.07),
+    0 7px 18px rgba(3, 107, 125, 0.07);
+}
+
+
+/* =========================================================
+   CITY DROPDOWN
+   ========================================================= */
+
+.city-dropdown {
+  position: absolute;
+
+  top: calc(100% + 7px);
+
+  left: 0;
+  right: 0;
+
+  z-index: 500;
+
+  padding: 7px;
+
+  border-radius: 14px;
+
+  background: rgba(255, 255, 255, 0.93);
+
+  border: 1px solid rgba(255, 255, 255, 0.9);
+
+  backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 15px 40px rgba(0, 60, 80, 0.15);
+}
+
+.city-option {
+  padding: 11px 13px;
+
+  border-radius: 9px;
+
+  color: #496b77;
+
+  font-size: 13px;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+.city-option:hover {
+  color: #036b7d;
+
+  background: rgba(3, 107, 125, 0.08);
+
+  transform: translateX(3px);
+}
+
+
+/* =========================================================
+   SEARCH BUTTON
+   ========================================================= */
+
+.search-btn {
+  height: 50px;
+
+  padding: 0 25px;
+
+  border: none;
+
+  border-radius: 13px;
+
+  cursor: pointer;
+
+  color: white;
+
+  background: linear-gradient(
+    135deg,
+    #036b7d,
+    #0097a7
+  );
+
+  font-size: 13px;
+  font-weight: 700;
+
+  box-shadow:
+    0 9px 22px rgba(3, 107, 125, 0.23);
+
+  transition: all 0.3s ease;
+}
+
+.search-btn:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 14px 28px rgba(3, 107, 125, 0.30);
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading {
+  margin: 25px auto 0;
+
+  max-width: 450px;
+
+  padding: 14px 18px;
+
+  border-radius: 13px;
+
+  color: #036b7d;
+
+  background: rgba(255, 255, 255, 0.55);
+
+  border: 1px solid rgba(255, 255, 255, 0.75);
+
+  backdrop-filter: blur(15px);
+
+  font-size: 13px;
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.error {
+  margin: 20px auto 0;
+
+  max-width: 600px;
+
+  padding: 13px 17px;
+
+  border-radius: 13px;
+
+  color: #a53b3b;
+
+  background: rgba(255, 235, 235, 0.75);
+
+  border: 1px solid rgba(220, 100, 100, 0.20);
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   FILTER CARD
+   ========================================================= */
+
+.filter-card {
+  width: calc(100% - 40px);
+
+  max-width: 1450px;
+
+  margin: 0 auto 35px;
+
+  padding: 27px;
+
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.50);
+
+  border: 1px solid rgba(255, 255, 255, 0.78);
+
+  backdrop-filter: blur(22px);
+  -webkit-backdrop-filter: blur(22px);
+
+  box-shadow:
+    0 18px 45px rgba(0, 70, 90, 0.08);
+}
+
+
+/* =========================================================
+   FILTER HEADER
+   ========================================================= */
+
+.filter-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 22px;
+}
+
+.filter-header h2 {
+  margin: 0 0 5px;
+
+  color: #234d5c;
+
+  font-size: 21px;
+}
+
+.filter-header p {
+  margin: 0;
+
+  color: #82979f;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   CLEAR BUTTON
+   ========================================================= */
+
+.clear-btn {
+  padding: 9px 15px;
+
+  border: 1px solid rgba(3, 107, 125, 0.14);
+
+  border-radius: 10px;
+
+  color: #036b7d;
+
+  background: rgba(255, 255, 255, 0.55);
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  transition: all 0.25s ease;
+}
+
+.clear-btn:hover {
+  background: rgba(3, 107, 125, 0.08);
+
+  transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   FILTER GRID
+   ========================================================= */
+
+.filter-grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(3, 1fr);
+
+  gap: 18px;
+}
+
+.filter-group label {
+  display: block;
+
+  margin-bottom: 7px;
+
+  color: #496975;
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   FILTER ACTION
+   ========================================================= */
+
+.filter-actions {
+  display: flex;
+
+  justify-content: flex-end;
+
+  margin-top: 22px;
+}
+
+.apply-filter-btn {
+  padding: 11px 22px;
+
+  border: none;
+
+  border-radius: 11px;
+
+  color: white;
+
+  background: linear-gradient(
+    135deg,
+    #036b7d,
+    #0097a7
+  );
+
+  cursor: pointer;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  box-shadow:
+    0 8px 20px rgba(3, 107, 125, 0.20);
+
+  transition: all 0.25s ease;
+}
+
+.apply-filter-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 12px 25px rgba(3, 107, 125, 0.28);
+}
+
+
+/* =========================================================
+   RESULTS SECTION
+   ========================================================= */
+
+.results-section {
+  width: calc(100% - 40px);
+
+  max-width: 1450px;
+
+  margin: 0 auto 80px;
+}
+
+
+/* =========================================================
+   RESULTS HEADER
+   ========================================================= */
+
+.results-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 20px;
+}
+
+.results-header h2 {
+  margin: 0 0 5px;
+
+  color: #173f51;
+
+  font-size: 24px;
+}
+
+.results-header p {
+  margin: 0;
+
+  color: #80969e;
+
+  font-size: 13px;
+}
+
+.travel-date {
+  padding: 9px 14px;
+
+  border-radius: 11px;
+
+  color: #036b7d;
+
+  background: rgba(3, 107, 125, 0.07);
+
+  border: 1px solid rgba(3, 107, 125, 0.10);
+
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   TABLE CONTAINER
+   ========================================================= */
+
+.table-container {
+  overflow-x: auto;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.52);
+
+  border: 1px solid rgba(255, 255, 255, 0.78);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 20px 50px rgba(0, 70, 90, 0.09);
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.bus-table {
+  width: 100%;
+
+  min-width: 1100px;
+
+  border-collapse: collapse;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+   ========================================================= */
+
+.bus-table thead {
+  background: rgba(3, 107, 125, 0.07);
+}
+
+.bus-table th {
+  padding: 16px 14px;
+
+  text-align: left;
+
+  color: #496975;
+
+  border-bottom: 1px solid rgba(3, 107, 125, 0.10);
+
+  font-size: 11px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE BODY
+   ========================================================= */
+
+.bus-table td {
+  padding: 17px 14px;
+
+  color: #607d87;
+
+  border-bottom: 1px solid rgba(3, 107, 125, 0.06);
+
+  white-space: nowrap;
+}
+
+.bus-table tbody tr {
+  transition: all 0.25s ease;
+}
+
+.bus-table tbody tr:hover {
+  background: rgba(255, 255, 255, 0.60);
+
+  transform: scale(1.002);
+}
+
+.bus-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* =========================================================
+   BUS NAME
+   ========================================================= */
+
+.bus-name {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #244e5c;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   BUS TYPE
+   ========================================================= */
+
+.bus-type {
+  display: inline-block;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  color: #036b7d;
+
+  background: rgba(3, 107, 125, 0.08);
+
+  font-size: 10px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   ROUTE
+   ========================================================= */
+
+.route {
+  color: #567681;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   TIME
+   ========================================================= */
+
+.bus-table td strong {
+  color: #244e5c;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   FARE
+   ========================================================= */
+
+.fare {
+  color: #036b7d;
+
+  font-size: 14px;
+
+  font-weight: 800;
+}
+
+
+/* =========================================================
+   RATING
+   ========================================================= */
+
+.rating {
+  display: inline-block;
+
+  padding: 5px 9px;
+
+  border-radius: 20px;
+
+  color: #9a7110;
+
+  background: rgba(245, 190, 60, 0.12);
+
+  font-size: 11px;
+
+  font-weight: 700;
+}
+
+.no-rating {
+  color: #9aaab0;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   ACTION BUTTONS
+   ========================================================= */
+
+.action-buttons {
+  display: flex;
+
+  align-items: center;
+
+  gap: 6px;
+}
+
+
+/* Common action button */
+
+.reviews-btn,
+.view-stops-btn,
+.select-btn {
+  padding: 8px 11px;
+
+  border-radius: 9px;
+
+  cursor: pointer;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  transition: all 0.25s ease;
+}
+
+
+/* Reviews */
+
+.reviews-btn {
+  color: #8a6a12;
+
+  background: rgba(245, 190, 60, 0.10);
+
+  border: 1px solid rgba(245, 190, 60, 0.18);
+}
+
+.reviews-btn:hover {
+  background: rgba(245, 190, 60, 0.18);
+
+  transform: translateY(-2px);
+}
+
+
+/* View stops */
+
+.view-stops-btn {
+  color: #036b7d;
+
+  background: rgba(3, 107, 125, 0.08);
+
+  border: 1px solid rgba(3, 107, 125, 0.12);
+}
+
+.view-stops-btn:hover {
+  background: rgba(3, 107, 125, 0.14);
+
+  transform: translateY(-2px);
+}
+
+
+/* Select seat */
+
+.select-btn {
+  color: white;
+
+  background: linear-gradient(
+    135deg,
+    #036b7d,
+    #0097a7
+  );
+
+  border: none;
+
+  box-shadow:
+    0 5px 12px rgba(3, 107, 125, 0.18);
+}
+
+.select-btn:hover {
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 8px 17px rgba(3, 107, 125, 0.25);
+}
+
+
+/* =========================================================
+   NO BUSES
+   ========================================================= */
+
+.no-buses-message,
+.no-search-message {
+  padding: 45px 20px;
+
+  text-align: center;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.50);
+
+  border: 1px solid rgba(255, 255, 255, 0.75);
+
+  backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 15px 35px rgba(0, 70, 90, 0.07);
+}
+
+.no-buses-message h3 {
+  margin: 0 0 8px;
+
+  color: #4c6872;
+
+  font-size: 18px;
+}
+
+.no-buses-message p,
+.no-search-message p {
+  margin: 0;
+
+  color: #899ba2;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 1050px) {
+
+  .nav-links a {
+    padding: 8px 8px;
+
+    font-size: 12px;
+  }
+
+  .search-card {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .filter-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 700px) {
+
+  .navbar {
+    position: relative;
+
+    width: calc(100% - 20px);
+
+    flex-direction: column;
+
+    gap: 14px;
+
+    padding: 15px;
+  }
+
+  .nav-links {
+    width: 100%;
+
+    justify-content: center;
+
+    flex-wrap: wrap;
+  }
+
+  .logo {
+    font-size: 18px;
+  }
+
+  .hero {
+    padding: 50px 15px 50px;
+  }
+
+  .hero h1 {
+    font-size: 38px;
+  }
+
+  .hero p {
+    font-size: 14px;
+  }
+
+  .search-card {
+    grid-template-columns: 1fr;
+
+    padding: 20px;
+  }
+
+  .filter-card {
+    width: calc(100% - 20px);
+
+    padding: 20px;
+  }
+
+  .filter-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .filter-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 15px;
+  }
+
+  .filter-actions {
+    justify-content: stretch;
+  }
+
+  .apply-filter-btn {
+    width: 100%;
+  }
+
+  .results-section {
+    width: calc(100% - 20px);
+  }
+
+  .results-header {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 420px) {
+
+  .nav-links a {
+    font-size: 11px;
+
+    padding: 7px 8px;
+  }
+
+  .logout-btn {
+    padding: 8px 12px;
+  }
+
+  .hero h1 {
+    font-size: 32px;
+  }
+
+  .search-card {
+    border-radius: 20px;
+  }
+
+}

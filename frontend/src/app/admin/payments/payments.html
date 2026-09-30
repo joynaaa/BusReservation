@@ -1,0 +1,110 @@
+<div class="page">
+
+<div class="page-header">
+
+  <div class="header-left">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goToDashboard()">
+      ← Back to Dashboard
+    </button>
+
+    <div class="heading-content">
+      <h1>Payment Management</h1>
+      <p>View and manage all payment transactions</p>
+    </div>
+
+  </div>
+
+</div>
+
+  <div *ngIf="loading" class="loading">
+    Loading payments...
+  </div>
+
+
+  <div *ngIf="!loading && payments.length === 0"
+       class="empty">
+
+    No payments found.
+
+  </div>
+
+
+  <div *ngIf="!loading && payments.length > 0"
+       class="table-container">
+
+    <table>
+
+      <thead>
+        <tr>
+
+          <th>Payment ID</th>
+
+          <th>Booking ID</th>
+
+          <th>User</th>
+
+          <th>Amount</th>
+
+          <th>Payment Method</th>
+
+          <th>Payment Status</th>
+
+          <th>Date</th>
+
+        </tr>
+      </thead>
+
+
+      <tbody>
+
+        <tr *ngFor="let payment of payments">
+
+          <td>
+            #{{ payment.id }}
+          </td>
+
+          <td>
+            #{{ payment.booking_id }}
+          </td>
+
+          <td>
+            {{ payment.username }}
+          </td>
+
+          <td>
+            ₹{{ payment.amount }}
+          </td>
+
+          <td>
+            {{ payment.payment_method }}
+          </td>
+
+          <td>
+
+            <span
+              class="status"
+              [ngClass]="payment.payment_status.toLowerCase()">
+
+              {{ payment.payment_status }}
+
+            </span>
+
+          </td>
+
+          <td>
+            {{ payment.payment_date | date:'dd-MM-yyyy HH:mm' }}
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

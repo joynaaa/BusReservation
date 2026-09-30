@@ -1,0 +1,266 @@
+<div class="page">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <div class="header-left">
+
+      <button
+        type="button"
+        class="back-btn"
+        (click)="goToDashboard()">
+        ← Back to Dashboard
+      </button>
+
+      <div class="heading-content">
+
+        <h1>
+          Manage Cities
+        </h1>
+
+        <p>
+          Add and manage cities available for bus search.
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <!-- SUCCESS -->
+
+  <div
+    class="success-message"
+    *ngIf="successMessage"
+  >
+    ✓ {{ successMessage }}
+  </div>
+
+
+  <!-- ERROR -->
+
+  <div
+    class="error-message"
+    *ngIf="errorMessage"
+  >
+    ⚠ {{ errorMessage }}
+  </div>
+
+
+  <!-- ADD CITY -->
+
+  <div class="card">
+
+    <h2>
+      Add City
+    </h2>
+
+    <div class="form-row">
+
+      <input
+        type="text"
+        [(ngModel)]="cityName"
+        placeholder="Enter city name"
+        maxlength="100"
+        (keyup.enter)="addCity()"
+      />
+
+      <button
+        class="add-btn"
+        (click)="addCity()"
+        [disabled]="saving"
+      >
+        {{ saving ? 'Adding...' : '＋ Add City' }}
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- CITY LIST -->
+
+  <div class="card">
+
+    <div class="table-header">
+
+      <h2>
+        Cities
+      </h2>
+
+      <span>
+        {{ cities.length }} cities
+      </span>
+
+    </div>
+
+
+    <!-- LOADING -->
+
+    <div
+      class="loading"
+      *ngIf="loading"
+    >
+      Loading cities...
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div
+      class="table-container"
+      *ngIf="!loading"
+    >
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>#</th>
+
+            <th>City Name</th>
+
+            <th>Actions</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="
+              let city of cities;
+              let i = index
+            "
+          >
+
+            <td>
+              {{ i + 1 }}
+            </td>
+
+
+            <!-- NORMAL CITY -->
+
+            <td
+              *ngIf="
+                editingCityId !== city.id
+              "
+            >
+              <strong>
+                {{ city.name }}
+              </strong>
+            </td>
+
+
+            <!-- EDIT CITY -->
+
+            <td
+              *ngIf="
+                editingCityId === city.id
+              "
+            >
+
+              <input
+                class="edit-input"
+                type="text"
+                [(ngModel)]="editingCityName"
+                maxlength="100"
+              />
+
+            </td>
+
+
+            <!-- ACTIONS -->
+
+            <td>
+
+              <!-- NORMAL -->
+
+              <div
+                class="actions"
+                *ngIf="
+                  editingCityId !== city.id
+                "
+              >
+
+                <button
+                  class="edit-btn"
+                  (click)="editCity(city)"
+                >
+                  ✏️ Edit
+                </button>
+
+
+                <button
+                  class="delete-btn"
+                  (click)="deleteCity(city.id)"
+                >
+                  🗑️ Delete
+                </button>
+
+              </div>
+
+
+              <!-- EDIT -->
+
+              <div
+                class="actions"
+                *ngIf="
+                  editingCityId === city.id
+                "
+              >
+
+                <button
+                  class="save-btn"
+                  (click)="updateCity()"
+                  [disabled]="saving"
+                >
+                  💾 {{ saving ? 'Saving...' : 'Save' }}
+                </button>
+
+
+                <button
+                  class="cancel-btn"
+                  (click)="cancelEdit()"
+                >
+                  Cancel
+                </button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+
+          <!-- EMPTY -->
+
+          <tr
+            *ngIf="cities.length === 0"
+          >
+
+            <td
+              colspan="3"
+              class="empty"
+            >
+              No cities added yet.
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

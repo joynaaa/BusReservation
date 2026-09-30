@@ -1,0 +1,193 @@
+<div class="passenger-page">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="logo">
+      🚌 Bus Reservation System
+    </div>
+
+    <button class="back-btn" (click)="goBack()">
+      ← Back
+    </button>
+  </nav>
+
+
+  <!-- MAIN CONTAINER -->
+  <div class="container">
+
+    <h1>Passenger Details</h1>
+
+    <p class="subtitle">
+      Enter passenger details for your selected seats
+    </p>
+
+
+    <!-- CONTACT DETAILS -->
+    <div class="card">
+
+      <h2>Contact Details</h2>
+
+      <div class="form-group">
+
+        <label>Contact Number</label>
+
+        <input
+          type="tel"
+          [(ngModel)]="contactNumber"
+          (input)="validateContact()"
+          placeholder="Enter mobile number"
+          maxlength="10"
+        >
+
+        <!-- RED ERROR -->
+        <div class="error-message" *ngIf="contactError">
+          {{ contactError }}
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- PASSENGER DETAILS -->
+    <div
+      class="card"
+      *ngFor="let passenger of passengers; let i = index"
+    >
+
+      <div class="passenger-header">
+
+        <h2>
+          Passenger {{ i + 1 }}
+        </h2>
+
+        <span class="seat-badge">
+          Seat {{ passenger.seatNumber }}
+        </span>
+
+      </div>
+
+
+      <div class="form-grid">
+
+        <!-- NAME -->
+        <div class="form-group">
+
+          <label>Passenger Name</label>
+
+          <input
+            type="text"
+            [(ngModel)]="passenger.passengerName"
+            (input)="validateName(i)"
+            placeholder="Enter passenger name"
+          >
+
+          <!-- RED ERROR -->
+          <div class="error-message" *ngIf="passengerErrors[i]?.name">
+            {{ passengerErrors[i].name }}
+          </div>
+
+        </div>
+
+
+        <!-- AGE -->
+        <div class="form-group">
+
+          <label>Age</label>
+
+          <input
+            type="number"
+            [(ngModel)]="passenger.age"
+            (input)="validateAge(i)"
+            min="1"
+            max="120"
+            placeholder="Enter age"
+          >
+
+          <!-- RED ERROR -->
+          <div class="error-message" *ngIf="passengerErrors[i]?.age">
+            {{ passengerErrors[i].age }}
+          </div>
+
+        </div>
+
+
+        <!-- GENDER -->
+        <div class="form-group">
+
+          <label>Gender</label>
+
+          <select
+            [(ngModel)]="passenger.gender"
+            (change)="validateGender(i)"
+          >
+
+            <option value="">
+              Select Gender
+            </option>
+
+            <option value="Male">
+              Male
+            </option>
+
+            <option value="Female">
+              Female
+            </option>
+
+            <option value="Other">
+              Other
+            </option>
+
+          </select>
+
+          <!-- RED ERROR -->
+          <div class="error-message" *ngIf="passengerErrors[i]?.gender">
+            {{ passengerErrors[i].gender }}
+          </div>
+
+        </div>
+
+
+        <!-- SEAT -->
+        <div class="form-group">
+
+          <label>Selected Seat</label>
+
+          <input
+            type="text"
+            [value]="passenger.seatNumber"
+            readonly
+          >
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- NO SEATS -->
+    <div
+      class="empty"
+      *ngIf="passengers.length === 0"
+    >
+
+      No selected seats found.
+
+    </div>
+
+
+    <!-- CONTINUE -->
+    <button
+      class="continue-btn"
+      *ngIf="passengers.length > 0"
+      (click)="continueToPayment()"
+    >
+
+      CONTINUE TO PAYMENT →
+
+    </button>
+
+  </div>
+
+</div>

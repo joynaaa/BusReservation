@@ -1,0 +1,821 @@
+<div class="home-page">
+
+  <!-- ================================= -->
+  <!-- NAVBAR -->
+  <!-- ================================= -->
+
+  <nav class="navbar">
+
+    <div class="logo">
+      🚌 Bus Reservation System
+    </div>
+
+    <div class="nav-links">
+
+      <a routerLink="/home">
+        Home
+      </a>
+
+      <a routerLink="/my-bookings">
+        My Bookings
+      </a>
+
+      <a routerLink="/ai-chat">
+        AI Assistant
+      </a>
+
+      <a routerLink="/profile">
+        Profile
+      </a>
+
+<button
+  class="notification-btn"
+  (click)="goToNotifications()">
+
+  🔔
+
+  <span
+    class="notification-count"
+    *ngIf="unreadCount > 0">
+
+    {{ unreadCount }}
+
+  </span>
+
+</button>
+      <button
+        type="button"
+        class="logout-btn"
+        (click)="logout()">
+
+        Logout
+
+      </button>
+
+    </div>
+
+  </nav>
+
+
+  <!-- ================================= -->
+  <!-- HERO -->
+  <!-- ================================= -->
+
+  <section class="hero">
+
+    <div class="hero-content">
+
+      <h1>
+        Search Your Bus
+      </h1>
+
+      <p>
+        Find and book your bus tickets easily
+      </p>
+
+
+      <!-- ================================= -->
+      <!-- AI BUTTON -->
+      <!-- ================================= -->
+
+      <button
+        type="button"
+        class="ai-btn"
+        routerLink="/ai-chat">
+
+        🤖 AI Assistant
+
+      </button>
+
+
+      <!-- ================================= -->
+      <!-- SEARCH CARD -->
+      <!-- ================================= -->
+
+      <div class="search-card">
+
+
+        <!-- ================================= -->
+        <!-- FROM -->
+        <!-- ================================= -->
+
+        <div class="form-group autocomplete">
+
+          <label>
+            From
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="source"
+            (input)="onFromInput()"
+            (focus)="onFromInput()"
+            placeholder="Enter source"
+            autocomplete="off"
+          >
+
+
+          <!-- FROM DROPDOWN -->
+
+          <div
+            class="city-dropdown"
+            *ngIf="showFromDropdown">
+
+            <div
+              class="city-option"
+              *ngFor="let city of filteredFromCities"
+              (click)="selectFromCity(city)">
+
+              📍 {{ city }}
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- TO -->
+        <!-- ================================= -->
+
+        <div class="form-group autocomplete">
+
+          <label>
+            To
+          </label>
+
+          <input
+            type="text"
+            [(ngModel)]="destination"
+            (input)="onToInput()"
+            (focus)="onToInput()"
+            placeholder="Enter destination"
+            autocomplete="off"
+          >
+
+
+          <!-- TO DROPDOWN -->
+
+          <div
+            class="city-dropdown"
+            *ngIf="showToDropdown">
+
+            <div
+              class="city-option"
+              *ngFor="let city of filteredToCities"
+              (click)="selectToCity(city)">
+
+              📍 {{ city }}
+
+            </div>
+
+          </div>
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- DATE -->
+        <!-- ================================= -->
+
+        <div class="form-group">
+
+          <label>
+            Travel Date
+          </label>
+
+          <input
+            type="date"
+            [(ngModel)]="travelDate"
+            [min]="today"
+            autocomplete="off"
+          >
+
+        </div>
+
+
+        <!-- ================================= -->
+        <!-- SEARCH -->
+        <!-- ================================= -->
+
+        <button
+          type="button"
+          class="search-btn"
+          (click)="searchBuses()">
+
+          🔍 Search Bus
+
+        </button>
+
+      </div>
+
+
+      <!-- ================================= -->
+      <!-- LOADING -->
+      <!-- ================================= -->
+
+      <div
+        class="loading"
+        *ngIf="loading">
+
+        🔄 Searching available buses...
+
+      </div>
+
+
+      <!-- ================================= -->
+      <!-- ERROR -->
+      <!-- ================================= -->
+
+      <div
+        class="error"
+        *ngIf="errorMessage">
+
+        {{ errorMessage }}
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ================================= -->
+  <!-- FILTER SECTION -->
+  <!-- ================================= -->
+
+  <section class="filter-card">
+
+
+    <!-- ================================= -->
+    <!-- FILTER HEADER -->
+    <!-- ================================= -->
+
+    <div class="filter-header">
+
+      <div>
+
+        <h2>
+          Filter Buses
+        </h2>
+
+        <p>
+          Refine your bus search
+        </p>
+
+      </div>
+
+
+      <!-- CLEAR FILTERS -->
+
+      <button
+        type="button"
+        class="clear-btn"
+        (click)="clearFilters()">
+
+        ✕ Clear Filters
+
+      </button>
+
+    </div>
+
+
+
+    <!-- ================================= -->
+    <!-- FILTER GRID -->
+    <!-- ================================= -->
+
+    <div class="filter-grid">
+
+
+      <!-- ================================= -->
+      <!-- BUS TYPE -->
+      <!-- ================================= -->
+
+      <div class="filter-group">
+
+        <label>
+          🚌 Bus Type
+        </label>
+
+        <select
+          [(ngModel)]="selectedBusType">
+
+          <option value="">
+            All Bus Types
+          </option>
+
+          <option value="AC">
+            AC
+          </option>
+
+          <option value="NON_AC">
+            Non-AC
+          </option>
+
+          <option value="SLEEPER">
+            Sleeper
+          </option>
+
+          <option value="SEATER">
+            Seater
+          </option>
+
+        </select>
+
+      </div>
+
+
+
+      <!-- ================================= -->
+      <!-- MIN PRICE -->
+      <!-- ================================= -->
+
+      <div class="filter-group">
+
+        <label>
+          💰 Minimum Price
+        </label>
+
+        <input
+          type="number"
+          [(ngModel)]="minPrice"
+          placeholder="₹ Minimum"
+          min="0">
+
+      </div>
+
+
+
+      <!-- ================================= -->
+      <!-- MAX PRICE -->
+      <!-- ================================= -->
+
+      <div class="filter-group">
+
+        <label>
+          💰 Maximum Price
+        </label>
+
+        <input
+          type="number"
+          [(ngModel)]="maxPrice"
+          placeholder="₹ Maximum"
+          min="0">
+
+      </div>
+
+
+
+      <!-- ================================= -->
+      <!-- DEPARTURE TIME -->
+      <!-- ================================= -->
+
+      <div class="filter-group">
+
+        <label>
+          🕐 Departure Time
+        </label>
+
+        <select
+          [(ngModel)]="departureTime">
+
+          <option value="">
+            Any Time
+          </option>
+
+          <option value="early">
+            Before 6 AM
+          </option>
+
+          <option value="morning">
+            6 AM - 12 PM
+          </option>
+
+          <option value="afternoon">
+            12 PM - 6 PM
+          </option>
+
+          <option value="evening">
+            After 6 PM
+          </option>
+
+        </select>
+
+      </div>
+
+
+
+      <!-- ================================= -->
+      <!-- ARRIVAL TIME -->
+      <!-- ================================= -->
+
+      <div class="filter-group">
+
+        <label>
+          🕐 Arrival Time
+        </label>
+
+        <select
+          [(ngModel)]="arrivalTime">
+
+          <option value="">
+            Any Time
+          </option>
+
+          <option value="early">
+            Before 6 AM
+          </option>
+
+          <option value="morning">
+            6 AM - 12 PM
+          </option>
+
+          <option value="afternoon">
+            12 PM - 6 PM
+          </option>
+
+          <option value="evening">
+            After 6 PM
+          </option>
+
+        </select>
+
+      </div>
+
+
+    </div>
+
+
+
+    <!-- ================================= -->
+    <!-- APPLY FILTER BUTTON -->
+    <!-- ================================= -->
+
+    <div class="filter-actions">
+
+      <button
+        type="button"
+        class="apply-filter-btn"
+        (click)="applyFilters()">
+
+        🔍 Apply Filters
+
+      </button>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- ================================= -->
+  <!-- BUS RESULTS -->
+  <!-- ================================= -->
+
+  <section class="results-section">
+
+
+    <!-- ================================= -->
+    <!-- RESULTS HEADER -->
+    <!-- ================================= -->
+
+    <div class="results-header">
+
+      <div>
+
+        <h2>
+          Available Buses
+        </h2>
+
+        <p>
+
+          {{ source }}
+
+          →
+
+          {{ destination }}
+
+        </p>
+
+      </div>
+
+
+      <div class="travel-date">
+
+        📅 {{ travelDate }}
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ================================= -->
+    <!-- NO MATCHING BUS MESSAGE -->
+    <!-- ONLY AFTER APPLY FILTERS -->
+    <!-- ================================= -->
+
+    <div
+      class="no-buses-message"
+      *ngIf="filterApplied && buses.length === 0">
+
+      <h3>
+        No matching buses found
+      </h3>
+
+      <p>
+        No buses match the filters you selected.
+      </p>
+
+    </div>
+
+
+
+    <!-- ================================= -->
+    <!-- BUS TABLE -->
+    <!-- ================================= -->
+
+    <div
+      class="table-container"
+      *ngIf="buses.length > 0">
+
+      <table class="bus-table">
+
+
+        <!-- ================================= -->
+        <!-- TABLE HEADER -->
+        <!-- ================================= -->
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Bus
+            </th>
+
+            <th>
+              Bus Number
+            </th>
+
+            <th>
+              Type
+            </th>
+
+            <th>
+              Route
+            </th>
+
+            <th>
+              Travel Date
+            </th>
+
+            <th>
+              Departure
+            </th>
+
+            <th>
+              Arrival
+            </th>
+
+            <th>
+              Fare
+            </th>
+
+
+            <th>
+              Action
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+
+        <!-- ================================= -->
+        <!-- TABLE BODY -->
+        <!-- ================================= -->
+
+        <tbody>
+
+          <tr
+            *ngFor="let bus of buses">
+
+
+            <!-- ================================= -->
+            <!-- BUS NAME -->
+            <!-- ================================= -->
+
+            <td>
+
+              <div class="bus-name">
+
+                🚌
+
+                {{ bus.bus_name }}
+
+              </div>
+
+            </td>
+
+
+
+            <!-- ================================= -->
+            <!-- BUS NUMBER -->
+            <!-- ================================= -->
+
+            <td>
+
+              {{ bus.bus_number }}
+
+            </td>
+
+
+
+            <!-- ================================= -->
+            <!-- BUS TYPE -->
+            <!-- ================================= -->
+
+            <td>
+
+              <span class="bus-type">
+
+                {{ bus.bus_type }}
+
+              </span>
+
+            </td>
+
+
+
+            <!-- ================================= -->
+            <!-- ROUTE -->
+            <!-- ================================= -->
+
+            <td>
+
+              <span class="route">
+
+                {{ bus.source }}
+
+                →
+
+                {{ bus.destination }}
+
+              </span>
+
+            </td>
+
+
+
+            <!-- ================================= -->
+            <!-- DATE -->
+            <!-- ================================= -->
+
+            <td>
+
+              {{ bus.travel_date }}
+
+            </td>
+
+
+
+            <!-- ================================= -->
+            <!-- DEPARTURE -->
+            <!-- ================================= -->
+
+            <td>
+
+              <strong>
+
+                {{ bus.departure_time }}
+
+              </strong>
+
+            </td>
+
+
+
+            <!-- ================================= -->
+            <!-- ARRIVAL -->
+            <!-- ================================= -->
+
+            <td>
+
+              <strong>
+
+                {{ bus.arrival_time }}
+
+              </strong>
+
+            </td>
+
+
+
+            <!-- ================================= -->
+            <!-- FARE -->
+            <!-- ================================= -->
+
+            <td>
+
+              <span class="fare">
+
+                ₹{{ bus.fare }}
+
+              </span>
+
+            </td>
+
+
+
+
+            <!-- ================================= -->
+            <!-- ACTIONS -->
+            <!-- ================================= -->
+
+            <td>
+
+              <div class="action-buttons">
+
+
+                <!-- REVIEWS -->
+
+                <button
+                  type="button"
+                  class="reviews-btn"
+                  [routerLink]="[
+                    '/bus-reviews',
+                    bus.bus
+                  ]">
+
+                  ⭐ Reviews
+
+                </button>
+
+
+<button
+  class="view-stops-btn"
+  (click)="viewStops(bus.route)">
+  View Stops
+</button>
+                <!-- SELECT SEAT -->
+
+                <button
+  type="button"
+  class="select-btn"
+  [routerLink]="[
+    '/seat-selection',
+    bus.id,
+    bus.bus
+  ]"
+  [queryParams]="{
+    fare: bus.fare,
+    from_stop: bus.source_stop_id,
+    to_stop: bus.destination_stop_id,
+    travel_date: bus.travel_date
+  }">
+
+  Select Seat
+
+</button>
+
+              </div>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+
+
+    <!-- ================================= -->
+    <!-- NO SEARCH YET -->
+    <!-- ================================= -->
+
+    <div
+      class="no-search-message"
+      *ngIf="
+        !loading &&
+        !filterApplied &&
+        buses.length === 0 &&
+        !errorMessage
+      ">
+
+      <p>
+        Search for a bus to see available buses.
+      </p>
+
+    </div>
+
+  </section>
+
+</div>

@@ -1,0 +1,363 @@
+<div class="fare-page">
+
+  <!-- =========================================
+       HEADER
+  ========================================== -->
+
+  <div class="page-header">
+<button
+  type="button"
+  class="back-btn"
+  (click)="goToDashboard()">
+
+  ← Back to Dashboard
+
+</button>
+    <h1>
+      Manage Fares
+    </h1>
+
+    <p>
+      Add fares between route stops for this schedule.
+    </p>
+
+  </div>
+
+
+  <!-- =========================================
+       SUCCESS MESSAGE
+  ========================================== -->
+
+  <div
+    class="success-message"
+    *ngIf="successMessage"
+  >
+
+    {{ successMessage }}
+
+  </div>
+
+
+  <!-- =========================================
+       ERROR MESSAGE
+  ========================================== -->
+
+  <div
+    class="error-message"
+    *ngIf="errorMessage"
+  >
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- =========================================
+       ADD FARE
+  ========================================== -->
+
+  <div class="fare-card">
+
+    <h2>
+      Add / Update Fare
+    </h2>
+
+
+    <div class="form-grid">
+
+
+      <!-- =====================================
+           FROM STOP
+      ====================================== -->
+
+      <div class="form-group">
+
+        <label for="fromStop">
+          From Stop
+        </label>
+<select
+  id="fromStop"
+  name="fromStop"
+  [(ngModel)]="fromStop"
+  [disabled]="saving || stops.length === 0"
+  class="stop-select"
+>
+  <option [ngValue]="null">
+    Select From Stop
+  </option>
+
+  <option
+    *ngFor="let stop of stops"
+    [ngValue]="stop.id"
+  >
+    {{ stop.stop_order }}. {{ stop.stop_name }}
+  </option>
+</select>
+
+        <!-- Loading -->
+
+        <small
+          class="field-info"
+          *ngIf="stopsLoading"
+        >
+
+          Loading stops...
+
+        </small>
+
+
+        <!-- No stops -->
+
+        <small
+          class="field-error"
+          *ngIf="
+            !stopsLoading &&
+            stops.length === 0
+          "
+        >
+
+          No stops available.
+
+        </small>
+
+      </div>
+
+
+
+      <!-- =====================================
+           TO STOP
+      ====================================== -->
+
+      <div class="form-group">
+
+        <label for="toStop">
+          To Stop
+        </label>
+
+    <select
+  id="toStop"
+  name="toStop"
+  [(ngModel)]="toStop"
+  [disabled]="saving || stops.length === 0"
+  class="stop-select"
+>
+  <option [ngValue]="null">
+    Select To Stop
+  </option>
+
+  <option
+    *ngFor="let stop of stops"
+    [ngValue]="stop.id"
+  >
+    {{ stop.stop_order }}. {{ stop.stop_name }}
+  </option>
+</select>
+
+        <!-- Loading -->
+
+        <small
+          class="field-info"
+          *ngIf="stopsLoading"
+        >
+
+          Loading stops...
+
+        </small>
+
+
+        <!-- No stops -->
+
+        <small
+          class="field-error"
+          *ngIf="
+            !stopsLoading &&
+            stops.length === 0
+          "
+        >
+
+          No stops available.
+
+        </small>
+
+      </div>
+
+
+
+      <!-- =====================================
+           FARE
+      ====================================== -->
+
+      <div class="form-group">
+
+        <label for="fare">
+          Fare (₹)
+        </label>
+
+        <input
+          id="fare"
+          type="number"
+          min="1"
+          step="0.01"
+          [(ngModel)]="fare"
+          [disabled]="saving"
+          placeholder="Enter fare"
+        >
+
+      </div>
+
+
+
+      <!-- =====================================
+           SAVE BUTTON
+      ====================================== -->
+
+      <div class="form-group button-group">
+
+        <button
+          type="button"
+          (click)="addFare()"
+          [disabled]="
+            saving ||
+            stopsLoading ||
+            stops.length === 0
+          "
+        >
+
+          {{
+            saving
+              ? 'Saving...'
+              : 'Save Fare'
+          }}
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+
+
+  <!-- =========================================
+       EXISTING FARES
+  ========================================== -->
+
+  <div class="fare-card">
+
+    <h2>
+      Existing Fares
+    </h2>
+
+
+    <!-- LOADING -->
+
+    <div
+      class="loading"
+      *ngIf="loading"
+    >
+
+      Loading fares...
+
+    </div>
+
+
+    <!-- FARE TABLE -->
+
+    <table
+      *ngIf="
+        !loading &&
+        fares.length > 0
+      "
+    >
+
+      <thead>
+
+        <tr>
+
+          <th>
+            From Stop
+          </th>
+
+          <th>
+            To Stop
+          </th>
+
+          <th>
+            Fare
+          </th>
+
+          <th>
+            Action
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr
+          *ngFor="let item of fares"
+        >
+
+          <td>
+
+            {{ item.from_stop_name }}
+
+          </td>
+
+
+          <td>
+
+            {{ item.to_stop_name }}
+
+          </td>
+
+
+          <td>
+
+            ₹{{ item.fare }}
+
+          </td>
+
+
+          <td>
+
+            <button
+              type="button"
+              class="delete-btn"
+              (click)="deleteFare(item.id)"
+            >
+
+              Delete
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+
+    <!-- EMPTY -->
+
+    <div
+      class="empty"
+      *ngIf="
+        !loading &&
+        fares.length === 0
+      "
+    >
+
+      No fares added yet.
+
+    </div>
+
+  </div>
+
+</div>

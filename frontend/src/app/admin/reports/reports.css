@@ -1,0 +1,587 @@
+/* =========================================================
+   BUSGO ADMIN - REPORTS & ANALYTICS
+   ========================================================= */
+
+:host {
+  display: block;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.page {
+  min-height: 100vh;
+
+  padding: 30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eef9fb 0%,
+      #f7fbfc 50%,
+      #edf7f8 100%
+    );
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.page-header {
+  margin-bottom: 30px;
+}
+
+.header-left {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-start;
+
+  gap: 18px;
+}
+
+.heading-content {
+  width: 100%;
+}
+
+.heading-content h1 {
+  margin: 0;
+
+  color: #034f5e;
+
+  font-size: 30px;
+
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+}
+
+.heading-content p {
+  margin: 7px 0 0;
+
+  color: #6b7f85;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   BACK TO DASHBOARD
+   ========================================================= */
+
+.back-btn {
+  border: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #036b7d,
+      #0097a7
+    );
+
+  color: #ffffff;
+
+  padding: 11px 20px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  box-shadow:
+    0 5px 15px rgba(3, 107, 125, 0.18);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.back-btn:hover {
+  transform: translateY(-2px);
+
+  background:
+    linear-gradient(
+      135deg,
+      #025768,
+      #008796
+    );
+
+  box-shadow:
+    0 8px 20px rgba(3, 107, 125, 0.28);
+}
+
+.back-btn:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   SUMMARY CARDS
+   ========================================================= */
+
+.summary-cards {
+  display: grid;
+
+  grid-template-columns:
+    repeat(2, minmax(0, 1fr));
+
+  gap: 20px;
+
+  margin-bottom: 28px;
+}
+
+.summary-card {
+  display: flex;
+
+  align-items: center;
+
+  gap: 18px;
+
+  padding: 22px;
+
+  background:
+    rgba(255, 255, 255, 0.88);
+
+  border:
+    1px solid rgba(3, 107, 125, 0.10);
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 10px 28px rgba(3, 107, 125, 0.08);
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter: blur(10px);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.summary-card:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 14px 32px rgba(3, 107, 125, 0.13);
+}
+
+
+/* Summary Icon */
+
+.summary-card .icon {
+  width: 55px;
+
+  height: 55px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 14px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #036b7d,
+      #0097a7
+    );
+
+  color: #ffffff;
+
+  font-size: 24px;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 6px 16px rgba(3, 107, 125, 0.20);
+}
+
+.summary-card h3 {
+  margin: 0 0 5px;
+
+  color: #6b7f85;
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+.summary-card h2 {
+  margin: 0;
+
+  color: #034f5e;
+
+  font-size: 26px;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading {
+  min-height: 200px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  background:
+    rgba(255, 255, 255, 0.82);
+
+  border:
+    1px solid rgba(3, 107, 125, 0.10);
+
+  border-radius: 16px;
+
+  color: #036b7d;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  box-shadow:
+    0 8px 25px rgba(3, 107, 125, 0.08);
+}
+
+
+/* =========================================================
+   REPORT CARDS
+   ========================================================= */
+
+.report-card {
+  margin-bottom: 24px;
+
+  background:
+    rgba(255, 255, 255, 0.90);
+
+  border:
+    1px solid rgba(3, 107, 125, 0.10);
+
+  border-radius: 16px;
+
+  overflow: hidden;
+
+  box-shadow:
+    0 10px 30px rgba(3, 107, 125, 0.08);
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter: blur(10px);
+}
+
+
+/* Report Heading */
+
+.report-card h2 {
+  margin: 0;
+
+  padding: 19px 22px;
+
+  color: #034f5e;
+
+  font-size: 18px;
+
+  font-weight: 700;
+
+  border-bottom:
+    1px solid #e5eff1;
+
+  background:
+    linear-gradient(
+      135deg,
+      #f8fcfd,
+      #eef9fa
+    );
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+.report-card table {
+  width: 100%;
+
+  border-collapse: collapse;
+}
+
+.report-card thead {
+  background:
+    linear-gradient(
+      135deg,
+      #034f5e,
+      #036b7d
+    );
+}
+
+.report-card thead th {
+  padding: 14px 18px;
+
+  color: #ffffff;
+
+  text-align: left;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+.report-card tbody tr {
+  border-bottom:
+    1px solid #e8f0f2;
+
+  transition:
+    background 0.2s ease;
+}
+
+.report-card tbody tr:last-child {
+  border-bottom: none;
+}
+
+.report-card tbody tr:hover {
+  background: #f2fafb;
+}
+
+.report-card tbody td {
+  padding: 15px 18px;
+
+  color: #425960;
+
+  font-size: 14px;
+
+  vertical-align: middle;
+}
+
+
+/* =========================================================
+   RANK / NUMBER CELLS
+   ========================================================= */
+
+.report-card tbody td:first-child {
+  color: #036b7d;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   BOOKING VALUES
+   ========================================================= */
+
+.report-card tbody td:last-child {
+  color: #034f5e;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   OPERATOR REVENUE
+   ========================================================= */
+
+.report-card tbody td:nth-child(3) {
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   SCROLL SUPPORT
+   ========================================================= */
+
+.report-card {
+  overflow-x: auto;
+}
+
+.report-card h2 {
+  min-width: 500px;
+}
+
+.report-card table {
+  min-width: 500px;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .page {
+    padding: 24px 20px;
+  }
+
+  .heading-content h1 {
+    font-size: 26px;
+  }
+
+  .summary-card {
+    padding: 20px;
+  }
+
+  .summary-card h2 {
+    font-size: 23px;
+  }
+
+  .report-card h2 {
+    padding: 17px 18px;
+  }
+
+  .report-card thead th,
+  .report-card tbody td {
+    padding: 13px 15px;
+  }
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .page {
+    padding: 20px 15px;
+  }
+
+  .header-left {
+    gap: 15px;
+  }
+
+  .back-btn {
+    padding: 10px 16px;
+
+    font-size: 13px;
+  }
+
+  .heading-content h1 {
+    font-size: 23px;
+  }
+
+  .heading-content p {
+    font-size: 13px;
+
+    line-height: 1.5;
+  }
+
+  .summary-cards {
+    grid-template-columns: 1fr;
+
+    gap: 14px;
+  }
+
+  .summary-card {
+    padding: 18px;
+  }
+
+  .summary-card .icon {
+    width: 48px;
+
+    height: 48px;
+
+    font-size: 21px;
+  }
+
+  .summary-card h2 {
+    font-size: 22px;
+  }
+
+  .report-card {
+    margin-bottom: 18px;
+
+    border-radius: 13px;
+  }
+
+  .report-card h2 {
+    font-size: 16px;
+
+    padding: 15px;
+  }
+
+  .report-card thead th {
+    font-size: 12px;
+
+    padding: 12px 14px;
+  }
+
+  .report-card tbody td {
+    font-size: 13px;
+
+    padding: 12px 14px;
+  }
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .page {
+    padding: 16px 12px;
+  }
+
+  .back-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .heading-content h1 {
+    font-size: 21px;
+  }
+
+  .heading-content p {
+    font-size: 12px;
+  }
+
+  .summary-card {
+    gap: 13px;
+  }
+
+  .summary-card .icon {
+    width: 44px;
+
+    height: 44px;
+
+    font-size: 19px;
+  }
+
+  .summary-card h3 {
+    font-size: 12px;
+  }
+
+  .summary-card h2 {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,727 @@
+<div class="page">
+
+  <!-- ================================================= -->
+  <!-- HEADER -->
+  <!-- ================================================= -->
+
+  <div class="header">
+
+    <div>
+
+      <button
+        class="back-btn"
+        type="button"
+        (click)="goToDashboard()">
+
+        ← Back to Dashboard
+
+      </button>
+
+      <h1>Manage Buses</h1>
+
+      <p>
+        Add and manage your buses
+      </p>
+
+    </div>
+
+    <button
+      class="add-btn"
+      type="button"
+      (click)="openAddForm()">
+
+      + Add Bus
+
+    </button>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- ADD / EDIT FORM -->
+  <!-- ================================================= -->
+
+  <div
+    class="form-card"
+    *ngIf="showForm">
+
+    <h2>
+      {{ editMode ? 'Edit Bus' : 'Add New Bus' }}
+    </h2>
+
+
+    <div class="form-grid">
+
+
+      <!-- ============================================= -->
+      <!-- BUS NUMBER -->
+      <!-- ============================================= -->
+
+      <div class="form-group">
+
+        <label>
+          Bus Number
+          <span class="required">*</span>
+        </label>
+
+        <input
+          type="text"
+          [(ngModel)]="bus.bus_number"
+          placeholder="KL-08-AB-1234"
+          maxlength="15"
+          autocomplete="off"
+          [class.invalid-input]="busNumberError"
+          (input)="onBusNumberInput()"
+          (blur)="validateBusNumber()"
+        >
+
+        <div
+          class="error-message"
+          *ngIf="busNumberError">
+
+          {{ busNumberError }}
+
+        </div>
+
+        <div
+          class="field-hint"
+          *ngIf="!busNumberError">
+
+          Example: KL-08-AB-1234
+
+        </div>
+
+      </div>
+
+
+      <!-- ============================================= -->
+      <!-- BUS NAME -->
+      <!-- ============================================= -->
+
+      <div class="form-group">
+
+        <label>
+          Bus Name
+          <span class="required">*</span>
+        </label>
+
+        <input
+          type="text"
+          [(ngModel)]="bus.bus_name"
+          placeholder="Kerala Express"
+          maxlength="100"
+          autocomplete="off"
+          [class.invalid-input]="busNameError"
+          (input)="validateBusName()"
+          (blur)="validateBusName()"
+        >
+
+        <div
+          class="error-message"
+          *ngIf="busNameError">
+
+          {{ busNameError }}
+
+        </div>
+
+        <div
+          class="field-hint"
+          *ngIf="!busNameError">
+
+          Enter the bus name
+
+        </div>
+
+      </div>
+
+
+      <!-- ============================================= -->
+      <!-- BUS TYPE -->
+      <!-- ============================================= -->
+
+      <div class="form-group">
+
+        <label>
+          Bus Type
+          <span class="required">*</span>
+        </label>
+
+        <select
+          [(ngModel)]="bus.bus_type"
+          (change)="validateBusType()"
+          [class.invalid-input]="busTypeError">
+
+          <option value="">
+            Select Bus Type
+          </option>
+
+          <option value="AC">
+            AC
+          </option>
+
+          <option value="NON_AC">
+            Non AC
+          </option>
+
+          <option value="SLEEPER">
+            Sleeper
+          </option>
+
+          <option value="SEATER">
+            Seater
+          </option>
+
+        </select>
+
+        <div
+          class="error-message"
+          *ngIf="busTypeError">
+
+          {{ busTypeError }}
+
+        </div>
+
+      </div>
+
+
+      <!-- ============================================= -->
+      <!-- TOTAL SEATS -->
+      <!-- ============================================= -->
+
+      <div class="form-group">
+
+        <label>
+          Total Seats
+          <span class="required">*</span>
+        </label>
+
+        <input
+          type="number"
+          [(ngModel)]="bus.total_seats"
+          min="10"
+          max="100"
+          step="1"
+          placeholder="40"
+          [class.invalid-input]="totalSeatsError"
+          (input)="validateTotalSeats()"
+          (blur)="validateTotalSeats()"
+        >
+
+        <div
+          class="error-message"
+          *ngIf="totalSeatsError">
+
+          {{ totalSeatsError }}
+
+        </div>
+
+        <div
+          class="field-hint"
+          *ngIf="!totalSeatsError">
+
+          Enter between 10 and 100 seats
+
+        </div>
+
+      </div>
+
+
+      <!-- ============================================= -->
+      <!-- SEATS PER ROW -->
+      <!-- ============================================= -->
+
+      <div class="form-group">
+
+        <label>
+          Seats Per Row
+          <span class="required">*</span>
+        </label>
+
+        <select
+          [(ngModel)]="bus.seats_per_row"
+          (change)="validateSeatsPerRow()"
+          [class.invalid-input]="seatsPerRowError">
+
+          <option value="">
+            Select Seats Per Row
+          </option>
+
+          <option value="3">
+            3 Seats Per Row
+          </option>
+
+          <option value="4">
+            4 Seats Per Row
+          </option>
+
+          <option value="5">
+            5 Seats Per Row
+          </option>
+
+        </select>
+
+        <div
+          class="error-message"
+          *ngIf="seatsPerRowError">
+
+          {{ seatsPerRowError }}
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- VEHICLE DOCUMENTS -->
+    <!-- ================================================= -->
+
+    <div class="documents-section">
+
+      <h3>Vehicle Documents</h3>
+
+      <p class="document-info">
+        Upload documents for this specific bus.
+      </p>
+
+
+      <!-- ============================================= -->
+      <!-- VEHICLE RC -->
+      <!-- ============================================= -->
+
+      <div class="document-group">
+
+        <label>
+          Vehicle RC
+          <span class="required">*</span>
+        </label>
+
+        <input
+          type="file"
+          accept=".pdf,.jpg,.jpeg,.png"
+          (change)="onFileSelected($event, 'vehicle_rc')"
+        >
+
+        <div
+          class="selected-file"
+          *ngIf="bus.vehicle_rc">
+
+          {{ bus.vehicle_rc.name }}
+
+        </div>
+
+        <div
+          class="existing-document"
+          *ngIf="editMode && existingVehicleRc && !bus.vehicle_rc">
+
+          Existing RC:
+          <a
+            [href]="existingVehicleRc"
+            target="_blank">
+
+            View Document
+
+          </a>
+
+        </div>
+
+        <div
+          class="error-message"
+          *ngIf="vehicleRcError">
+
+          {{ vehicleRcError }}
+
+        </div>
+
+      </div>
+
+
+      <!-- ============================================= -->
+      <!-- INSURANCE -->
+      <!-- ============================================= -->
+
+      <div class="document-group">
+
+        <label>
+          Insurance Certificate
+          <span class="required">*</span>
+        </label>
+
+        <input
+          type="file"
+          accept=".pdf,.jpg,.jpeg,.png"
+          (change)="onFileSelected($event, 'insurance_certificate')"
+        >
+
+        <div
+          class="selected-file"
+          *ngIf="bus.insurance_certificate">
+
+          {{ bus.insurance_certificate.name }}
+
+        </div>
+
+        <div
+          class="existing-document"
+          *ngIf="
+            editMode &&
+            existingInsuranceCertificate &&
+            !bus.insurance_certificate
+          ">
+
+          Existing Insurance:
+          <a
+            [href]="existingInsuranceCertificate"
+            target="_blank">
+
+            View Document
+
+          </a>
+
+        </div>
+
+        <div
+          class="error-message"
+          *ngIf="insuranceError">
+
+          {{ insuranceError }}
+
+        </div>
+
+      </div>
+
+
+      <!-- ============================================= -->
+      <!-- FITNESS CERTIFICATE -->
+      <!-- ============================================= -->
+
+      <div class="document-group">
+
+        <label>
+          Fitness Certificate
+          <span class="required">*</span>
+        </label>
+
+        <input
+          type="file"
+          accept=".pdf,.jpg,.jpeg,.png"
+          (change)="onFileSelected($event, 'fitness_certificate')"
+        >
+
+        <div
+          class="selected-file"
+          *ngIf="bus.fitness_certificate">
+
+          {{ bus.fitness_certificate.name }}
+
+        </div>
+
+        <div
+          class="existing-document"
+          *ngIf="
+            editMode &&
+            existingFitnessCertificate &&
+            !bus.fitness_certificate
+          ">
+
+          Existing Fitness Certificate:
+          <a
+            [href]="existingFitnessCertificate"
+            target="_blank">
+
+            View Document
+
+          </a>
+
+        </div>
+
+        <div
+          class="error-message"
+          *ngIf="fitnessError">
+
+          {{ fitnessError }}
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- FORM SUMMARY ERROR -->
+    <!-- ================================================= -->
+
+    <div
+      class="form-error"
+      *ngIf="formError">
+
+      ⚠️ {{ formError }}
+
+    </div>
+
+
+    <!-- ================================================= -->
+    <!-- FORM ACTIONS -->
+    <!-- ================================================= -->
+
+    <div class="form-actions">
+
+      <button
+        type="button"
+        class="save-btn"
+        [disabled]="!isFormValid() || saving"
+        (click)="saveBus()">
+
+        <span *ngIf="!saving">
+
+          {{ editMode ? 'Update Bus' : 'Add Bus' }}
+
+        </span>
+
+        <span *ngIf="saving">
+
+          Saving...
+
+        </span>
+
+      </button>
+
+
+      <button
+        type="button"
+        class="cancel-btn"
+        [disabled]="saving"
+        (click)="cancelForm()">
+
+        Cancel
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ================================================= -->
+  <!-- BUS TABLE -->
+  <!-- ================================================= -->
+
+  <div class="table-card">
+
+    <div class="table-header">
+
+      <h2>
+        My Buses
+      </h2>
+
+      <span>
+        {{ buses.length }}
+        {{ buses.length === 1 ? 'Bus' : 'Buses' }}
+      </span>
+
+    </div>
+
+
+    <!-- EMPTY -->
+
+    <div
+      class="empty"
+      *ngIf="buses.length === 0">
+
+      <p>
+        No buses added yet.
+      </p>
+
+      <button
+        class="add-btn"
+        type="button"
+        (click)="openAddForm()">
+
+        + Add Your First Bus
+
+      </button>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <div
+      class="table-wrapper"
+      *ngIf="buses.length > 0">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>Bus Number</th>
+
+            <th>Bus Name</th>
+
+            <th>Type</th>
+
+            <th>Total Seats</th>
+
+            <th>Seats / Row</th>
+
+            <th>Approval Status</th>
+
+            <th>Documents</th>
+
+            <th>Action</th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let item of buses">
+
+            <td>
+
+              <strong>
+                {{ item.bus_number }}
+              </strong>
+
+            </td>
+
+            <td>
+              {{ item.bus_name }}
+            </td>
+
+            <td>
+
+              <span class="type-badge">
+
+                {{ item.bus_type }}
+
+              </span>
+
+            </td>
+
+            <td>
+              {{ item.total_seats }}
+            </td>
+
+            <td>
+              {{ item.seats_per_row }}
+            </td>
+
+            <td>
+
+              <span
+                class="status pending"
+                *ngIf="item.status === 'PENDING'">
+                Pending Approval
+              </span>
+
+              <span
+                class="status approved"
+                *ngIf="item.status === 'APPROVED'">
+                Approved
+              </span>
+
+              <span
+                class="status rejected"
+                *ngIf="item.status === 'REJECTED'">
+                Rejected
+              </span>
+
+              <div
+                class="rejection-reason"
+                *ngIf="
+                  item.status === 'REJECTED' &&
+                  item.rejection_reason
+                ">
+                Reason:
+                {{ item.rejection_reason }}
+              </div>
+
+            </td>
+
+            <td>
+
+              <div class="document-links">
+
+                <a
+                  *ngIf="item.vehicle_rc"
+                  [href]="item.vehicle_rc"
+                  target="_blank">
+
+                  RC
+
+                </a>
+
+                <a
+                  *ngIf="item.insurance_certificate"
+                  [href]="item.insurance_certificate"
+                  target="_blank">
+
+                  Insurance
+
+                </a>
+
+                <a
+                  *ngIf="item.fitness_certificate"
+                  [href]="item.fitness_certificate"
+                  target="_blank">
+
+                  Fitness
+
+                </a>
+
+                <span
+                  *ngIf="
+                    !item.vehicle_rc &&
+                    !item.insurance_certificate &&
+                    !item.fitness_certificate
+                  ">
+
+                  No documents
+
+                </span>
+
+              </div>
+
+            </td>
+
+            <td>
+
+              <button
+                type="button"
+                class="edit-btn"
+                (click)="editBus(item)">
+
+                Edit
+
+              </button>
+
+              <button
+                type="button"
+                class="delete-btn"
+                (click)="deleteBus(item.id)">
+
+                Delete
+
+              </button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

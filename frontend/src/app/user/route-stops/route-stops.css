@@ -1,0 +1,1372 @@
+/* =========================================================
+   GLOBAL
+========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+/* =========================================================
+   MAIN PAGE
+========================================================= */
+
+.route-page {
+  min-height: 100vh;
+
+  padding-bottom: 50px;
+
+  color: #173f51;
+
+  background:
+    radial-gradient(
+      circle at 10% 5%,
+      rgba(0, 188, 212, 0.18),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 15%,
+      rgba(3, 107, 125, 0.16),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 85%,
+      rgba(0, 150, 136, 0.11),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #eef9fb,
+      #f7fbfc 45%,
+      #edf7f8
+    );
+
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+.navbar {
+  width: 100%;
+  min-height: 70px;
+
+  padding: 0 30px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  position: sticky;
+  top: 0;
+
+  z-index: 1000;
+
+  background: rgba(255, 255, 255, 0.76);
+
+  border-bottom: 1px solid rgba(255, 255, 255, 0.85);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 8px 30px rgba(3, 107, 125, 0.08);
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo {
+  display: flex;
+
+  align-items: center;
+
+  gap: 9px;
+
+  color: #036b7d;
+
+  font-size: 20px;
+
+  font-weight: 750;
+
+  letter-spacing: -0.3px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   NAV LINKS
+========================================================= */
+
+.nav-links {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+
+/* NAV BUTTON */
+
+.nav-links button {
+  border: none;
+
+  padding: 10px 16px;
+
+  border-radius: 10px;
+
+  background: transparent;
+
+  color: #315d6b;
+
+  font-family: inherit;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition:
+    background 0.25s ease,
+    color 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+/* HOVER */
+
+.nav-links button:hover {
+  background: rgba(3, 107, 125, 0.08);
+
+  color: #036b7d;
+
+  transform: translateY(-1px);
+}
+
+
+/* BACK BUTTON */
+
+.nav-links button:first-child {
+  color: #036b7d;
+
+  background: rgba(3, 107, 125, 0.08);
+}
+
+.nav-links button:first-child:hover {
+  background: rgba(3, 107, 125, 0.15);
+}
+
+
+/* =========================================================
+   PAGE HEADING
+========================================================= */
+
+.page-heading {
+  width: min(1100px, calc(100% - 40px));
+
+  margin: 32px auto 25px;
+}
+
+.page-heading h1 {
+  margin: 0;
+
+  color: #12485b;
+
+  font-size: 30px;
+
+  font-weight: 750;
+
+  letter-spacing: -0.5px;
+}
+
+.page-heading p {
+  margin: 6px 0 0;
+
+  color: #64808c;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   ROUTE SUMMARY
+========================================================= */
+
+.route-card {
+  width: min(1100px, calc(100% - 40px));
+
+  margin: 0 auto 25px;
+
+  padding: 25px;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.68);
+
+  border: 1px solid rgba(255, 255, 255, 0.85);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 15px 40px rgba(3, 107, 125, 0.10);
+}
+
+
+/* ROUTE SUMMARY */
+
+.route-summary {
+  display: grid;
+
+  grid-template-columns: 1fr auto 1fr;
+
+  align-items: center;
+
+  gap: 30px;
+}
+
+
+/* =========================================================
+   LOCATION
+========================================================= */
+
+.location {
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  padding: 16px 18px;
+
+  border-radius: 15px;
+
+  background: rgba(255, 255, 255, 0.62);
+
+  border: 1px solid rgba(3, 107, 125, 0.08);
+}
+
+
+/* LOCATION DOT */
+
+.location-dot {
+  width: 14px;
+  height: 14px;
+
+  flex-shrink: 0;
+
+  border-radius: 50%;
+
+  background: #036b7d;
+
+  box-shadow:
+    0 0 0 6px rgba(3, 107, 125, 0.10);
+}
+
+
+/* DESTINATION DOT */
+
+.location-dot.destination {
+  background: #009688;
+
+  box-shadow:
+    0 0 0 6px rgba(0, 150, 136, 0.10);
+}
+
+
+/* LOCATION TEXT */
+
+.location > div {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 5px;
+}
+
+
+/* LABEL */
+
+.label {
+  color: #76909a;
+
+  font-size: 10px;
+
+  font-weight: 700;
+
+  letter-spacing: 1px;
+}
+
+
+/* LOCATION NAME */
+
+.location strong {
+  color: #174d60;
+
+  font-size: 17px;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   ROUTE ARROW
+========================================================= */
+
+.route-arrow {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  color: #036b7d;
+}
+
+.route-arrow span {
+  width: 35px;
+  height: 1px;
+
+  background: rgba(3, 107, 125, 0.25);
+}
+
+.route-arrow div {
+  width: 42px;
+  height: 42px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: white;
+
+  font-size: 20px;
+
+  font-weight: 600;
+
+  background:
+    linear-gradient(
+      135deg,
+      #036b7d,
+      #0097a7
+    );
+
+  box-shadow:
+    0 8px 18px rgba(3, 107, 125, 0.20);
+}
+
+
+/* =========================================================
+   STATUS CARD
+========================================================= */
+
+.status-card {
+  width: min(1100px, calc(100% - 40px));
+
+  margin: 25px auto;
+
+  padding: 45px 25px;
+
+  text-align: center;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.68);
+
+  border: 1px solid rgba(255, 255, 255, 0.85);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 15px 40px rgba(3, 107, 125, 0.08);
+}
+
+
+/* STATUS TEXT */
+
+.status-card p {
+  margin: 12px 0 0;
+
+  color: #718995;
+
+  font-size: 14px;
+}
+
+.status-card h3 {
+  margin: 15px 0 0;
+
+  color: #194c5e;
+
+  font-size: 19px;
+}
+
+
+/* =========================================================
+   LOADER
+========================================================= */
+
+.loader {
+  width: 42px;
+  height: 42px;
+
+  margin: 0 auto;
+
+  border-radius: 50%;
+
+  border: 4px solid rgba(3, 107, 125, 0.12);
+
+  border-top-color: #036b7d;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   ERROR CARD
+========================================================= */
+
+.error-card {
+  width: min(1100px, calc(100% - 40px));
+
+  margin: 25px auto;
+
+  padding: 20px 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 16px;
+
+  border-radius: 18px;
+
+  background: rgba(255, 245, 245, 0.78);
+
+  border: 1px solid rgba(220, 70, 70, 0.15);
+
+  box-shadow:
+    0 12px 30px rgba(180, 50, 50, 0.08);
+}
+
+
+/* ERROR ICON */
+
+.error-icon {
+  width: 42px;
+  height: 42px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: rgba(220, 70, 70, 0.10);
+
+  color: #c74646;
+
+  font-size: 22px;
+
+  font-weight: 700;
+}
+
+
+/* ERROR TEXT */
+
+.error-card h3 {
+  margin: 0 0 5px;
+
+  color: #a83d3d;
+
+  font-size: 16px;
+}
+
+.error-card p {
+  margin: 0;
+
+  color: #7c6666;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   STOPS CONTAINER
+========================================================= */
+
+.stops-container {
+  width: min(1100px, calc(100% - 40px));
+
+  margin: 0 auto 25px;
+
+  padding: 28px;
+
+  border-radius: 22px;
+
+  background: rgba(255, 255, 255, 0.68);
+
+  border: 1px solid rgba(255, 255, 255, 0.85);
+
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 15px 45px rgba(3, 107, 125, 0.10);
+}
+
+
+/* =========================================================
+   STOPS HEADER
+========================================================= */
+
+.stops-header {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  padding-bottom: 20px;
+
+  margin-bottom: 5px;
+
+  border-bottom: 1px solid rgba(3, 107, 125, 0.09);
+}
+
+
+.stops-header h2 {
+  margin: 0;
+
+  color: #16495b;
+
+  font-size: 22px;
+
+  font-weight: 700;
+}
+
+
+.stops-header p {
+  margin: 5px 0 0;
+
+  color: #758d97;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   STOP COUNT
+========================================================= */
+
+.stop-count {
+  min-width: 48px;
+  height: 48px;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 14px;
+
+  color: white;
+
+  font-size: 17px;
+
+  font-weight: 700;
+
+  background:
+    linear-gradient(
+      135deg,
+      #036b7d,
+      #0097a7
+    );
+
+  box-shadow:
+    0 8px 18px rgba(3, 107, 125, 0.18);
+}
+
+
+/* =========================================================
+   STOP LIST
+========================================================= */
+
+.stop-list {
+  padding-top: 12px;
+}
+
+
+/* STOP ITEM */
+
+.stop-item {
+  display: grid;
+
+  grid-template-columns: 65px 1fr;
+
+  min-height: 105px;
+
+  position: relative;
+}
+
+
+/* =========================================================
+   TIMELINE
+========================================================= */
+
+.timeline {
+  position: relative;
+
+  display: flex;
+
+  justify-content: center;
+
+  min-height: 100%;
+}
+
+
+/* STOP NUMBER */
+
+.stop-number {
+  width: 36px;
+  height: 36px;
+
+  position: relative;
+
+  z-index: 2;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 20px;
+
+  border-radius: 50%;
+
+  background: #f7fbfc;
+
+  border: 2px solid rgba(3, 107, 125, 0.35);
+
+  color: #036b7d;
+
+  font-size: 12px;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 4px 12px rgba(3, 107, 125, 0.08);
+}
+
+
+/* FIRST + LAST STOP */
+
+.stop-number.first-stop,
+.stop-number.last-stop {
+  background:
+    linear-gradient(
+      135deg,
+      #036b7d,
+      #0097a7
+    );
+
+  border-color: transparent;
+
+  color: white;
+
+  box-shadow:
+    0 6px 16px rgba(3, 107, 125, 0.22);
+}
+
+
+/* TIMELINE LINE */
+
+.timeline-line {
+  position: absolute;
+
+  top: 56px;
+  bottom: -1px;
+
+  width: 2px;
+
+  background:
+    linear-gradient(
+      to bottom,
+      rgba(3, 107, 125, 0.30),
+      rgba(3, 107, 125, 0.08)
+    );
+}
+
+
+/* =========================================================
+   STOP CONTENT
+========================================================= */
+
+.stop-content {
+  margin: 10px 0;
+
+  padding: 18px 20px;
+
+  border-radius: 16px;
+
+  background: rgba(255, 255, 255, 0.56);
+
+  border: 1px solid rgba(3, 107, 125, 0.07);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+
+.stop-content:hover {
+  transform: translateX(5px);
+
+  background: rgba(255, 255, 255, 0.84);
+
+  box-shadow:
+    0 10px 25px rgba(3, 107, 125, 0.10);
+}
+
+
+/* =========================================================
+   STOP MAIN
+========================================================= */
+
+.stop-main {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+
+  gap: 20px;
+}
+
+
+/* STOP NAME */
+
+.stop-name-section {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  flex-wrap: wrap;
+}
+
+
+.stop-name-section h3 {
+  margin: 0;
+
+  color: #174c5e;
+
+  font-size: 17px;
+
+  font-weight: 700;
+}
+
+
+/* STOP ORDER */
+
+.stop-order {
+  padding: 5px 10px;
+
+  border-radius: 20px;
+
+  color: #036b7d;
+
+  background: rgba(3, 107, 125, 0.08);
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   STOP TIME
+========================================================= */
+
+.stop-time {
+  display: flex;
+
+  align-items: center;
+
+  gap: 25px;
+}
+
+
+.stop-time > div {
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: flex-end;
+
+  gap: 3px;
+}
+
+
+.stop-time span {
+  color: #81959e;
+
+  font-size: 10px;
+
+  text-transform: uppercase;
+
+  letter-spacing: 0.7px;
+}
+
+
+.stop-time strong {
+  color: #036b7d;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   STOP OPTIONS
+========================================================= */
+
+.stop-options {
+  display: flex;
+
+  align-items: center;
+
+  gap: 10px;
+
+  margin-top: 13px;
+
+  flex-wrap: wrap;
+}
+
+
+/* BOARDING / DROPPING */
+
+.boarding,
+.dropping {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  padding: 6px 11px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+
+  font-weight: 600;
+}
+
+
+/* BOARDING */
+
+.boarding {
+  color: #067568;
+
+  background: rgba(0, 150, 136, 0.09);
+}
+
+
+.boarding .small-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #009688;
+}
+
+
+/* DROPPING */
+
+.dropping {
+  color: #5367a3;
+
+  background: rgba(83, 103, 163, 0.09);
+}
+
+
+.dropping .small-dot {
+  width: 7px;
+  height: 7px;
+
+  border-radius: 50%;
+
+  background: #5367a3;
+}
+
+
+/* =========================================================
+   EMPTY ICON
+========================================================= */
+
+.empty-icon {
+  width: 58px;
+  height: 58px;
+
+  margin: 0 auto;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 18px;
+
+  background: rgba(3, 107, 125, 0.08);
+
+  font-size: 28px;
+}
+
+
+/* =========================================================
+   INFORMATION CARD
+========================================================= */
+
+.info-card {
+  width: min(1100px, calc(100% - 40px));
+
+  margin: 0 auto;
+
+  padding: 18px 22px;
+
+  display: flex;
+
+  align-items: center;
+
+  gap: 15px;
+
+  border-radius: 17px;
+
+  background: rgba(3, 107, 125, 0.07);
+
+  border: 1px solid rgba(3, 107, 125, 0.10);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+
+/* INFO ICON */
+
+.info-icon {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #036b7d,
+      #0097a7
+    );
+
+  font-size: 17px;
+
+  font-weight: 700;
+}
+
+
+/* INFO TEXT */
+
+.info-card strong {
+  display: block;
+
+  margin-bottom: 4px;
+
+  color: #175064;
+
+  font-size: 14px;
+}
+
+
+.info-card p {
+  margin: 0;
+
+  color: #69828d;
+
+  font-size: 12px;
+
+  line-height: 1.6;
+}
+
+
+/* =========================================================
+   TABLET
+========================================================= */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 0 18px;
+
+    min-height: 64px;
+  }
+
+
+  .logo {
+    font-size: 17px;
+  }
+
+
+  .nav-links {
+    gap: 3px;
+  }
+
+
+  .nav-links button {
+    padding: 8px 10px;
+
+    font-size: 12px;
+  }
+
+
+  .page-heading {
+    margin-top: 25px;
+  }
+
+
+  .page-heading h1 {
+    font-size: 25px;
+  }
+
+
+  .route-summary {
+    grid-template-columns: 1fr;
+
+    gap: 12px;
+  }
+
+
+  .route-arrow {
+    justify-content: center;
+
+    transform: rotate(90deg);
+  }
+
+
+  .route-arrow span {
+    width: 25px;
+  }
+
+
+  .stops-container {
+    padding: 20px 15px;
+  }
+
+
+  .stop-item {
+    grid-template-columns: 50px 1fr;
+  }
+
+
+  .stop-main {
+    align-items: flex-start;
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+
+  .stop-time {
+    width: 100%;
+
+    justify-content: flex-start;
+
+    gap: 20px;
+  }
+
+
+  .stop-time > div {
+    align-items: flex-start;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media (max-width: 560px) {
+
+  .route-page {
+    padding-bottom: 30px;
+  }
+
+
+  .navbar {
+    min-height: auto;
+
+    padding: 12px 14px;
+
+    flex-direction: column;
+
+    gap: 10px;
+  }
+
+
+  .logo {
+    width: 100%;
+
+    justify-content: center;
+
+    font-size: 17px;
+  }
+
+
+  .nav-links {
+    width: 100%;
+
+    justify-content: center;
+
+    gap: 3px;
+  }
+
+
+  .nav-links button {
+    padding: 8px 11px;
+
+    font-size: 11px;
+  }
+
+
+  .page-heading {
+    width: calc(100% - 30px);
+
+    margin: 22px auto 20px;
+
+    text-align: center;
+  }
+
+
+  .page-heading h1 {
+    font-size: 22px;
+  }
+
+
+  .page-heading p {
+    font-size: 12px;
+  }
+
+
+  .route-card {
+    width: calc(100% - 20px);
+
+    padding: 14px;
+  }
+
+
+  .location {
+    padding: 13px;
+  }
+
+
+  .location strong {
+    font-size: 15px;
+  }
+
+
+  .route-arrow div {
+    width: 36px;
+    height: 36px;
+
+    font-size: 17px;
+  }
+
+
+  .stops-container {
+    width: calc(100% - 20px);
+
+    padding: 18px 10px;
+  }
+
+
+  .stops-header h2 {
+    font-size: 19px;
+  }
+
+
+  .stop-count {
+    min-width: 40px;
+    height: 40px;
+
+    font-size: 14px;
+  }
+
+
+  .stop-item {
+    grid-template-columns: 42px 1fr;
+  }
+
+
+  .stop-number {
+    width: 31px;
+    height: 31px;
+
+    margin-top: 18px;
+  }
+
+
+  .stop-content {
+    padding: 15px;
+
+    margin: 8px 0;
+  }
+
+
+  .stop-name-section {
+    gap: 8px;
+  }
+
+
+  .stop-name-section h3 {
+    font-size: 15px;
+  }
+
+
+  .stop-order {
+    font-size: 10px;
+  }
+
+
+  .stop-time {
+    gap: 15px;
+  }
+
+
+  .stop-time strong {
+    font-size: 13px;
+  }
+
+
+  .boarding,
+  .dropping {
+    font-size: 10px;
+
+    padding: 5px 9px;
+  }
+
+
+  .info-card {
+    width: calc(100% - 20px);
+
+    padding: 15px;
+
+    align-items: flex-start;
+  }
+
+
+  .info-card p {
+    font-size: 11px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+========================================================= */
+
+@media (max-width: 380px) {
+
+  .logo {
+    font-size: 15px;
+  }
+
+
+  .nav-links button {
+    padding: 7px 8px;
+
+    font-size: 10px;
+  }
+
+
+  .page-heading h1 {
+    font-size: 20px;
+  }
+
+
+  .route-summary {
+    gap: 8px;
+  }
+
+
+  .location strong {
+    font-size: 14px;
+  }
+
+
+  .stop-item {
+    grid-template-columns: 36px 1fr;
+  }
+
+
+  .stop-number {
+    width: 28px;
+    height: 28px;
+
+    font-size: 10px;
+  }
+
+
+  .stop-content {
+    padding: 12px;
+  }
+
+
+  .stop-time {
+    flex-direction: column;
+
+    gap: 8px;
+  }
+
+
+  .stop-time > div {
+    align-items: flex-start;
+  }
+
+}

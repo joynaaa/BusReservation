@@ -1,0 +1,306 @@
+<div class="page">
+
+  <!-- HEADER -->
+
+  <!-- HEADER -->
+
+<div class="header">
+
+  <div class="header-left">
+
+    <button
+      class="back-btn"
+      type="button"
+      (click)="goToDashboard()">
+
+      ← Back to Dashboard
+
+    </button>
+
+    <div>
+
+      <h1>Manage Routes</h1>
+
+      <p>
+        Add and manage your bus routes
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <button
+    class="add-btn"
+    type="button"
+    (click)="openAddForm()">
+
+    + Add Route
+
+  </button>
+
+</div>
+
+  <!-- FORM -->
+
+  <div
+    class="form-card"
+    *ngIf="showForm">
+
+    <h2>
+
+      {{ editMode ? 'Edit Route' : 'Add New Route' }}
+
+    </h2>
+
+
+    <div class="form-grid">
+
+
+      <!-- SOURCE -->
+
+      <div class="form-group">
+
+        <label>Source</label>
+
+        <select
+          [(ngModel)]="route.source"
+          [disabled]="loadingCities || cities.length === 0">
+
+          <option value="">
+
+            {{
+              loadingCities
+                ? 'Loading cities...'
+                : cities.length === 0
+                  ? 'No cities available'
+                  : 'Select Source'
+            }}
+
+          </option>
+
+          <option
+            *ngFor="let city of cities"
+            [value]="city.name">
+
+            {{ city.name }}
+
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- DESTINATION -->
+
+      <div class="form-group">
+
+        <label>Destination</label>
+
+        <select
+          [(ngModel)]="route.destination"
+          [disabled]="loadingCities || cities.length === 0">
+
+          <option value="">
+
+            {{
+              loadingCities
+                ? 'Loading cities...'
+                : cities.length === 0
+                  ? 'No cities available'
+                  : 'Select Destination'
+            }}
+
+          </option>
+
+          <option
+            *ngFor="let city of cities"
+            [value]="city.name">
+
+            {{ city.name }}
+
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- DISTANCE -->
+
+      <div class="form-group">
+
+        <label>Distance (km)</label>
+
+        <input
+          type="number"
+          [(ngModel)]="route.distance"
+          min="1"
+          placeholder="85">
+
+      </div>
+
+
+      <!-- DURATION -->
+
+      <div class="form-group">
+
+        <label>Duration</label>
+
+        <input
+          type="text"
+          [(ngModel)]="route.duration"
+          placeholder="2 hours">
+
+      </div>
+
+    </div>
+
+
+    <!-- FORM ACTIONS -->
+
+    <div class="form-actions">
+
+      <button
+        class="save-btn"
+        (click)="saveRoute()">
+
+        {{ editMode ? 'Update Route' : 'Add Route' }}
+
+      </button>
+
+
+      <button
+        class="cancel-btn"
+        (click)="cancelForm()">
+
+        Cancel
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- ROUTES TABLE -->
+
+  <div class="table-card">
+
+    <div class="table-header">
+
+      <h2>My Routes</h2>
+
+      <span>
+        {{ routes.length }} Routes
+      </span>
+
+    </div>
+
+
+    <!-- EMPTY -->
+
+    <div
+      class="empty"
+      *ngIf="routes.length === 0">
+
+      <p>
+        No routes added yet.
+      </p>
+
+      <button
+        class="add-btn"
+        (click)="openAddForm()">
+
+        + Add Your First Route
+
+      </button>
+
+    </div>
+
+
+    <!-- TABLE -->
+
+    <table
+      *ngIf="routes.length > 0">
+
+      <thead>
+
+        <tr>
+
+          <th>Source</th>
+
+          <th>Destination</th>
+
+          <th>Distance</th>
+
+          <th>Duration</th>
+
+          <th>Action</th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr
+          *ngFor="let item of routes">
+
+          <td>
+            {{ item.source }}
+          </td>
+
+          <td>
+            {{ item.destination }}
+          </td>
+
+          <td>
+            {{ item.distance }} km
+          </td>
+
+          <td>
+            {{ item.duration }}
+          </td>
+
+          <td>
+
+            <button
+              class="stops-btn"
+              (click)="manageStops(item.id)">
+
+              Manage Stops
+
+            </button>
+
+
+            <button
+              class="edit-btn"
+              (click)="editRoute(item)">
+
+              Edit
+
+            </button>
+
+
+            <button
+              class="delete-btn"
+              (click)="deleteRoute(item.id)">
+
+              Delete
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

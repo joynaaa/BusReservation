@@ -1,0 +1,245 @@
+<div class="seat-page">
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+
+    <div class="logo">
+      🚌 Bus Reservation System
+    </div>
+
+    <button
+      class="back-btn"
+      (click)="router.navigate(['/home'])">
+
+      ← Back
+
+    </button>
+
+  </nav>
+
+
+  <!-- MAIN CONTENT -->
+  <div class="seat-container">
+
+    <h1>Select Your Seats</h1>
+
+    <p class="subtitle">
+      Choose your preferred seats
+    </p>
+
+
+    <!-- LOADING -->
+    <div
+      *ngIf="loading"
+      class="loading">
+
+      Loading seats...
+
+    </div>
+
+
+    <!-- HOLDING SEAT -->
+    <div
+      *ngIf="holdingSeat"
+      class="loading">
+
+      Holding your seat...
+
+    </div>
+
+
+    <!-- ERROR -->
+    <div
+      *ngIf="errorMessage"
+      class="error">
+
+      {{ errorMessage }}
+
+    </div>
+
+
+    <!-- BUS LAYOUT -->
+    <div
+      class="bus-layout"
+      *ngIf="!loading && seats.length > 0">
+
+      <!-- DRIVER -->
+      <div class="driver">
+
+        <span>🚍</span>
+
+        <span>
+          DRIVER
+        </span>
+
+      </div>
+
+
+      <div class="divider"></div>
+
+
+      <!-- SEATS -->
+      <div class="seat-grid">
+
+        <button
+  *ngFor="let seat of seats"
+  class="seat"
+  [class.selected]="isSelected(seat)"
+  [class.booked]="seat.status === 'BOOKED'"
+  [class.held]="seat.status === 'HELD'"
+  [disabled]="seat.status === 'BOOKED' || seat.status === 'HELD'"
+  (click)="selectSeat(seat)">
+
+  {{ seat.seat_number }}
+
+</button>
+      </div>
+
+    </div>
+
+
+    <!-- NO SEATS -->
+    <div
+      *ngIf="
+        !loading &&
+        seats.length === 0 &&
+        !errorMessage
+      "
+      class="error">
+
+      No seats available.
+
+    </div>
+
+
+    <!-- LEGEND -->
+    <div
+      class="legend"
+      *ngIf="!loading && seats.length > 0">
+
+      <div class="legend-item">
+
+        <span class="legend-box available"></span>
+
+        Available
+
+      </div>
+
+
+      <div class="legend-item">
+
+        <span class="legend-box selected-box"></span>
+
+        Selected
+
+      </div>
+
+
+      <div class="legend-item">
+
+        <span class="legend-box booked"></span>
+
+        Booked
+
+      </div>
+
+
+      <div class="legend-item">
+
+        <span class="legend-box held-box"></span>
+
+        Temporarily Held
+
+      </div>
+
+    </div>
+
+
+    <!-- BOOKING SUMMARY -->
+    <div
+      class="summary"
+      *ngIf="!loading && seats.length > 0">
+
+
+      <!-- SELECTED SEATS -->
+      <div>
+
+        <span class="summary-label">
+          Selected Seats
+        </span>
+
+        <strong>
+
+          {{
+            selectedSeats.length > 0
+              ? selectedSeats
+                  .map(s => s.seat_number)
+                  .join(', ')
+              : 'None'
+          }}
+
+        </strong>
+
+      </div>
+
+
+      <!-- NUMBER OF SEATS -->
+      <div>
+
+        <span class="summary-label">
+          Seats
+        </span>
+
+        <strong>
+          {{ selectedSeats.length }}
+        </strong>
+
+      </div>
+
+
+      <!-- FARE -->
+      <div>
+
+        <span class="summary-label">
+          Fare per seat
+        </span>
+
+        <strong>
+          ₹{{ fare }}
+        </strong>
+
+      </div>
+
+
+      <!-- TOTAL -->
+      <div class="total">
+
+        <span class="summary-label">
+          Total
+        </span>
+
+        <strong>
+          ₹{{ getTotal() }}
+        </strong>
+
+      </div>
+
+
+      <!-- CONTINUE -->
+      <button
+        class="continue-btn"
+        [disabled]="
+          selectedSeats.length === 0 ||
+          holdingSeat
+        "
+        (click)="continueBooking()">
+
+        CONTINUE →
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

@@ -1,0 +1,763 @@
+/* =========================================================
+   BUSGO REVIEWS PAGE
+   MODERN GLASSMORPHISM UI
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+/* =========================================================
+   PAGE BACKGROUND
+   ========================================================= */
+
+.reviews-page {
+  min-height: 100vh;
+
+  color: #173f51;
+
+  background:
+    radial-gradient(
+      circle at 10% 5%,
+      rgba(0, 188, 212, 0.18),
+      transparent 28%
+    ),
+    radial-gradient(
+      circle at 90% 15%,
+      rgba(3, 107, 125, 0.16),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 85%,
+      rgba(0, 150, 136, 0.11),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #eef9fb,
+      #f7fbfc 45%,
+      #edf7f8
+    );
+
+  position: relative;
+
+  overflow-x: hidden;
+}
+
+
+/* =========================================================
+   NAVBAR
+   ========================================================= */
+
+.navbar {
+  position: sticky;
+
+  top: 15px;
+
+  z-index: 1000;
+
+  width: calc(100% - 40px);
+
+  max-width: 1450px;
+
+  margin: 15px auto;
+
+  padding: 15px 24px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.58);
+
+  border: 1px solid rgba(255, 255, 255, 0.78);
+
+  backdrop-filter: blur(22px);
+
+  -webkit-backdrop-filter: blur(22px);
+
+  box-shadow:
+    0 12px 35px rgba(0, 70, 90, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.90);
+}
+
+
+/* =========================================================
+   LOGO
+   ========================================================= */
+
+.logo {
+  color: #036b7d;
+
+  font-size: 21px;
+
+  font-weight: 800;
+
+  letter-spacing: -0.4px;
+}
+
+
+/* =========================================================
+   NAV BUTTONS
+   ========================================================= */
+
+.nav-links {
+  display: flex;
+
+  align-items: center;
+
+  gap: 8px;
+}
+
+.nav-links button {
+  padding: 9px 16px;
+
+  border: 1px solid transparent;
+
+  border-radius: 10px;
+
+  color: #56737e;
+
+  background: transparent;
+
+  cursor: pointer;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 600;
+
+  transition: all 0.25s ease;
+}
+
+.nav-links button:hover {
+  color: #036b7d;
+
+  background: rgba(3, 107, 125, 0.08);
+
+  border-color: rgba(3, 107, 125, 0.08);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   MAIN CONTAINER
+   ========================================================= */
+
+.reviews-container {
+  width: calc(100% - 40px);
+
+  max-width: 1100px;
+
+  margin: 0 auto;
+
+  padding: 70px 0 90px;
+}
+
+
+/* =========================================================
+   HEADER
+   ========================================================= */
+
+.header {
+  text-align: center;
+
+  margin-bottom: 45px;
+}
+
+
+/* Header icon */
+
+.header .icon {
+  width: 68px;
+
+  height: 68px;
+
+  margin: 0 auto 18px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 20px;
+
+  font-size: 31px;
+
+  background: rgba(255, 255, 255, 0.55);
+
+  border: 1px solid rgba(255, 255, 255, 0.80);
+
+  backdrop-filter: blur(15px);
+
+  box-shadow:
+    0 12px 30px rgba(0, 70, 90, 0.09);
+}
+
+
+/* Heading */
+
+.header h1 {
+  margin: 0 0 10px;
+
+  color: #173f51;
+
+  font-size: clamp(34px, 5vw, 46px);
+
+  font-weight: 800;
+
+  letter-spacing: -1.2px;
+}
+
+
+/* Subtitle */
+
+.header p {
+  margin: 0;
+
+  color: #7b929b;
+
+  font-size: 15px;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading {
+  max-width: 420px;
+
+  margin: 30px auto;
+
+  padding: 30px;
+
+  text-align: center;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.52);
+
+  border: 1px solid rgba(255, 255, 255, 0.78);
+
+  backdrop-filter: blur(18px);
+
+  box-shadow:
+    0 15px 35px rgba(0, 70, 90, 0.08);
+}
+
+.loading p {
+  margin: 15px 0 0;
+
+  color: #718994;
+
+  font-size: 13px;
+}
+
+
+/* Spinner */
+
+.spinner {
+  width: 38px;
+
+  height: 38px;
+
+  margin: 0 auto;
+
+  border-radius: 50%;
+
+  border: 4px solid rgba(3, 107, 125, 0.12);
+
+  border-top-color: #036b7d;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.error {
+  max-width: 650px;
+
+  margin: 30px auto;
+
+  padding: 16px 20px;
+
+  text-align: center;
+
+  border-radius: 14px;
+
+  color: #a53b3b;
+
+  background: rgba(255, 235, 235, 0.75);
+
+  border: 1px solid rgba(220, 100, 100, 0.20);
+
+  font-size: 13px;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   EMPTY REVIEWS
+   ========================================================= */
+
+.empty {
+  max-width: 600px;
+
+  margin: 30px auto;
+
+  padding: 50px 30px;
+
+  text-align: center;
+
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.52);
+
+  border: 1px solid rgba(255, 255, 255, 0.78);
+
+  backdrop-filter: blur(20px);
+
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 20px 50px rgba(0, 70, 90, 0.09);
+}
+
+
+/* Empty icon */
+
+.empty-icon {
+  width: 70px;
+
+  height: 70px;
+
+  margin: 0 auto 20px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 20px;
+
+  font-size: 31px;
+
+  background: rgba(245, 190, 60, 0.10);
+
+  border: 1px solid rgba(245, 190, 60, 0.15);
+}
+
+
+/* Empty title */
+
+.empty h2 {
+  margin: 0 0 9px;
+
+  color: #315a68;
+
+  font-size: 22px;
+}
+
+
+/* Empty text */
+
+.empty p {
+  margin: 0 0 25px;
+
+  color: #82979f;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   REVIEW LIST
+   ========================================================= */
+
+.review-list {
+  display: grid;
+
+  grid-template-columns: repeat(2, 1fr);
+
+  gap: 20px;
+}
+
+
+/* =========================================================
+   REVIEW CARD
+   ========================================================= */
+
+.review-card {
+  position: relative;
+
+  padding: 25px;
+
+  border-radius: 21px;
+
+  background: rgba(255, 255, 255, 0.53);
+
+  border: 1px solid rgba(255, 255, 255, 0.78);
+
+  backdrop-filter: blur(20px);
+
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow:
+    0 15px 40px rgba(0, 70, 90, 0.08);
+
+  transition:
+    transform 0.3s ease,
+    box-shadow 0.3s ease,
+    background 0.3s ease;
+}
+
+
+/* Card hover */
+
+.review-card:hover {
+  transform: translateY(-6px);
+
+  background: rgba(255, 255, 255, 0.70);
+
+  box-shadow:
+    0 22px 50px rgba(0, 70, 90, 0.13);
+}
+
+
+/* =========================================================
+   USER SECTION
+   ========================================================= */
+
+.review-top {
+  display: flex;
+
+  align-items: center;
+
+  gap: 13px;
+
+  margin-bottom: 17px;
+}
+
+
+/* User icon */
+
+.user-icon {
+  width: 48px;
+
+  height: 48px;
+
+  flex-shrink: 0;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  border-radius: 14px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #036b7d,
+      #0097a7
+    );
+
+  font-size: 17px;
+
+  font-weight: 800;
+
+  box-shadow:
+    0 7px 17px rgba(3, 107, 125, 0.20);
+}
+
+
+/* Username */
+
+.review-top h3 {
+  margin: 0 0 3px;
+
+  color: #244e5c;
+
+  font-size: 15px;
+
+  font-weight: 700;
+}
+
+
+/* Booking number */
+
+.review-top small {
+  color: #91a1a7;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   STARS
+   ========================================================= */
+
+.stars {
+  display: flex;
+
+  align-items: center;
+
+  gap: 3px;
+
+  margin-bottom: 14px;
+}
+
+.stars span {
+  color: #c8d1d4;
+
+  font-size: 19px;
+
+  transition: all 0.2s ease;
+}
+
+.stars span.filled {
+  color: #f1b82d;
+
+  text-shadow:
+    0 2px 8px rgba(241, 184, 45, 0.20);
+}
+
+
+/* =========================================================
+   COMMENT
+   ========================================================= */
+
+.comment {
+  min-height: 55px;
+
+  margin: 0 0 18px;
+
+  color: #58737e;
+
+  font-size: 13px;
+
+  line-height: 1.75;
+
+  font-style: italic;
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+.date {
+  padding-top: 13px;
+
+  border-top: 1px solid rgba(3, 107, 125, 0.08);
+
+  color: #9aaab0;
+
+  font-size: 10px;
+
+  text-align: right;
+}
+
+
+/* =========================================================
+   WRITE REVIEW SECTION
+   ========================================================= */
+
+.write-section {
+  margin-top: 35px;
+
+  padding: 28px;
+
+  text-align: center;
+
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.45);
+
+  border: 1px solid rgba(255, 255, 255, 0.72);
+
+  backdrop-filter: blur(16px);
+
+  box-shadow:
+    0 12px 30px rgba(0, 70, 90, 0.07);
+}
+
+.write-section p {
+  margin: 0 0 15px;
+
+  color: #718994;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   WRITE BUTTON
+   ========================================================= */
+
+.write-btn {
+  padding: 11px 22px;
+
+  border: none;
+
+  border-radius: 12px;
+
+  color: white;
+
+  background:
+    linear-gradient(
+      135deg,
+      #036b7d,
+      #0097a7
+    );
+
+  cursor: pointer;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  box-shadow:
+    0 9px 22px rgba(3, 107, 125, 0.22);
+
+  transition: all 0.3s ease;
+}
+
+.write-btn:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 14px 28px rgba(3, 107, 125, 0.30);
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 800px) {
+
+  .review-list {
+    grid-template-columns: 1fr;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .navbar {
+    position: relative;
+
+    width: calc(100% - 20px);
+
+    padding: 14px 16px;
+  }
+
+  .logo {
+    font-size: 17px;
+  }
+
+  .nav-links {
+    gap: 3px;
+  }
+
+  .nav-links button {
+    padding: 8px 10px;
+
+    font-size: 11px;
+  }
+
+  .reviews-container {
+    width: calc(100% - 24px);
+
+    padding: 50px 0 60px;
+  }
+
+  .header {
+    margin-bottom: 35px;
+  }
+
+  .header .icon {
+    width: 60px;
+
+    height: 60px;
+
+    font-size: 27px;
+  }
+
+  .header h1 {
+    font-size: 32px;
+  }
+
+  .header p {
+    font-size: 13px;
+  }
+
+  .review-card {
+    padding: 21px;
+  }
+
+  .empty {
+    padding: 40px 20px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .logo {
+    font-size: 15px;
+  }
+
+  .nav-links button {
+    padding: 7px 8px;
+
+    font-size: 10px;
+  }
+
+  .header h1 {
+    font-size: 28px;
+  }
+
+}

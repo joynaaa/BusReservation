@@ -1,0 +1,657 @@
+/* =========================================================
+   BUSGO ADMIN - REVIEWS MANAGEMENT
+   ========================================================= */
+
+:host {
+  display: block;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+/* =========================================================
+   PAGE
+   ========================================================= */
+
+.page {
+  min-height: 100vh;
+  padding: 30px;
+
+  background:
+    linear-gradient(
+      135deg,
+      #eef9fb 0%,
+      #f7fbfc 50%,
+      #edf7f8 100%
+    );
+
+  box-sizing: border-box;
+}
+
+
+/* =========================================================
+   PAGE HEADER
+   ========================================================= */
+
+.page-header {
+  margin-bottom: 28px;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 18px;
+}
+
+.heading-content {
+  width: 100%;
+}
+
+.heading-content h1 {
+  margin: 0;
+
+  color: #034f5e;
+
+  font-size: 30px;
+  font-weight: 700;
+
+  letter-spacing: -0.5px;
+}
+
+.heading-content p {
+  margin: 7px 0 0;
+
+  color: #6b7f85;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   BACK TO DASHBOARD
+   ========================================================= */
+
+.back-btn {
+  border: none;
+
+  background:
+    linear-gradient(
+      135deg,
+      #036b7d,
+      #0097a7
+    );
+
+  color: #ffffff;
+
+  padding: 11px 20px;
+
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+
+  box-shadow:
+    0 5px 15px rgba(3, 107, 125, 0.18);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease;
+}
+
+.back-btn:hover {
+  transform: translateY(-2px);
+
+  background:
+    linear-gradient(
+      135deg,
+      #025768,
+      #008796
+    );
+
+  box-shadow:
+    0 8px 20px rgba(3, 107, 125, 0.28);
+}
+
+.back-btn:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   ERROR
+   ========================================================= */
+
+.error-box {
+  padding: 15px 18px;
+
+  margin-bottom: 20px;
+
+  background: #fdeaea;
+
+  border: 1px solid #f2c7c7;
+
+  border-left: 4px solid #d64545;
+
+  border-radius: 10px;
+
+  color: #b52f2f;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   LOADING
+   ========================================================= */
+
+.loading {
+  min-height: 220px;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  background: rgba(255, 255, 255, 0.82);
+
+  border: 1px solid rgba(3, 107, 125, 0.10);
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 8px 25px rgba(3, 107, 125, 0.08);
+}
+
+.loading p {
+  margin: 14px 0 0;
+
+  color: #64787d;
+
+  font-size: 14px;
+}
+
+
+/* Loader */
+
+.loader {
+  width: 38px;
+  height: 38px;
+
+  border: 4px solid #dceff2;
+  border-top: 4px solid #036b7d;
+
+  border-radius: 50%;
+
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   EMPTY STATE
+   ========================================================= */
+
+.empty {
+  min-height: 250px;
+
+  display: flex;
+  flex-direction: column;
+
+  align-items: center;
+  justify-content: center;
+
+  text-align: center;
+
+  background: rgba(255, 255, 255, 0.82);
+
+  border: 1px solid rgba(3, 107, 125, 0.10);
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 8px 25px rgba(3, 107, 125, 0.07);
+}
+
+.empty-icon {
+  width: 65px;
+  height: 65px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 12px;
+
+  border-radius: 50%;
+
+  background: #e8f7f9;
+
+  font-size: 28px;
+}
+
+.empty h3 {
+  margin: 0 0 6px;
+
+  color: #034f5e;
+
+  font-size: 18px;
+}
+
+.empty p {
+  margin: 0;
+
+  color: #75878c;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   TABLE CONTAINER
+   ========================================================= */
+
+.table-container {
+  width: 100%;
+
+  overflow-x: auto;
+
+  background: rgba(255, 255, 255, 0.88);
+
+  border: 1px solid rgba(3, 107, 125, 0.10);
+
+  border-radius: 16px;
+
+  box-shadow:
+    0 10px 30px rgba(3, 107, 125, 0.09);
+
+  backdrop-filter: blur(10px);
+
+  -webkit-backdrop-filter: blur(10px);
+}
+
+
+/* =========================================================
+   TABLE
+   ========================================================= */
+
+table {
+  width: 100%;
+  min-width: 1250px;
+
+  border-collapse: collapse;
+}
+
+
+/* Header */
+
+thead {
+  background:
+    linear-gradient(
+      135deg,
+      #034f5e,
+      #036b7d
+    );
+}
+
+thead th {
+  padding: 16px 18px;
+
+  color: #ffffff;
+
+  text-align: left;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+
+/* Body */
+
+tbody tr {
+  border-bottom: 1px solid #e8f0f2;
+
+  transition:
+    background 0.2s ease;
+}
+
+tbody tr:last-child {
+  border-bottom: none;
+}
+
+tbody tr:hover {
+  background: #f2fafb;
+}
+
+tbody td {
+  padding: 16px 18px;
+
+  color: #425960;
+
+  font-size: 14px;
+
+  vertical-align: middle;
+}
+
+
+/* =========================================================
+   REVIEW ID
+   ========================================================= */
+
+.review-id {
+  color: #036b7d;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   USER
+   ========================================================= */
+
+tbody td strong {
+  color: #334e55;
+
+  font-weight: 600;
+}
+
+
+/* =========================================================
+   BUS
+   ========================================================= */
+
+tbody td small {
+  display: inline-block;
+
+  margin-top: 4px;
+
+  color: #819297;
+
+  font-size: 12px;
+}
+
+
+/* =========================================================
+   ROUTE
+   ========================================================= */
+
+.route {
+  display: inline-flex;
+
+  align-items: center;
+
+  gap: 8px;
+
+  color: #425960;
+
+  font-weight: 500;
+
+  white-space: nowrap;
+}
+
+.arrow {
+  color: #036b7d;
+
+  font-weight: 700;
+}
+
+
+/* =========================================================
+   RATING
+   ========================================================= */
+
+.rating {
+  display: inline-flex;
+
+  align-items: center;
+
+  padding: 6px 11px;
+
+  border-radius: 20px;
+
+  background: #fff6df;
+
+  border: 1px solid #f1dfa9;
+
+  color: #a86c00;
+
+  font-size: 13px;
+
+  font-weight: 700;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   COMMENT
+   ========================================================= */
+
+.comment {
+  max-width: 300px;
+
+  color: #53686e;
+
+  line-height: 1.5;
+}
+
+.no-comment {
+  color: #9aa9ad;
+
+  font-style: italic;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   DATE
+   ========================================================= */
+
+tbody td:nth-child(7) {
+  color: #687b80;
+
+  font-size: 13px;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+   ========================================================= */
+
+.delete-btn {
+  border: none;
+
+  background: #fdeaea;
+
+  color: #c0392b;
+
+  border: 1px solid #f1caca;
+
+  padding: 8px 13px;
+
+  border-radius: 8px;
+
+  font-size: 12px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  white-space: nowrap;
+
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.delete-btn:hover {
+  background: #d64545;
+
+  color: #ffffff;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 4px 12px rgba(214, 69, 69, 0.20);
+}
+
+.delete-btn:active {
+  transform: translateY(0);
+}
+
+
+/* =========================================================
+   TABLE SCROLLBAR
+   ========================================================= */
+
+.table-container::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #edf5f6;
+
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: #9bc8ce;
+
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #036b7d;
+}
+
+
+/* =========================================================
+   TABLET
+   ========================================================= */
+
+@media (max-width: 900px) {
+
+  .page {
+    padding: 24px 20px;
+  }
+
+  .heading-content h1 {
+    font-size: 26px;
+  }
+
+  .table-container {
+    border-radius: 14px;
+  }
+
+  thead th,
+  tbody td {
+    padding: 14px 15px;
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .page {
+    padding: 20px 15px;
+  }
+
+  .header-left {
+    gap: 15px;
+  }
+
+  .back-btn {
+    padding: 10px 16px;
+
+    font-size: 13px;
+  }
+
+  .heading-content h1 {
+    font-size: 23px;
+  }
+
+  .heading-content p {
+    font-size: 13px;
+
+    line-height: 1.5;
+  }
+
+  .table-container {
+    border-radius: 12px;
+  }
+
+  thead th {
+    padding: 13px 14px;
+
+    font-size: 12px;
+  }
+
+  tbody td {
+    padding: 13px 14px;
+
+    font-size: 13px;
+  }
+
+  .rating {
+    padding: 5px 9px;
+
+    font-size: 11px;
+  }
+
+  .delete-btn {
+    padding: 7px 11px;
+
+    font-size: 11px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 400px) {
+
+  .page {
+    padding: 16px 12px;
+  }
+
+  .back-btn {
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  .heading-content h1 {
+    font-size: 21px;
+  }
+
+  .heading-content p {
+    font-size: 12px;
+  }
+
+}

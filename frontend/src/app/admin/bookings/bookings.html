@@ -1,0 +1,488 @@
+<div class="page">
+
+  <!-- ==========================================
+       HEADER
+  =========================================== -->
+
+<div class="page-header">
+
+  <div class="header-left">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goToDashboard()">
+      ← Back to Dashboard
+    </button>
+
+    <div class="heading-content">
+
+      <h1>
+        Manage Bookings
+      </h1>
+
+      <p>
+        View all customer bookings
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="booking-count">
+
+    Total Bookings:
+    {{ bookings.length }}
+
+  </div>
+
+</div>
+
+
+  <!-- ==========================================
+       LOADING
+  =========================================== -->
+
+  <div
+    class="loading"
+    *ngIf="loading"
+  >
+
+    Loading bookings...
+
+  </div>
+
+
+
+  <!-- ==========================================
+       EMPTY
+  =========================================== -->
+
+  <div
+    class="empty"
+    *ngIf="
+      !loading &&
+      bookings.length === 0
+    "
+  >
+
+    <div class="empty-icon">
+      🎫
+    </div>
+
+    <h3>
+      No Bookings Found
+    </h3>
+
+    <p>
+      There are currently no customer bookings.
+    </p>
+
+  </div>
+
+
+
+  <!-- ==========================================
+       TABLE
+  =========================================== -->
+
+  <div
+    class="table-container"
+    *ngIf="
+      !loading &&
+      bookings.length > 0
+    "
+  >
+
+    <table>
+
+      <!-- ==========================================
+           TABLE HEADER
+      =========================================== -->
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Booking ID
+          </th>
+
+          <th>
+            Customer
+          </th>
+
+          <th>
+            Passenger
+          </th>
+
+          <th>
+            Bus
+          </th>
+
+          <th>
+            Route
+          </th>
+
+          <th>
+            Booking Date
+          </th>
+
+          <th>
+            Seats
+          </th>
+
+          <th>
+            Amount
+          </th>
+
+          <th>
+            Payment Status
+          </th>
+
+          <th>
+            Booking Status
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+
+      <!-- ==========================================
+           TABLE BODY
+      =========================================== -->
+
+      <tbody>
+
+        <tr
+          *ngFor="
+            let booking of bookings
+          "
+        >
+
+
+          <!-- ==================================
+               BOOKING ID
+          =================================== -->
+
+          <td>
+
+            <strong class="booking-id">
+
+              #{{ booking.id }}
+
+            </strong>
+
+          </td>
+
+
+
+          <!-- ==================================
+               CUSTOMER
+          =================================== -->
+
+          <td>
+
+            <div class="customer-info">
+
+              <strong>
+                {{ booking.username }}
+              </strong>
+
+            </div>
+
+          </td>
+
+
+
+          <!-- ==================================
+               PASSENGER
+          =================================== -->
+
+          <td>
+
+            <div class="passenger-info">
+
+              <strong>
+                {{ booking.passenger_name }}
+              </strong>
+
+            </div>
+
+          </td>
+
+
+
+          <!-- ==================================
+               BUS
+          =================================== -->
+
+          <td>
+
+            <div class="bus-info">
+
+              <strong>
+                {{ booking.bus_name || '-' }}
+              </strong>
+
+              <small>
+                {{ booking.bus_number || '-' }}
+              </small>
+
+            </div>
+
+          </td>
+
+
+
+          <!-- ==================================
+               ROUTE
+          =================================== -->
+
+          <td>
+
+            <span class="route">
+
+              {{ booking.source || '-' }}
+
+              <span class="arrow">
+                →
+              </span>
+
+              {{ booking.destination || '-' }}
+
+            </span>
+
+          </td>
+
+
+
+          <!-- ==================================
+               BOOKING DATE
+          =================================== -->
+
+          <td>
+
+            <div class="date-info">
+
+              <strong>
+                {{ booking.booking_date | date:'dd-MM-yyyy' }}
+              </strong>
+
+              <small>
+                {{ booking.booking_date | date:'hh:mm a' }}
+              </small>
+
+            </div>
+
+          </td>
+
+
+
+          <!-- ==================================
+               SEATS
+          =================================== -->
+
+          <td>
+
+            <div class="seat-list">
+
+              <span
+                class="seat"
+                *ngFor="
+                  let seat of booking.seats
+                "
+              >
+
+                {{ seat }}
+
+              </span>
+
+
+              <span
+                *ngIf="
+                  !booking.seats ||
+                  booking.seats.length === 0
+                "
+                class="no-seat"
+              >
+
+                -
+
+              </span>
+
+            </div>
+
+          </td>
+
+
+
+          <!-- ==================================
+               AMOUNT
+          =================================== -->
+
+          <td>
+
+            <strong class="amount">
+
+              ₹{{ booking.total_amount }}
+
+            </strong>
+
+          </td>
+
+
+
+          <!-- ==================================
+               PAYMENT STATUS
+          =================================== -->
+
+          <td>
+
+
+            <!-- PAID -->
+
+            <span
+              class="status payment-paid"
+              *ngIf="
+                booking.payment_status === 'PAID'
+              "
+            >
+
+              Paid
+
+            </span>
+
+
+
+            <!-- PENDING -->
+
+            <span
+              class="status payment-pending"
+              *ngIf="
+                booking.payment_status === 'PENDING'
+              "
+            >
+
+              Pending
+
+            </span>
+
+
+
+            <!-- FAILED -->
+
+            <span
+              class="status payment-failed"
+              *ngIf="
+                booking.payment_status === 'FAILED'
+              "
+            >
+
+              Failed
+
+            </span>
+
+
+
+            <!-- REFUNDED -->
+
+            <span
+              class="status payment-refunded"
+              *ngIf="
+                booking.payment_status === 'REFUNDED'
+              "
+            >
+
+              Refunded
+
+            </span>
+
+
+
+            <!-- UNKNOWN -->
+
+            <span
+              class="status payment-unknown"
+              *ngIf="
+                booking.payment_status !== 'PAID' &&
+                booking.payment_status !== 'PENDING' &&
+                booking.payment_status !== 'FAILED' &&
+                booking.payment_status !== 'REFUNDED'
+              "
+            >
+
+              {{ booking.payment_status || '-' }}
+
+            </span>
+
+          </td>
+
+
+
+          <!-- ==================================
+               BOOKING STATUS
+          =================================== -->
+
+          <td>
+
+
+            <!-- CONFIRMED -->
+
+            <span
+              class="status booking-confirmed"
+              *ngIf="
+                booking.status === 'CONFIRMED'
+              "
+            >
+
+              Confirmed
+
+            </span>
+
+
+
+            <!-- CANCELLED -->
+
+            <span
+              class="status booking-cancelled"
+              *ngIf="
+                booking.status === 'CANCELLED'
+              "
+            >
+
+              Cancelled
+
+            </span>
+
+
+
+            <!-- UNKNOWN -->
+
+            <span
+              class="status booking-unknown"
+              *ngIf="
+                booking.status !== 'CONFIRMED' &&
+                booking.status !== 'CANCELLED'
+              "
+            >
+
+              {{ booking.status || '-' }}
+
+            </span>
+
+          </td>
+
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

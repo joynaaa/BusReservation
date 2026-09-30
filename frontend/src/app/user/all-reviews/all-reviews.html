@@ -1,0 +1,220 @@
+<div class="reviews-page">
+
+  <!-- NAVBAR -->
+
+  <nav class="navbar">
+
+    <div class="logo">
+      🚌 Bus Reservation System
+    </div>
+
+    <div class="nav-links">
+
+      <button
+        type="button"
+        (click)="goHome()">
+        Home
+      </button>
+
+      <button
+        type="button"
+        (click)="goToBookings()">
+        My Bookings
+      </button>
+
+    </div>
+
+  </nav>
+
+
+  <!-- MAIN -->
+
+  <main class="reviews-container">
+
+    <div class="header">
+
+      <div class="icon">
+        ⭐
+      </div>
+
+      <h1>
+        Customer Reviews
+      </h1>
+
+      <p>
+        See what our passengers say about their journeys.
+      </p>
+
+    </div>
+
+
+    <!-- LOADING -->
+
+    <div
+      class="loading"
+      *ngIf="loading">
+
+      <div class="spinner"></div>
+
+      <p>
+        Loading reviews...
+      </p>
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    <div
+      class="error"
+      *ngIf="!loading && errorMessage">
+
+      {{ errorMessage }}
+
+    </div>
+
+
+    <!-- NO REVIEWS -->
+
+    <div
+      class="empty"
+      *ngIf="
+        !loading &&
+        !errorMessage &&
+        reviews.length === 0
+      ">
+
+      <div class="empty-icon">
+        ⭐
+      </div>
+
+      <h2>
+        No Reviews Yet
+      </h2>
+
+      <p>
+        Be the first passenger to share your experience.
+      </p>
+
+      <button
+        type="button"
+        class="write-btn"
+        (click)="writeReview()">
+
+        Write a Review
+
+      </button>
+
+    </div>
+
+
+    <!-- REVIEWS -->
+
+    <div
+      class="review-list"
+      *ngIf="
+        !loading &&
+        reviews.length > 0
+      ">
+
+      <div
+        class="review-card"
+        *ngFor="let review of reviews">
+
+
+        <!-- USER -->
+
+        <div class="review-top">
+
+          <div class="user-icon">
+            {{ review.username?.charAt(0)?.toUpperCase() }}
+          </div>
+
+          <div>
+
+            <h3>
+              {{ review.username }}
+            </h3>
+
+            <small>
+              Booking #{{ review.booking }}
+            </small>
+
+          </div>
+
+        </div>
+
+
+        <!-- RATING -->
+
+        <div class="stars">
+
+          <ng-container
+            *ngFor="let star of stars">
+
+            <span
+              [class.filled]="
+                star <= review.rating
+              ">
+
+              {{ star <= review.rating
+                ? '★'
+                : '☆' }}
+
+            </span>
+
+          </ng-container>
+
+        </div>
+
+
+        <!-- COMMENT -->
+
+        <p class="comment">
+
+          "{{ review.comment }}"
+
+        </p>
+
+
+        <!-- DATE -->
+
+        <div class="date">
+
+          {{ review.created_at
+            | date:'dd MMM yyyy, hh:mm a' }}
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- WRITE REVIEW -->
+
+    <div
+      class="write-section"
+      *ngIf="
+        !loading &&
+        reviews.length > 0
+      ">
+
+      <p>
+        Have you travelled with us?
+      </p>
+
+      <button
+        type="button"
+        class="write-btn"
+        (click)="writeReview()">
+
+        ⭐ Write a Review
+
+      </button>
+
+    </div>
+
+  </main>
+
+</div>

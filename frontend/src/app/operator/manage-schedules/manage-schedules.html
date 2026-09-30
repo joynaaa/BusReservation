@@ -1,0 +1,551 @@
+<div class="manage-schedules-page">
+
+  <!-- =========================================
+       HEADER
+  ========================================== -->
+<!-- HEADER -->
+
+<div class="page-header">
+
+  <div class="header-left">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goToDashboard()">
+
+      ← Back to Dashboard
+
+    </button>
+
+    <div>
+
+      <h1>
+        Manage Schedules
+      </h1>
+
+      <p>
+        Create and manage bus operating schedules.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
+  <!-- =========================================
+       SUCCESS
+  ========================================== -->
+
+  <div
+    class="success-message"
+    *ngIf="successMessage">
+
+    {{ successMessage }}
+
+  </div>
+
+
+  <!-- =========================================
+       ERROR
+  ========================================== -->
+
+  <div
+    class="error-message"
+    *ngIf="errorMessage">
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- =========================================
+       APPROVAL INFORMATION
+  ========================================== -->
+
+  <div
+    class="approval-info"
+    *ngIf="!loadingBuses && buses.length === 0">
+
+    <strong>
+      Bus approval required
+    </strong>
+
+    <p>
+      You can create a schedule only after your bus
+      has been approved by the admin.
+    </p>
+
+    <p>
+      Please add your bus and upload the required
+      vehicle documents from Manage Buses.
+    </p>
+
+  </div>
+
+
+  <!-- =========================================
+       CREATE / EDIT SCHEDULE
+  ========================================== -->
+
+  <div
+    class="schedule-card"
+    *ngIf="buses.length > 0">
+
+    <h2>
+
+      {{
+        editingScheduleId !== null
+          ? 'Edit Schedule'
+          : 'Create Schedule'
+      }}
+
+    </h2>
+
+
+    <!-- =========================================
+         BUS
+    ========================================== -->
+
+    <div class="form-group">
+
+      <label for="bus">
+        Select Approved Bus
+      </label>
+
+      <select
+        id="bus"
+        [(ngModel)]="selectedBus"
+        [disabled]="saving || loadingBuses">
+
+        <option
+          [ngValue]="null">
+
+          Select Approved Bus
+
+        </option>
+
+        <option
+          *ngFor="let bus of buses"
+          [ngValue]="bus.id">
+
+          {{ bus.bus_name }}
+          -
+          {{ bus.bus_number }}
+
+        </option>
+
+      </select>
+
+      <small class="item-count">
+
+        {{ buses.length }}
+        approved bus(es) available
+
+      </small>
+
+    </div>
+
+
+    <!-- =========================================
+         ROUTE
+    ========================================== -->
+
+    <div class="form-group">
+
+      <label for="route">
+        Select Route
+      </label>
+
+      <select
+        id="route"
+        [(ngModel)]="selectedRoute"
+        [disabled]="saving">
+
+        <option
+          [ngValue]="null">
+
+          Select Route
+
+        </option>
+
+        <option
+          *ngFor="let route of routes"
+          [ngValue]="route.id">
+
+          {{ route.source }}
+          →
+          {{ route.destination }}
+
+        </option>
+
+      </select>
+
+      <small class="item-count">
+
+        {{ routes.length }}
+        route(s) available
+
+      </small>
+
+    </div>
+
+
+    <!-- =========================================
+         OPERATING DAYS
+    ========================================== -->
+
+    <div class="form-group">
+
+      <label>
+        Operating Days
+      </label>
+
+      <div class="days-grid">
+
+        <label
+          class="day-item"
+          *ngFor="let day of days">
+
+          <input
+            type="checkbox"
+            [checked]="isDaySelected(day)"
+            (change)="toggleDay(day)"
+            [disabled]="saving">
+
+          <span>
+            {{ day }}
+          </span>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================================
+         ACTIVE
+    ========================================== -->
+
+    <div class="active-option">
+
+      <label>
+
+        <input
+          type="checkbox"
+          [(ngModel)]="isActive"
+          [disabled]="saving">
+
+        <span>
+          Active Schedule
+        </span>
+
+      </label>
+
+    </div>
+
+
+    <!-- =========================================
+         CREATE / UPDATE
+    ========================================== -->
+
+    <button
+      type="button"
+      class="create-btn"
+      (click)="saveSchedule()"
+      [disabled]="
+        saving ||
+        selectedBus === null ||
+        selectedRoute === null
+      ">
+
+      <span *ngIf="!saving">
+
+        {{
+          editingScheduleId !== null
+            ? 'Update Schedule'
+            : 'Create Schedule'
+        }}
+
+      </span>
+
+      <span *ngIf="saving">
+
+        {{
+          editingScheduleId !== null
+            ? 'Updating...'
+            : 'Creating...'
+        }}
+
+      </span>
+
+    </button>
+
+
+    <!-- =========================================
+         CANCEL EDIT
+    ========================================== -->
+
+    <button
+      type="button"
+      class="cancel-edit-btn"
+      *ngIf="editingScheduleId !== null"
+      (click)="cancelEdit()"
+      [disabled]="saving">
+
+      Cancel Edit
+
+    </button>
+
+  </div>
+
+
+  <!-- =========================================
+       EXISTING SCHEDULES
+  ========================================== -->
+
+  <div class="schedule-list">
+
+    <h2>
+      Existing Schedules
+    </h2>
+
+
+    <!-- =========================================
+         LOADING
+    ========================================== -->
+
+    <div
+      class="loading"
+      *ngIf="loading">
+
+      Loading schedules...
+
+    </div>
+
+
+    <!-- =========================================
+         EMPTY
+    ========================================== -->
+
+    <div
+      class="empty-message"
+      *ngIf="
+        !loading &&
+        schedules.length === 0
+      ">
+
+      No schedules found.
+
+    </div>
+
+
+    <!-- =========================================
+         TABLE
+    ========================================== -->
+
+    <div
+      class="table-container"
+      *ngIf="
+        !loading &&
+        schedules.length > 0
+      ">
+
+      <table>
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Bus
+            </th>
+
+            <th>
+              Route
+            </th>
+
+            <th>
+              Operating Days
+            </th>
+
+            <th>
+              Status
+            </th>
+
+            <th>
+              Actions
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+        <tbody>
+
+          <tr
+            *ngFor="let schedule of schedules">
+
+
+            <!-- =================================
+                 BUS
+            ================================== -->
+
+            <td>
+
+              <strong>
+                {{ schedule.bus_name }}
+              </strong>
+
+              <br>
+
+              <small>
+                {{ schedule.bus_number }}
+              </small>
+
+            </td>
+
+
+            <!-- =================================
+                 ROUTE
+            ================================== -->
+
+            <td>
+
+              {{ schedule.source }}
+
+              →
+
+              {{ schedule.destination }}
+
+            </td>
+
+
+            <!-- =================================
+                 OPERATING DAYS
+            ================================== -->
+
+            <td>
+
+              <div
+                class="saved-days"
+                *ngIf="
+                  schedule.operating_days &&
+                  schedule.operating_days.length > 0
+                ">
+
+                <span
+                  class="day-badge"
+                  *ngFor="
+                    let day of schedule.operating_days
+                  ">
+
+                  {{ day.day || day }}
+
+                </span>
+
+              </div>
+
+
+              <span
+                class="no-days"
+                *ngIf="
+                  !schedule.operating_days ||
+                  schedule.operating_days.length === 0
+                ">
+
+                No days
+
+              </span>
+
+            </td>
+
+
+            <!-- =================================
+                 STATUS
+            ================================== -->
+
+            <td>
+
+              <span
+                class="status"
+                [class.active]="schedule.is_active"
+                [class.inactive]="!schedule.is_active">
+
+                {{
+                  schedule.is_active
+                    ? 'Active'
+                    : 'Inactive'
+                }}
+
+              </span>
+
+            </td>
+
+
+            <!-- =================================
+                 ACTIONS
+            ================================== -->
+
+            <td class="action-buttons">
+
+
+              <!-- =================================
+                   MANAGE FARES
+              ================================== -->
+
+              <button
+                type="button"
+                class="manage-fare-btn"
+                [routerLink]="[
+                  '/operator/manage-fares',
+                  schedule.id
+                ]">
+
+                Manage Fares
+
+              </button>
+
+
+              <!-- =================================
+                   EDIT
+              ================================== -->
+
+              <button
+                type="button"
+                class="edit-btn"
+                (click)="editSchedule(schedule)">
+
+                Edit
+
+              </button>
+
+
+              <!-- =================================
+                   DELETE
+              ================================== -->
+
+              <button
+                type="button"
+                class="delete-btn"
+                (click)="deleteSchedule(schedule.id)">
+
+                Delete
+
+              </button>
+
+            </td>
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

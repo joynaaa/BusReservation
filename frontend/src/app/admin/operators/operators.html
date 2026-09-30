@@ -1,0 +1,437 @@
+<div class="page">
+
+  <!-- =====================================================
+       PAGE HEADER
+       ===================================================== -->
+
+<div class="page-header">
+
+  <div class="header-left">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goToDashboard()">
+
+      ← Back to Dashboard
+
+    </button>
+
+    <div>
+
+      <h1>Manage Operators</h1>
+
+      <p>
+        Review and manage bus operator registrations
+      </p>
+
+    </div>
+
+  </div>
+
+  <div class="operator-count">
+    Total Operators: {{ operators.length }}
+  </div>
+
+</div>
+
+
+  <!-- =====================================================
+       LOADING
+       ===================================================== -->
+
+  <div
+    class="loading"
+    *ngIf="loading"
+  >
+    <div class="spinner"></div>
+
+    <p>
+      Loading operators...
+    </p>
+  </div>
+
+
+  <!-- =====================================================
+       EMPTY STATE
+       ===================================================== -->
+
+  <div
+    class="empty"
+    *ngIf="!loading && operators.length === 0"
+  >
+
+    <div class="empty-icon">
+      🚌
+    </div>
+
+    <h3>
+      No Operators Found
+    </h3>
+
+    <p>
+      There are currently no bus operator registrations.
+    </p>
+
+  </div>
+
+
+  <!-- =====================================================
+       OPERATORS TABLE
+       ===================================================== -->
+
+  <div
+    class="table-container"
+    *ngIf="!loading && operators.length > 0"
+  >
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>#</th>
+
+          <th>Operator</th>
+
+          <th>Company</th>
+
+          <th>Operator Type</th>
+
+          <th>Contact</th>
+
+          <th>Business Details</th>
+
+          <th>Address</th>
+
+          <th>Status</th>
+
+          <th>Documents</th>
+
+          <th>Actions</th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr
+          *ngFor="
+            let operator of operators;
+            let i = index
+          "
+        >
+
+          <!-- =================================================
+               NUMBER
+               ================================================= -->
+
+          <td>
+            {{ i + 1 }}
+          </td>
+
+
+          <!-- =================================================
+               OPERATOR
+               ================================================= -->
+
+          <td>
+
+            <strong>
+              {{ operator.full_name || 'N/A' }}
+            </strong>
+
+            <small>
+              @{{ operator.username }}
+            </small>
+
+          </td>
+
+
+          <!-- =================================================
+               COMPANY
+               ================================================= -->
+
+          <td>
+
+            <strong>
+              {{ operator.company_name || 'N/A' }}
+            </strong>
+
+          </td>
+
+
+          <!-- =================================================
+               OPERATOR TYPE
+               ================================================= -->
+
+          <td>
+
+            <span
+              class="operator-type"
+            >
+
+              {{
+                operator.operator_type === 'INDIVIDUAL'
+                  ? 'Individual Operator'
+                  : operator.operator_type === 'AGENCY'
+                    ? 'Travel Agency'
+                    : operator.operator_type === 'COMPANY'
+                      ? 'Bus Company'
+                      : 'N/A'
+              }}
+
+            </span>
+
+          </td>
+
+
+          <!-- =================================================
+               CONTACT
+               ================================================= -->
+
+          <td>
+
+            <div class="contact-info">
+
+              <span>
+                📞 {{ operator.phone || 'N/A' }}
+              </span>
+
+              <span>
+                ✉ {{ operator.email || 'N/A' }}
+              </span>
+
+            </div>
+
+          </td>
+
+
+          <!-- =================================================
+               BUSINESS DETAILS
+               ================================================= -->
+
+          <td>
+
+            <div class="business-info">
+
+              <span>
+                <strong>
+                  Buses:
+                </strong>
+
+                {{ operator.number_of_buses || 0 }}
+              </span>
+
+              <span>
+                <strong>
+                  Experience:
+                </strong>
+
+                {{ operator.years_of_experience || 0 }}
+                years
+              </span>
+
+              <span
+                *ngIf="operator.business_phone"
+              >
+                <strong>
+                  Business:
+                </strong>
+
+                {{ operator.business_phone }}
+              </span>
+
+            </div>
+
+          </td>
+
+
+          <!-- =================================================
+               ADDRESS
+               ================================================= -->
+
+          <td>
+
+            <div class="address-info">
+
+              <span>
+                {{ operator.address || 'N/A' }}
+              </span>
+
+              <small
+                *ngIf="
+                  operator.city ||
+                  operator.state ||
+                  operator.pin_code
+                "
+              >
+
+                {{
+                  operator.city
+                    ? operator.city + ', '
+                    : ''
+                }}
+
+                {{
+                  operator.state
+                    ? operator.state + ' '
+                    : ''
+                }}
+
+                {{
+                  operator.pin_code || ''
+                }}
+
+              </small>
+
+            </div>
+
+          </td>
+
+
+          <!-- =================================================
+               STATUS
+               ================================================= -->
+
+          <td>
+
+            <span
+              class="status pending"
+              *ngIf="
+                operator.status === 'PENDING'
+              "
+            >
+              Pending
+            </span>
+
+
+            <span
+              class="status approved"
+              *ngIf="
+                operator.status === 'APPROVED'
+              "
+            >
+              Approved
+            </span>
+
+
+            <span
+              class="status rejected"
+              *ngIf="
+                operator.status === 'REJECTED'
+              "
+            >
+              Rejected
+            </span>
+
+          </td>
+
+
+          <!-- =================================================
+               DOCUMENTS
+               ================================================= -->
+
+          <td>
+
+            <div class="documents">
+
+              <a
+                *ngIf="operator.government_id"
+                [href]="operator.government_id"
+                target="_blank"
+                class="document-link"
+              >
+                Government ID
+              </a>
+
+              <a
+                *ngIf="operator.business_registration"
+                [href]="operator.business_registration"
+                target="_blank"
+                class="document-link"
+              >
+                Business Registration
+              </a>
+
+              <a
+                *ngIf="operator.transport_permit"
+                [href]="operator.transport_permit"
+                target="_blank"
+                class="document-link"
+              >
+                Transport Permit
+              </a>
+
+
+              <span
+                class="no-document"
+                *ngIf="
+                  !operator.government_id &&
+                  !operator.business_registration &&
+                  !operator.transport_permit
+                "
+              >
+                No documents
+              </span>
+
+            </div>
+
+          </td>
+
+
+          <!-- =================================================
+               ACTIONS
+               ================================================= -->
+
+          <td class="actions">
+
+            <!-- APPROVE -->
+
+            <button
+              class="approve"
+              *ngIf="
+                operator.status === 'PENDING'
+              "
+              (click)="approveOperator(operator)"
+            >
+              Approve
+            </button>
+
+
+            <!-- REJECT -->
+
+            <button
+              class="reject"
+              *ngIf="
+                operator.status === 'PENDING'
+              "
+              (click)="rejectOperator(operator)"
+            >
+              Reject
+            </button>
+
+
+            <!-- DELETE -->
+
+            <button
+              class="delete"
+              (click)="deleteOperator(operator)"
+            >
+              Delete
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

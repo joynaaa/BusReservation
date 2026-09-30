@@ -1,0 +1,492 @@
+<div class="page">
+
+  <!-- =====================================================
+       HEADER
+  ====================================================== -->
+
+  <div class="header">
+
+    <div>
+
+      <button
+        type="button"
+        class="back-btn"
+        (click)="goBack()">
+
+        ← Back to Routes
+
+      </button>
+
+      <h1>
+        Manage Stops
+      </h1>
+
+      <p>
+        Add and manage stops for this route
+      </p>
+
+    </div>
+
+    <button
+      type="button"
+      class="add-btn"
+      (click)="openAddForm()">
+
+      + Add Stop
+
+    </button>
+
+  </div>
+
+
+  <!-- =====================================================
+       ERROR
+  ====================================================== -->
+
+  <div
+    class="error-message"
+    *ngIf="errorMessage">
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- =====================================================
+       ADD / EDIT STOP FORM
+  ====================================================== -->
+
+  <div
+    class="form-card"
+    *ngIf="showForm">
+
+    <h2>
+      {{
+        editingStopId !== null
+          ? 'Edit Route Stop'
+          : 'Add Route Stop'
+      }}
+    </h2>
+
+
+    <div class="form-grid">
+
+
+      <!-- =================================================
+           STOP NAME / CITY
+      ================================================== -->
+
+      <div class="form-group">
+
+        <label>
+          Stop Name
+        </label>
+
+        <select
+          [(ngModel)]="stop.stop_name"
+          [disabled]="loadingCities || cities.length === 0">
+
+          <option value="">
+
+            {{
+              loadingCities
+                ? 'Loading cities...'
+                : 'Select City'
+            }}
+
+          </option>
+
+          <option
+            *ngFor="let city of cities"
+            [value]="city.name">
+
+            {{ city.name }}
+
+          </option>
+
+        </select>
+
+
+        <small
+          class="help-text"
+          *ngIf="
+            !loadingCities &&
+            cities.length === 0
+          ">
+
+          No cities available.
+          Please ask the admin to add cities.
+
+        </small>
+
+      </div>
+
+
+      <!-- =================================================
+           STOP ORDER
+      ================================================== -->
+
+      <div class="form-group">
+
+        <label>
+          Stop Order
+        </label>
+
+        <input
+          type="number"
+          [(ngModel)]="stop.stop_order"
+          min="1"
+          placeholder="1">
+
+      </div>
+
+
+      <!-- =================================================
+           ARRIVAL
+      ================================================== -->
+
+      <div class="form-group">
+
+        <label>
+          Arrival Time
+        </label>
+
+        <input
+          type="time"
+          [(ngModel)]="stop.arrival_time">
+
+      </div>
+
+
+      <!-- =================================================
+           DEPARTURE
+      ================================================== -->
+
+      <div class="form-group">
+
+        <label>
+          Departure Time
+        </label>
+
+        <input
+          type="time"
+          [(ngModel)]="stop.departure_time">
+
+      </div>
+
+    </div>
+
+
+    <!-- =====================================================
+         BOARDING / DROPPING
+    ====================================================== -->
+
+    <div class="checkbox-group">
+
+      <label>
+
+        <input
+          type="checkbox"
+          [(ngModel)]="stop.is_boarding_point">
+
+        Boarding Point
+
+      </label>
+
+
+      <label>
+
+        <input
+          type="checkbox"
+          [(ngModel)]="stop.is_dropping_point">
+
+        Dropping Point
+
+      </label>
+
+    </div>
+
+
+    <!-- =====================================================
+         ACTIONS
+    ====================================================== -->
+
+    <div class="form-actions">
+
+      <!-- SAVE / UPDATE -->
+
+      <button
+        type="button"
+        class="save-btn"
+        (click)="saveStop()"
+        [disabled]="
+          saving ||
+          loadingCities ||
+          cities.length === 0
+        ">
+
+        {{
+          saving
+            ? (
+                editingStopId !== null
+                  ? 'Updating...'
+                  : 'Adding...'
+              )
+            : (
+                editingStopId !== null
+                  ? 'Update Stop'
+                  : 'Add Stop'
+              )
+        }}
+
+      </button>
+
+
+      <!-- CANCEL -->
+
+      <button
+        type="button"
+        class="cancel-btn"
+        (click)="cancelForm()"
+        [disabled]="saving">
+
+        Cancel
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- =====================================================
+       STOPS TABLE
+  ====================================================== -->
+
+  <div class="table-card">
+
+
+    <!-- TABLE HEADER -->
+
+    <div class="table-header">
+
+      <h2>
+        Route Stops
+      </h2>
+
+      <span>
+        {{ stops.length }} Stops
+      </span>
+
+    </div>
+
+
+    <!-- ===================================================
+         LOADING
+    ==================================================== -->
+
+    <div
+      class="empty"
+      *ngIf="loading">
+
+      <p>
+        Loading stops...
+      </p>
+
+    </div>
+
+
+    <!-- ===================================================
+         EMPTY
+    ==================================================== -->
+
+    <div
+      class="empty"
+      *ngIf="
+        !loading &&
+        stops.length === 0
+      ">
+
+      <p>
+        No stops added for this route yet.
+      </p>
+
+      <button
+        type="button"
+        class="add-btn"
+        (click)="openAddForm()">
+
+        + Add First Stop
+
+      </button>
+
+    </div>
+
+
+    <!-- ===================================================
+         TABLE
+    ==================================================== -->
+
+    <table
+      *ngIf="
+        !loading &&
+        stops.length > 0
+      ">
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Order
+          </th>
+
+          <th>
+            Stop
+          </th>
+
+          <th>
+            Arrival
+          </th>
+
+          <th>
+            Departure
+          </th>
+
+          <th>
+            Boarding
+          </th>
+
+          <th>
+            Dropping
+          </th>
+
+          <th>
+            Action
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr
+          *ngFor="let item of stops">
+
+
+          <!-- ORDER -->
+
+          <td>
+            {{ item.stop_order }}
+          </td>
+
+
+          <!-- STOP -->
+
+          <td>
+
+            <strong>
+              {{ item.stop_name }}
+            </strong>
+
+          </td>
+
+
+          <!-- ARRIVAL -->
+
+          <td>
+            {{ item.arrival_time || '-' }}
+          </td>
+
+
+          <!-- DEPARTURE -->
+
+          <td>
+            {{ item.departure_time || '-' }}
+          </td>
+
+
+          <!-- BOARDING -->
+
+          <td>
+
+            <span
+              *ngIf="item.is_boarding_point"
+              class="yes">
+
+              Yes
+
+            </span>
+
+            <span
+              *ngIf="!item.is_boarding_point"
+              class="no">
+
+              No
+
+            </span>
+
+          </td>
+
+
+          <!-- DROPPING -->
+
+          <td>
+
+            <span
+              *ngIf="item.is_dropping_point"
+              class="yes">
+
+              Yes
+
+            </span>
+
+            <span
+              *ngIf="!item.is_dropping_point"
+              class="no">
+
+              No
+
+            </span>
+
+          </td>
+
+
+          <!-- =================================================
+               EDIT / DELETE
+          ================================================== -->
+
+          <td class="action-buttons">
+
+            <button
+              type="button"
+              class="edit-btn"
+              (click)="editStop(item)">
+
+              Edit
+
+            </button>
+
+
+            <button
+              type="button"
+              class="delete-btn"
+              (click)="deleteStop(item.id)">
+
+              Delete
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

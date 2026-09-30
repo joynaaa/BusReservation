@@ -1,0 +1,435 @@
+<div class="page">
+
+  <!-- HEADER -->
+<div class="page-header">
+
+  <div class="header-left">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goToDashboard()">
+      ← Back to Dashboard
+    </button>
+
+    <div class="heading-content">
+
+      <h1>
+        Manage Schedules
+      </h1>
+
+      <p>
+        Manage bus schedules, routes, operating days and fares
+      </p>
+
+    </div>
+
+  </div>
+
+  <button
+    class="add-btn"
+    type="button"
+    (click)="addSchedule()">
+
+    + Add Schedule
+
+  </button>
+
+</div>
+  <!-- =====================================================
+       FORM
+  ====================================================== -->
+
+  <div
+    class="form-card"
+    *ngIf="showForm"
+  >
+
+    <h2>
+
+      {{
+        editing
+          ? 'Edit Schedule'
+          : 'Add New Schedule'
+      }}
+
+    </h2>
+
+
+    <div class="form-grid">
+
+      <!-- BUS -->
+
+      <div class="form-group">
+
+        <label>
+          Bus
+        </label>
+
+        <select
+          [(ngModel)]="scheduleForm.bus"
+        >
+
+          <option [ngValue]="null">
+            Select Bus
+          </option>
+
+          <option
+            *ngFor="let bus of buses"
+            [ngValue]="bus.id"
+          >
+
+            {{ bus.bus_name }}
+            -
+            {{ bus.bus_number }}
+
+          </option>
+
+        </select>
+
+      </div>
+
+
+      <!-- ROUTE -->
+<div class="form-group">
+
+  <label>
+    Route
+  </label>
+
+  <select
+    [(ngModel)]="scheduleForm.route"
+  >
+
+    <option [ngValue]="null">
+      Select Route
+    </option>
+
+    <option
+      *ngFor="let route of routes"
+      [ngValue]="route.id"
+    >
+
+      {{ route.source }}
+      →
+      {{ route.destination }}
+
+    </option>
+
+  </select>
+
+</div>
+
+
+      <!-- STATUS -->
+
+      <div class="form-group">
+
+        <label>
+          Status
+        </label>
+
+        <select
+          [(ngModel)]="scheduleForm.is_active"
+        >
+
+          <option [ngValue]="true">
+            Active
+          </option>
+
+          <option [ngValue]="false">
+            Inactive
+          </option>
+
+        </select>
+
+      </div>
+
+    </div>
+
+
+    <!-- OPERATING DAYS -->
+
+    <div class="days-section">
+
+      <label class="days-title">
+        Operating Days
+      </label>
+
+      <p class="days-help">
+        Select the days on which this bus operates.
+      </p>
+
+
+      <div class="days-grid">
+
+        <label
+          class="day-option"
+          *ngFor="let day of availableDays"
+        >
+
+          <input
+            type="checkbox"
+            [checked]="isDaySelected(day)"
+            (change)="toggleDay(day)"
+          >
+
+          <span>
+            {{ day }}
+          </span>
+
+        </label>
+
+      </div>
+
+    </div>
+
+
+    <!-- ACTIONS -->
+
+    <div class="form-actions">
+
+      <button
+        class="save-btn"
+        (click)="saveSchedule()"
+      >
+
+        {{
+          editing
+            ? 'Update Schedule'
+            : 'Add Schedule'
+        }}
+
+      </button>
+
+
+      <button
+        class="cancel-btn"
+        (click)="cancelForm()"
+      >
+
+        Cancel
+
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <!-- LOADING -->
+
+  <div
+    class="loading"
+    *ngIf="loading"
+  >
+
+    Loading schedules...
+
+  </div>
+
+
+  <!-- TABLE -->
+
+  <div
+    class="table-container"
+    *ngIf="!loading"
+  >
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>#</th>
+
+          <th>Bus</th>
+
+          <th>Route</th>
+
+          <th>Operating Days</th>
+
+          <th>Status</th>
+
+          <th>Actions</th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr
+          *ngFor="
+            let schedule of schedules;
+            let i = index
+          "
+        >
+
+          <td>
+            {{ i + 1 }}
+          </td>
+
+
+          <!-- BUS -->
+
+          <td>
+
+            <strong class="bus-name">
+
+              {{ schedule.bus_name }}
+
+            </strong>
+
+            <span class="bus-number">
+
+              {{ schedule.bus_number }}
+
+            </span>
+
+          </td>
+
+
+          <!-- ROUTE -->
+
+          <td>
+
+            <strong class="route">
+
+              {{ schedule.source }}
+
+              →
+
+              {{ schedule.destination }}
+
+            </strong>
+
+          </td>
+
+
+          <!-- DAYS -->
+
+          <td>
+
+            <div
+              class="days-list"
+              *ngIf="
+                schedule.operating_days &&
+                schedule.operating_days.length
+              "
+            >
+
+              <span
+                class="day-badge"
+                *ngFor="
+                  let day of schedule.operating_days
+                "
+              >
+
+                {{ day.day }}
+
+              </span>
+
+            </div>
+
+
+            <span
+              class="no-days"
+              *ngIf="
+                !schedule.operating_days ||
+                schedule.operating_days.length === 0
+              "
+            >
+
+              No days set
+
+            </span>
+
+          </td>
+
+
+          <!-- STATUS -->
+
+          <td>
+
+            <span
+              class="status"
+              [class.active]="schedule.is_active"
+              [class.inactive]="!schedule.is_active"
+            >
+
+              {{
+                schedule.is_active
+                  ? 'Active'
+                  : 'Inactive'
+              }}
+
+            </span>
+
+          </td>
+
+
+          <!-- ACTIONS -->
+
+          <td class="actions">
+
+            <button
+              class="edit"
+              (click)="editSchedule(schedule)"
+            >
+
+              Edit
+
+            </button>
+
+
+            <button
+              class="fare"
+              (click)="manageFares(schedule)"
+            >
+
+              Fares
+
+            </button>
+
+
+            <button
+              class="delete"
+              (click)="deleteSchedule(schedule)"
+            >
+
+              Delete
+
+            </button>
+
+          </td>
+
+        </tr>
+
+
+        <!-- EMPTY -->
+
+        <tr
+          *ngIf="schedules.length === 0"
+        >
+
+          <td
+            colspan="6"
+            class="no-data"
+          >
+
+            No schedules found.
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

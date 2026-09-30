@@ -1,0 +1,329 @@
+<div class="ticket-page">
+
+  <div class="ticket-container">
+
+    <!-- Loading -->
+    <div *ngIf="loading" class="loading">
+      <div class="spinner"></div>
+      <p>Loading your ticket...</p>
+    </div>
+
+
+    <!-- Error -->
+    <div *ngIf="errorMessage && !loading" class="error">
+      {{ errorMessage }}
+    </div>
+
+
+    <!-- TICKET -->
+    <div
+      class="ticket-card"
+      id="ticketToPrint"
+      *ngIf="ticket && !loading">
+
+      <!-- ==============================
+           TICKET HEADER
+      =============================== -->
+
+      <div class="ticket-header">
+
+        <div class="brand-section">
+
+          <div class="bus-icon">
+            🚌
+          </div>
+
+          <div>
+            <h1>BUS TICKET</h1>
+            <p>Booking Confirmation</p>
+          </div>
+
+        </div>
+
+        <div class="confirmed-badge">
+          CONFIRMED
+        </div>
+
+      </div>
+
+
+      <!-- ==============================
+           JOURNEY
+      =============================== -->
+
+      <div class="journey-section">
+
+        <div class="city">
+
+          <span>FROM</span>
+
+          <strong>
+            {{ ticket.source || ticket.from_stop_name || 'Source' }}
+          </strong>
+
+        </div>
+
+
+        <div class="journey-line">
+
+          <div class="line"></div>
+
+          <span>🚌</span>
+
+          <div class="line"></div>
+
+        </div>
+
+
+        <div class="city">
+
+          <span>TO</span>
+
+          <strong>
+            {{ ticket.destination || ticket.to_stop_name || 'Destination' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- ==============================
+           TRAVEL DETAILS
+      =============================== -->
+
+      <div class="travel-details">
+
+        <div class="travel-detail">
+
+          <span>TRAVEL DATE</span>
+
+          <strong>
+            {{ ticket.travel_date || ticket.booking_travel_date || '—' }}
+          </strong>
+
+        </div>
+
+
+        <div class="travel-detail">
+
+          <span>BUS</span>
+
+          <strong>
+            {{ ticket.bus_name || 'Bus' }}
+          </strong>
+
+        </div>
+
+
+        <div class="travel-detail">
+
+          <span>BUS NUMBER</span>
+
+          <strong>
+            {{ ticket.bus_number || '—' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- ==============================
+           TICKET INFORMATION
+      =============================== -->
+
+      <div class="section-title">
+        Ticket Details
+      </div>
+
+
+      <div class="ticket-information">
+
+        <div class="info-column">
+
+          <div class="info-row">
+
+            <span>Ticket ID</span>
+
+            <strong>
+              {{ ticket.ticket_id }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-row">
+
+            <span>Booking ID</span>
+
+            <strong>
+              #{{ ticket.booking }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-row">
+
+            <span>Passenger</span>
+
+            <strong>
+              {{ ticket.passenger_name }}
+            </strong>
+
+          </div>
+
+
+          <div class="info-row">
+
+            <span>Seat</span>
+
+            <strong class="seat-number">
+              {{ ticket.seat_numbers }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+        <!-- QR -->
+
+        <div class="qr-section">
+
+          <img
+            *ngIf="ticket.qr_code"
+            [src]="'http://127.0.0.1:8000' + ticket.qr_code"
+            alt="Ticket QR Code">
+
+          <p>
+            Scan to verify ticket
+          </p>
+
+        </div>
+
+      </div>
+
+
+      <!-- ==============================
+           FARE
+      =============================== -->
+
+      <div class="fare-section">
+
+        <div>
+
+          <span>Ticket Fare</span>
+
+          <strong>
+            ₹{{ ticket.ticket_price || ticket.amount }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>Amount Paid</span>
+
+          <strong>
+            ₹{{ ticket.payment_amount || ticket.amount }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- ==============================
+           PAYMENT STATUS
+      =============================== -->
+
+      <div class="payment-status">
+
+        <div>
+
+          <span>Payment Status</span>
+
+          <strong>
+            {{ ticket.payment_status || 'SUCCESS' }}
+          </strong>
+
+        </div>
+
+
+        <div>
+
+          <span>Booking Status</span>
+
+          <strong>
+            {{ ticket.booking_status || 'CONFIRMED' }}
+          </strong>
+
+        </div>
+
+      </div>
+
+
+      <!-- ==============================
+           FOOTER
+      =============================== -->
+
+      <div class="ticket-footer">
+
+        <p>
+          Please carry a valid ID proof while travelling.
+        </p>
+
+        <p>
+          Please arrive at the boarding point before departure.
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <!-- ==============================
+         ACTION BUTTONS
+    =============================== -->
+
+    <div
+      class="ticket-actions"
+      *ngIf="ticket && !loading">
+
+      <button
+        class="download-btn"
+        type="button"
+        (click)="downloadTicket()">
+
+        ⬇ Download Ticket
+
+      </button>
+
+
+      <button
+        class="home-btn"
+        type="button"
+        (click)="goHome()">
+
+        Back to Home
+
+      </button>
+
+
+      <button
+        class="bookings-btn"
+        type="button"
+        (click)="goToBookings()">
+
+        My Bookings
+
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

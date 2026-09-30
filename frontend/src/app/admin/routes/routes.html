@@ -1,0 +1,833 @@
+<div class="page">
+
+
+  <!-- ===================================================== -->
+  <!-- HEADER -->
+  <!-- ===================================================== -->
+
+<div class="page-header">
+
+  <div class="header-left">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goToDashboard()">
+      ← Back to Dashboard
+    </button>
+
+    <div class="heading-content">
+      <h1>Manage Routes</h1>
+      <p>Add, edit and manage bus routes</p>
+    </div>
+
+  </div>
+
+  <button
+    type="button"
+    class="add-btn"
+    (click)="addRoute()">
+    + Add Route
+  </button>
+
+</div>
+
+  <!-- ===================================================== -->
+  <!-- ADD / EDIT ROUTE -->
+  <!-- ===================================================== -->
+
+  <div
+    class="form-card"
+    *ngIf="showForm">
+
+
+    <h2>
+
+      {{ editing ? 'Edit Route' : 'Add New Route' }}
+
+    </h2>
+
+
+    <div class="form-grid">
+
+
+      <!-- ================================================= -->
+      <!-- SOURCE -->
+      <!-- ================================================= -->
+
+      <div>
+
+        <label for="source">
+
+          Source
+
+          <span class="required">
+            *
+          </span>
+
+        </label>
+
+
+        <select
+          id="source"
+          name="source"
+          [(ngModel)]="routeForm.source"
+          (change)="validateSource()"
+          [class.invalid]="sourceError">
+
+
+          <option
+            value=""
+            disabled>
+
+            {{
+              loadingCities
+                ? 'Loading cities...'
+                : 'Select source city'
+            }}
+
+          </option>
+
+
+          <option
+            *ngFor="let city of cities"
+            [value]="city.name">
+
+            {{ city.name }}
+
+          </option>
+
+
+        </select>
+
+
+        <small
+          class="field-error"
+          *ngIf="sourceError">
+
+          {{ sourceError }}
+
+        </small>
+
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- DESTINATION -->
+      <!-- ================================================= -->
+
+      <div>
+
+        <label for="destination">
+
+          Destination
+
+          <span class="required">
+            *
+          </span>
+
+        </label>
+
+
+        <select
+          id="destination"
+          name="destination"
+          [(ngModel)]="routeForm.destination"
+          (change)="validateDestination()"
+          [class.invalid]="destinationError">
+
+
+          <option
+            value=""
+            disabled>
+
+            {{
+              loadingCities
+                ? 'Loading cities...'
+                : 'Select destination city'
+            }}
+
+          </option>
+
+
+          <option
+            *ngFor="let city of cities"
+            [value]="city.name"
+            [disabled]="
+              city.name === routeForm.source
+            ">
+
+            {{ city.name }}
+
+          </option>
+
+
+        </select>
+
+
+        <small
+          class="field-error"
+          *ngIf="destinationError">
+
+          {{ destinationError }}
+
+        </small>
+
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- DISTANCE -->
+      <!-- ================================================= -->
+
+      <div>
+
+        <label for="distance">
+
+          Distance (KM)
+
+          <span class="required">
+            *
+          </span>
+
+        </label>
+
+
+        <input
+          id="distance"
+          name="distance"
+          type="number"
+          [(ngModel)]="routeForm.distance"
+          (input)="validateDistance()"
+          (blur)="validateDistance()"
+          min="1"
+          max="5000"
+          step="0.1"
+          placeholder="190"
+          [class.invalid]="distanceError"
+        />
+
+
+        <small class="hint">
+
+          Enter distance between 1 and 5000 KM.
+
+        </small>
+
+
+        <small
+          class="field-error"
+          *ngIf="distanceError">
+
+          {{ distanceError }}
+
+        </small>
+
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- DURATION -->
+      <!-- ================================================= -->
+
+      <div>
+
+        <label for="duration">
+
+          Duration
+
+          <span class="required">
+            *
+          </span>
+
+        </label>
+
+
+        <input
+          id="duration"
+          name="duration"
+          type="text"
+          [(ngModel)]="routeForm.duration"
+          (input)="validateDuration()"
+          (blur)="validateDuration()"
+          maxlength="50"
+          placeholder="5 hours"
+          [class.invalid]="durationError"
+        />
+
+
+        <small class="hint">
+
+          Example: 5 hours or 2h 30m.
+
+        </small>
+
+
+        <small
+          class="field-error"
+          *ngIf="durationError">
+
+          {{ durationError }}
+
+        </small>
+
+      </div>
+
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- ROUTE BUTTONS -->
+    <!-- ================================================= -->
+
+    <div class="form-actions">
+
+
+      <button
+        type="button"
+        class="save-btn"
+        (click)="saveRoute()"
+        [disabled]="!isFormValid() || saving">
+
+
+        <span *ngIf="!saving">
+
+          {{ editing ? 'Update Route' : 'Add Route' }}
+
+        </span>
+
+
+        <span *ngIf="saving">
+
+          {{ editing ? 'Updating...' : 'Adding...' }}
+
+        </span>
+
+
+      </button>
+
+
+      <button
+        type="button"
+        class="cancel-btn"
+        (click)="cancelForm()"
+        [disabled]="saving">
+
+        Cancel
+
+      </button>
+
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- STOPS -->
+    <!-- ================================================= -->
+
+    <div
+      class="stops-section"
+      *ngIf="editingRouteId">
+
+
+      <div class="stops-header">
+
+        <div>
+
+          <h3>
+            Route Stops
+          </h3>
+
+          <p>
+            Add boarding and dropping points for this route.
+          </p>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- ADD STOP FORM -->
+      <!-- ================================================= -->
+
+      <div class="stop-form">
+
+
+        <!-- Stop Name -->
+
+        <div class="stop-field">
+
+          <label>
+
+            Stop Name
+
+            <span class="required">
+              *
+            </span>
+
+          </label>
+
+
+          <input
+            type="text"
+            name="stopName"
+            [(ngModel)]="stopForm.stop_name"
+            (input)="validateStopName()"
+            (blur)="validateStopName()"
+            placeholder="Angamaly"
+            maxlength="100"
+            [class.invalid]="stopNameError"
+          />
+
+
+          <small
+            class="field-error"
+            *ngIf="stopNameError">
+
+            {{ stopNameError }}
+
+          </small>
+
+        </div>
+
+
+
+        <!-- Stop Order -->
+
+        <div class="stop-field">
+
+          <label>
+
+            Stop Order
+
+            <span class="required">
+              *
+            </span>
+
+          </label>
+
+
+          <input
+            type="number"
+            name="stopOrder"
+            [(ngModel)]="stopForm.stop_order"
+            (input)="validateStopOrder()"
+            min="1"
+            step="1"
+            [class.invalid]="stopOrderError"
+          />
+
+
+          <small
+            class="field-error"
+            *ngIf="stopOrderError">
+
+            {{ stopOrderError }}
+
+          </small>
+
+        </div>
+
+
+
+        <!-- Arrival -->
+
+        <div class="stop-field">
+
+          <label>
+            Arrival Time
+          </label>
+
+
+          <input
+            type="time"
+            name="arrivalTime"
+            [(ngModel)]="stopForm.arrival_time"
+            (change)="validateStopTimes()"
+          />
+
+        </div>
+
+
+
+        <!-- Departure -->
+
+        <div class="stop-field">
+
+          <label>
+            Departure Time
+          </label>
+
+
+          <input
+            type="time"
+            name="departureTime"
+            [(ngModel)]="stopForm.departure_time"
+            (change)="validateStopTimes()"
+          />
+
+        </div>
+
+
+        <!-- Stop Time Error -->
+
+        <div
+          class="stop-time-error"
+          *ngIf="stopTimeError">
+
+          {{ stopTimeError }}
+
+        </div>
+
+
+
+        <!-- Boarding -->
+
+        <label class="checkbox-field">
+
+          <input
+            type="checkbox"
+            name="boarding"
+            [(ngModel)]="stopForm.is_boarding_point"
+          />
+
+          Boarding Point
+
+        </label>
+
+
+
+        <!-- Dropping -->
+
+        <label class="checkbox-field">
+
+          <input
+            type="checkbox"
+            name="dropping"
+            [(ngModel)]="stopForm.is_dropping_point"
+          />
+
+          Dropping Point
+
+        </label>
+
+
+
+        <!-- Add Stop -->
+
+        <button
+          type="button"
+          class="add-stop-btn"
+          (click)="addStop()"
+          [disabled]="savingStop">
+
+
+          {{
+            savingStop
+              ? 'Adding...'
+              : '+ Add Stop'
+          }}
+
+
+        </button>
+
+
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- STOP LIST -->
+      <!-- ================================================= -->
+
+      <div class="stops-list">
+
+
+        <div
+          class="loading-stops"
+          *ngIf="loadingStops">
+
+          Loading stops...
+
+        </div>
+
+
+
+        <div
+          class="no-stops"
+          *ngIf="
+            !loadingStops &&
+            stops.length === 0
+          ">
+
+          No stops added yet.
+
+        </div>
+
+
+
+        <div
+          class="stop-item"
+          *ngFor="let stop of stops">
+
+
+          <div class="stop-order">
+
+            {{ stop.stop_order }}
+
+          </div>
+
+
+          <div class="stop-info">
+
+            <strong>
+
+              {{ stop.stop_name }}
+
+            </strong>
+
+
+            <span>
+
+              <span
+                *ngIf="stop.arrival_time">
+
+                Arrival:
+                {{ stop.arrival_time }}
+
+              </span>
+
+
+              <span
+                *ngIf="
+                  stop.arrival_time &&
+                  stop.departure_time
+                ">
+
+                &nbsp; | &nbsp;
+
+              </span>
+
+
+              <span
+                *ngIf="stop.departure_time">
+
+                Departure:
+                {{ stop.departure_time }}
+
+              </span>
+
+            </span>
+
+
+            <div class="stop-badges">
+
+
+              <span
+                class="badge boarding"
+                *ngIf="stop.is_boarding_point">
+
+                Boarding
+
+              </span>
+
+
+              <span
+                class="badge dropping"
+                *ngIf="stop.is_dropping_point">
+
+                Dropping
+
+              </span>
+
+
+            </div>
+
+          </div>
+
+
+          <button
+            type="button"
+            class="delete-stop-btn"
+            (click)="deleteStop(stop)">
+
+            Delete
+
+          </button>
+
+
+        </div>
+
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+
+
+  <!-- ===================================================== -->
+  <!-- LOADING -->
+  <!-- ===================================================== -->
+
+  <div
+    class="loading"
+    *ngIf="loading">
+
+    Loading routes...
+
+  </div>
+
+
+
+  <!-- ===================================================== -->
+  <!-- ROUTE TABLE -->
+  <!-- ===================================================== -->
+
+  <div
+    class="table-container"
+    *ngIf="!loading">
+
+
+    <table>
+
+
+      <thead>
+
+        <tr>
+
+          <th>#</th>
+
+          <th>Source</th>
+
+          <th>Destination</th>
+
+          <th>Distance</th>
+
+          <th>Duration</th>
+
+          <th>Actions</th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+
+        <tr
+          *ngFor="
+            let route of routes;
+            let i = index
+          ">
+
+
+          <td>
+
+            {{ i + 1 }}
+
+          </td>
+
+
+          <td>
+
+            <strong>
+
+              {{ route.source }}
+
+            </strong>
+
+          </td>
+
+
+          <td>
+
+            <strong>
+
+              {{ route.destination }}
+
+            </strong>
+
+          </td>
+
+
+          <td>
+
+            {{ route.distance }} km
+
+          </td>
+
+
+          <td>
+
+            {{ route.duration }}
+
+          </td>
+
+
+          <td class="actions">
+
+
+            <button
+              type="button"
+              class="edit"
+              (click)="editRoute(route)">
+
+              Edit
+
+            </button>
+
+
+            <button
+              type="button"
+              class="delete"
+              (click)="deleteRoute(route)">
+
+              Delete
+
+            </button>
+
+
+          </td>
+
+
+        </tr>
+
+
+        <tr
+          *ngIf="routes.length === 0">
+
+
+          <td
+            colspan="6"
+            class="no-data">
+
+            No routes found.
+
+          </td>
+
+
+        </tr>
+
+
+      </tbody>
+
+
+    </table>
+
+
+  </div>
+
+
+</div>

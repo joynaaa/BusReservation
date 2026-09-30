@@ -1,0 +1,413 @@
+<div class="bookings-page">
+
+  <!-- =====================================================
+       PAGE HEADER
+  ====================================================== -->
+<div class="page-header">
+
+  <div class="header-left">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goToDashboard()">
+
+      ← Back to Dashboard
+
+    </button>
+
+    <div>
+
+      <h1>My Bus Bookings</h1>
+
+      <p>
+        View bookings made for your buses
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <div class="booking-count">
+
+    {{ bookings.length }}
+
+    {{ bookings.length === 1 ? 'Booking' : 'Bookings' }}
+
+  </div>
+
+</div>
+
+  <!-- =====================================================
+       ERROR MESSAGE
+  ====================================================== -->
+
+  <div
+    class="error-message"
+    *ngIf="errorMessage">
+
+    {{ errorMessage }}
+
+  </div>
+
+
+
+  <!-- =====================================================
+       TABLE CARD
+  ====================================================== -->
+
+  <div class="table-card">
+
+
+    <!-- ===================================================
+         LOADING
+    ==================================================== -->
+
+    <div
+      class="loading"
+      *ngIf="loading">
+
+      <div class="loading-icon">
+        ⏳
+      </div>
+
+      <h3>
+        Loading Bookings...
+      </h3>
+
+      <p>
+        Please wait while we load bookings for your buses.
+      </p>
+
+    </div>
+
+
+
+    <!-- ===================================================
+         EMPTY
+    ==================================================== -->
+
+    <div
+      class="empty"
+      *ngIf="
+        !loading &&
+        bookings.length === 0
+      ">
+
+      <div class="empty-icon">
+        🎫
+      </div>
+
+      <h3>
+        No Bookings Found
+      </h3>
+
+      <p>
+        There are no bookings for your buses yet.
+      </p>
+
+    </div>
+
+
+
+    <!-- ===================================================
+         BOOKINGS TABLE
+    ==================================================== -->
+
+    <div
+      class="table-wrapper"
+      *ngIf="
+        !loading &&
+        bookings.length > 0
+      ">
+
+      <table>
+
+        <!-- =================================================
+             HEADER
+        ================================================== -->
+
+        <thead>
+
+          <tr>
+
+            <th>
+              Booking ID
+            </th>
+
+            <th>
+              Customer
+            </th>
+
+            <th>
+              Bus
+            </th>
+
+            <th>
+              Route
+            </th>
+
+            <th>
+              Seat
+            </th>
+
+            <th>
+              Amount
+            </th>
+
+            <th>
+              Booking Date
+            </th>
+
+            <th>
+              Payment
+            </th>
+
+            <th>
+              Status
+            </th>
+
+          </tr>
+
+        </thead>
+
+
+
+        <!-- =================================================
+             BODY
+        ================================================== -->
+
+        <tbody>
+
+          <tr
+            *ngFor="let booking of bookings">
+
+
+            <!-- =============================================
+                 BOOKING ID
+            ============================================== -->
+
+            <td>
+
+              <strong class="booking-id">
+
+                B{{ booking.booking_id }}
+
+              </strong>
+
+            </td>
+
+
+
+            <!-- =============================================
+                 CUSTOMER
+            ============================================== -->
+
+            <td>
+
+              <div class="customer">
+
+                <div class="customer-icon">
+                  👤
+                </div>
+
+
+                <div>
+
+                  <strong>
+
+                    {{
+                      booking.passenger_name ||
+                      booking.customer ||
+                      'Customer'
+                    }}
+
+                  </strong>
+
+
+                  <small>
+
+                    {{
+                      booking.customer_username ||
+                      booking.customer ||
+                      ''
+                    }}
+
+                  </small>
+
+                </div>
+
+              </div>
+
+            </td>
+
+
+
+            <!-- =============================================
+                 BUS
+            ============================================== -->
+
+            <td>
+
+              <strong>
+
+                {{ booking.bus }}
+
+              </strong>
+
+
+              <small class="bus-number">
+
+                {{ booking.bus_number }}
+
+              </small>
+
+            </td>
+
+
+
+            <!-- =============================================
+                 ROUTE
+            ============================================== -->
+
+            <td>
+
+              <span class="route">
+
+                {{ booking.source }}
+
+                →
+
+                {{ booking.destination }}
+
+              </span>
+
+            </td>
+
+
+
+            <!-- =============================================
+                 SEAT
+            ============================================== -->
+
+            <td>
+
+              <span class="seat-badge">
+
+                {{ booking.seat }}
+
+              </span>
+
+            </td>
+
+
+
+            <!-- =============================================
+                 AMOUNT
+            ============================================== -->
+
+            <td>
+
+              <strong class="amount">
+
+                ₹{{ booking.total_amount }}
+
+              </strong>
+
+            </td>
+
+
+
+            <!-- =============================================
+                 BOOKING DATE
+            ============================================== -->
+
+            <td>
+
+              <span class="booking-date">
+
+                {{ booking.booking_date | date:'dd MMM yyyy' }}
+
+              </span>
+
+
+              <small
+                class="booking-time">
+
+                {{ booking.booking_date | date:'hh:mm a' }}
+
+              </small>
+
+            </td>
+
+
+
+            <!-- =============================================
+                 PAYMENT
+            ============================================== -->
+
+            <td>
+
+              <span
+                class="payment-badge"
+
+                [class.paid]="
+                  booking.payment_status === 'PAID'
+                "
+
+                [class.pending]="
+                  booking.payment_status === 'PENDING'
+                "
+
+                [class.failed]="
+                  booking.payment_status === 'FAILED'
+                "
+
+                [class.refunded]="
+                  booking.payment_status === 'REFUNDED'
+                ">
+
+                {{ booking.payment_status }}
+
+              </span>
+
+            </td>
+
+
+
+            <!-- =============================================
+                 STATUS
+            ============================================== -->
+
+            <td>
+
+              <span
+                class="status-badge"
+
+                [class.confirmed]="
+                  booking.booking_status === 'CONFIRMED'
+                "
+
+                [class.cancelled]="
+                  booking.booking_status === 'CANCELLED'
+                ">
+
+                {{ booking.booking_status }}
+
+              </span>
+
+            </td>
+
+
+          </tr>
+
+        </tbody>
+
+      </table>
+
+    </div>
+
+  </div>
+
+</div>

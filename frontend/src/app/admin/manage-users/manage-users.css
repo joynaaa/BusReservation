@@ -1,0 +1,643 @@
+/* =========================================================
+   MANAGE USERS PAGE
+========================================================= */
+
+:host {
+  display: block;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+}
+
+.page-header {
+  margin-bottom: 25px;
+}
+
+.header-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 17px;
+}
+
+.page-header h1 {
+  margin: 0;
+
+  color: #036b7d;
+
+  font-size: 30px;
+  font-weight: 700;
+
+  letter-spacing: -0.3px;
+}
+
+.page-header p {
+  margin: 7px 0 0;
+
+  color: #66858b;
+
+  font-size: 14px;
+}
+
+
+/* =========================================================
+   BACK BUTTON
+========================================================= */
+
+.back-btn {
+  border: 1px solid rgba(3, 107, 125, 0.14);
+  outline: none;
+
+  padding: 10px 18px;
+
+  border-radius: 10px;
+
+  background: rgba(255, 255, 255, 0.85);
+  color: #036b7d;
+
+  font-family: "Segoe UI", sans-serif;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  box-shadow:
+    0 5px 15px rgba(3, 107, 125, 0.08);
+
+  transition: all 0.25s ease;
+}
+
+.back-btn:hover {
+  background: #036b7d;
+  color: #ffffff;
+
+  transform: translateX(-3px);
+
+  box-shadow:
+    0 8px 20px rgba(3, 107, 125, 0.20);
+}
+
+
+/* =========================================================
+   TABLE CONTAINER
+========================================================= */
+
+.table-container {
+  width: 100%;
+
+  overflow-x: auto;
+
+  background: rgba(255, 255, 255, 0.84);
+
+  border: 1px solid rgba(255, 255, 255, 0.78);
+
+  border-radius: 18px;
+
+  box-shadow:
+    0 12px 35px rgba(3, 107, 125, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.75);
+
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+
+/* =========================================================
+   TABLE
+========================================================= */
+
+.table-container table {
+  width: 100%;
+
+  min-width: 1100px;
+
+  border-collapse: collapse;
+
+  font-family: "Segoe UI", sans-serif;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   TABLE HEADER
+========================================================= */
+
+.table-container thead {
+  background: linear-gradient(
+    135deg,
+    #036b7d,
+    #07899b
+  );
+}
+
+.table-container th {
+  padding: 16px 15px;
+
+  color: #ffffff;
+
+  font-size: 12px;
+  font-weight: 650;
+
+  text-align: left;
+
+  white-space: nowrap;
+}
+
+
+/* =========================================================
+   TABLE BODY
+========================================================= */
+
+.table-container tbody tr {
+  border-bottom: 1px solid #e5eff1;
+
+  transition: background 0.2s ease;
+}
+
+.table-container tbody tr:last-child {
+  border-bottom: none;
+}
+
+.table-container tbody tr:hover {
+  background: #f3fafb;
+}
+
+.table-container td {
+  padding: 15px;
+
+  color: #45666d;
+
+  vertical-align: middle;
+}
+
+
+/* =========================================================
+   USER INFO
+========================================================= */
+
+.user-info {
+  display: flex;
+
+  align-items: center;
+
+  gap: 11px;
+
+  min-width: 170px;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #e6f6f8;
+
+  color: #036b7d;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  border: 1px solid #c8e6ea;
+}
+
+.username {
+  color: #285961;
+
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.fullname {
+  margin-top: 3px;
+
+  color: #8a9ea2;
+
+  font-size: 11px;
+}
+
+
+/* =========================================================
+   EMAIL
+========================================================= */
+
+.email {
+  color: #45666d;
+
+  font-size: 12px;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   ADDRESS
+========================================================= */
+
+.address {
+  display: block;
+
+  max-width: 180px;
+
+  color: #5d777d;
+
+  font-size: 12px;
+
+  line-height: 1.5;
+
+  word-break: break-word;
+}
+
+
+/* =========================================================
+   ROLE BADGE
+========================================================= */
+
+.role-badge {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  background: #eaf7f9;
+
+  border: 1px solid #c9e7eb;
+
+  color: #036b7d;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 0.4px;
+}
+
+
+/* =========================================================
+   ACTIONS
+========================================================= */
+
+.actions {
+  display: flex;
+
+  align-items: center;
+
+  gap: 7px;
+
+  white-space: nowrap;
+}
+
+.actions button {
+  border-radius: 8px;
+
+  padding: 7px 11px;
+
+  font-family: "Segoe UI", sans-serif;
+
+  font-size: 11px;
+  font-weight: 650;
+
+  cursor: pointer;
+
+  transition: all 0.2s ease;
+}
+
+
+/* =========================================================
+   EDIT BUTTON
+========================================================= */
+
+.edit-btn {
+  border: 1px solid #b9dce1;
+
+  background: #eaf7f9;
+  color: #036b7d;
+}
+
+.edit-btn:hover {
+  background: #036b7d;
+  color: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   DELETE BUTTON
+========================================================= */
+
+.delete-btn {
+  border: 1px solid #efc0c0;
+
+  background: #fff0f0;
+  color: #c62828;
+}
+
+.delete-btn:hover:not(:disabled) {
+  background: #c62828;
+  color: #ffffff;
+
+  transform: translateY(-1px);
+}
+
+.delete-btn:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   SAVE BUTTON
+========================================================= */
+
+.save-btn {
+  border: none;
+
+  background: linear-gradient(
+    135deg,
+    #036b7d,
+    #07899b
+  );
+
+  color: #ffffff;
+
+  box-shadow:
+    0 5px 12px rgba(3, 107, 125, 0.15);
+}
+
+.save-btn:hover:not(:disabled) {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 7px 16px rgba(3, 107, 125, 0.22);
+}
+
+.save-btn:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   CANCEL BUTTON
+========================================================= */
+
+.cancel-btn {
+  border: 1px solid #d4e3e6;
+
+  background: #ffffff;
+  color: #607f85;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  background: #f1f7f8;
+
+  border-color: #b9d4d8;
+
+  color: #345e66;
+}
+
+.cancel-btn:disabled {
+  opacity: 0.5;
+
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   EDIT INPUT
+========================================================= */
+
+.edit-input {
+  width: 100%;
+
+  min-width: 130px;
+
+  min-height: 38px;
+
+  padding: 7px 10px;
+
+  box-sizing: border-box;
+
+  border: 1px solid #cfe2e6;
+
+  border-radius: 8px;
+
+  background: #ffffff;
+
+  color: #294e55;
+
+  font-family: "Segoe UI", sans-serif;
+
+  font-size: 12px;
+
+  outline: none;
+
+  transition: all 0.2s ease;
+}
+
+.edit-input:hover {
+  border-color: #8bc5cd;
+}
+
+.edit-input:focus {
+  border-color: #036b7d;
+
+  box-shadow:
+    0 0 0 3px rgba(3, 107, 125, 0.09);
+}
+
+
+/* =========================================================
+   INVALID INPUT
+========================================================= */
+
+.edit-input.invalid {
+  border-color: #d9534f;
+
+  background: #fff8f8;
+}
+
+.edit-input.invalid:focus {
+  box-shadow:
+    0 0 0 3px rgba(198, 40, 40, 0.08);
+}
+
+
+/* =========================================================
+   FIELD ERROR
+========================================================= */
+
+.field-error {
+  display: block;
+
+  margin-top: 5px;
+
+  color: #c62828;
+
+  font-size: 10px;
+
+  line-height: 1.4;
+}
+
+
+/* =========================================================
+   EMPTY / LOADING
+========================================================= */
+
+.empty {
+  height: 230px;
+
+  text-align: center;
+
+  vertical-align: middle;
+
+  color: #789096;
+}
+
+.empty-icon {
+  width: 62px;
+  height: 62px;
+
+  margin: 0 auto 12px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 50%;
+
+  background: #eaf7f9;
+
+  font-size: 27px;
+}
+
+.empty h3 {
+  margin: 0 0 7px;
+
+  color: #285961;
+
+  font-size: 17px;
+}
+
+.empty p {
+  margin: 0;
+
+  color: #81969b;
+
+  font-size: 13px;
+}
+
+
+/* =========================================================
+   SPINNER
+========================================================= */
+
+.spinner {
+  width: 30px;
+  height: 30px;
+
+  margin: 0 auto 12px;
+
+  border: 3px solid #dceff2;
+
+  border-top-color: #036b7d;
+
+  border-radius: 50%;
+
+  animation: userSpin 0.8s linear infinite;
+}
+
+@keyframes userSpin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+
+/* =========================================================
+   SCROLLBAR
+========================================================= */
+
+.table-container::-webkit-scrollbar {
+  height: 7px;
+}
+
+.table-container::-webkit-scrollbar-track {
+  background: #edf5f6;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+  background: #9ccbd1;
+
+  border-radius: 10px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+  background: #5faab5;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 900px) {
+
+  .page-header h1 {
+    font-size: 27px;
+  }
+
+  .table-container table {
+    min-width: 1000px;
+  }
+}
+
+
+@media (max-width: 650px) {
+
+  .page-header h1 {
+    font-size: 24px;
+  }
+
+  .page-header p {
+    font-size: 13px;
+  }
+
+  .back-btn {
+    width: auto;
+  }
+
+  .table-container {
+    border-radius: 14px;
+  }
+
+  .table-container th,
+  .table-container td {
+    padding: 12px;
+  }
+}
+
+
+@media (max-width: 400px) {
+
+  .back-btn {
+    width: 100%;
+  }
+
+  .page-header h1 {
+    font-size: 22px;
+  }
+}

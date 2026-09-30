@@ -1,0 +1,223 @@
+<div class="page">
+
+  <!-- PAGE HEADER -->
+<div class="page-header">
+
+  <div class="header-left">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goToDashboard()">
+      ← Back to Dashboard
+    </button>
+
+    <div class="heading-content">
+      <h1>Reviews Management</h1>
+      <p>View and manage customer reviews</p>
+    </div>
+
+  </div>
+
+</div>
+
+  <!-- ERROR -->
+  <div
+    *ngIf="!loading && errorMessage"
+    class="error-box"
+  >
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- LOADING -->
+  <div
+    *ngIf="loading"
+    class="loading"
+  >
+
+    <div class="loader"></div>
+
+    <p>
+      Loading reviews...
+    </p>
+
+  </div>
+
+
+  <!-- EMPTY -->
+  <div
+    *ngIf="!loading && !errorMessage && reviews.length === 0"
+    class="empty"
+  >
+
+    <div class="empty-icon">
+      ⭐
+    </div>
+
+    <h3>
+      No Reviews Found
+    </h3>
+
+    <p>
+      Customer reviews will appear here.
+    </p>
+
+  </div>
+
+
+  <!-- REVIEWS TABLE -->
+  <div
+    *ngIf="!loading && reviews.length > 0"
+    class="table-container"
+  >
+
+    <table>
+
+      <thead>
+
+        <tr>
+
+          <th>
+            Review ID
+          </th>
+
+          <th>
+            User
+          </th>
+
+          <th>
+            Bus
+          </th>
+
+         
+
+          <th>
+            Rating
+          </th>
+
+          <th>
+            Review
+          </th>
+
+          <th>
+            Date
+          </th>
+
+          <th>
+            Action
+          </th>
+
+        </tr>
+
+      </thead>
+
+
+      <tbody>
+
+        <tr
+          *ngFor="let review of reviews"
+        >
+
+          <!-- REVIEW ID -->
+          <td>
+
+            <span class="review-id">
+              #{{ review.id }}
+            </span>
+
+          </td>
+
+
+          <!-- USER -->
+          <td>
+
+            <strong>
+              {{ review.username }}
+            </strong>
+
+          </td>
+
+
+          <!-- BUS -->
+          <td>
+
+            <strong>
+              {{ review.bus_name }}
+            </strong>
+
+            <br>
+
+            <small>
+              {{ review.bus_number }}
+            </small>
+
+          </td>
+
+
+
+
+          <!-- RATING -->
+          <td>
+
+            <span class="rating">
+
+              ⭐ {{ review.rating }}/5
+
+            </span>
+
+          </td>
+
+
+          <!-- COMMENT -->
+          <td class="comment">
+
+            <span
+              *ngIf="review.comment"
+            >
+              {{ review.comment }}
+            </span>
+
+            <span
+              *ngIf="!review.comment"
+              class="no-comment"
+            >
+              No comment
+            </span>
+
+          </td>
+
+
+          <!-- DATE -->
+          <td>
+
+            {{ review.created_at | date:'dd-MM-yyyy HH:mm' }}
+
+          </td>
+
+
+          <!-- ACTION -->
+          <td>
+
+            <button
+              class="delete-btn"
+              (click)="deleteReview(review.id)"
+            >
+
+              🗑 Delete
+
+            </button>
+
+          </td>
+
+        </tr>
+
+      </tbody>
+
+    </table>
+
+  </div>
+
+</div>

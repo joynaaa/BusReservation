@@ -1,0 +1,429 @@
+/* =========================================================
+   BUSGO LOGIN PAGE
+   MODERN GLASSMORPHISM STYLE
+   ========================================================= */
+
+* {
+  box-sizing: border-box;
+}
+
+:host {
+  display: block;
+  min-height: 100vh;
+  font-family: "Segoe UI", Arial, sans-serif;
+}
+
+
+/* =========================================================
+   LOGIN CONTAINER
+   ========================================================= */
+
+.login-container {
+  min-height: 100vh;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 30px 20px;
+
+  /* Same background as index page */
+  background:
+    radial-gradient(
+      circle at 15% 15%,
+      rgba(0, 188, 212, 0.20),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 85% 20%,
+      rgba(3, 107, 125, 0.18),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 50% 90%,
+      rgba(0, 150, 136, 0.14),
+      transparent 35%
+    ),
+    linear-gradient(
+      135deg,
+      #eef9fb,
+      #f7fbfc 45%,
+      #edf7f8
+    );
+
+  position: relative;
+  overflow: hidden;
+}
+
+
+/* =========================================================
+   DECORATIVE BACKGROUND CIRCLES
+   ========================================================= */
+
+.login-container::before {
+  content: "";
+
+  position: absolute;
+
+  width: 280px;
+  height: 280px;
+
+  top: -100px;
+  left: -80px;
+
+  border-radius: 50%;
+
+  background: rgba(3, 107, 125, 0.08);
+
+  filter: blur(5px);
+}
+
+.login-container::after {
+  content: "";
+
+  position: absolute;
+
+  width: 320px;
+  height: 320px;
+
+  right: -120px;
+  bottom: -120px;
+
+  border-radius: 50%;
+
+  background: rgba(0, 188, 212, 0.10);
+
+  filter: blur(5px);
+}
+
+
+/* =========================================================
+   LOGIN CARD
+   ========================================================= */
+
+.login-card {
+  position: relative;
+  z-index: 2;
+
+  width: 100%;
+  max-width: 430px;
+
+  padding: 42px 40px;
+
+  border-radius: 26px;
+
+  /* Transparent glass */
+  background: rgba(255, 255, 255, 0.52);
+
+  border: 1px solid rgba(255, 255, 255, 0.75);
+
+  backdrop-filter: blur(25px);
+  -webkit-backdrop-filter: blur(25px);
+
+  box-shadow:
+    0 25px 60px rgba(0, 70, 90, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.9);
+
+  animation: loginCardAppear 0.6s ease;
+}
+
+
+/* =========================================================
+   CARD TOP LIGHT
+   ========================================================= */
+
+.login-card::before {
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+  left: 10%;
+
+  width: 80%;
+  height: 1px;
+
+  background: rgba(255, 255, 255, 0.9);
+}
+
+
+/* =========================================================
+   LOGIN TITLE
+   ========================================================= */
+
+.login-card h3 {
+  margin: 0 0 30px;
+
+  text-align: center;
+
+  font-size: 32px;
+  font-weight: 800;
+
+  letter-spacing: -0.8px;
+
+  color: #173f51;
+}
+
+
+/* =========================================================
+   FORM
+   ========================================================= */
+
+.login-card form {
+  display: flex;
+  flex-direction: column;
+}
+
+
+/* =========================================================
+   LABEL
+   ========================================================= */
+
+.login-card label {
+  margin-bottom: 8px;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  color: #315a68;
+}
+
+
+/* =========================================================
+   INPUT
+   ========================================================= */
+
+.login-card input {
+  width: 100%;
+  height: 52px;
+
+  margin-bottom: 20px;
+
+  padding: 0 16px;
+
+  border: 1px solid rgba(3, 107, 125, 0.16);
+
+  border-radius: 14px;
+
+  outline: none;
+
+  background: rgba(255, 255, 255, 0.68);
+
+  color: #173b4d;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 14px;
+
+  transition:
+    border-color 0.25s ease,
+    box-shadow 0.25s ease,
+    background 0.25s ease,
+    transform 0.25s ease;
+}
+
+
+/* Placeholder */
+
+.login-card input::placeholder {
+  color: #91a7af;
+}
+
+
+/* Focus */
+
+.login-card input:focus {
+  border-color: rgba(3, 107, 125, 0.65);
+
+  background: rgba(255, 255, 255, 0.90);
+
+  box-shadow:
+    0 0 0 4px rgba(3, 107, 125, 0.08),
+    0 8px 20px rgba(3, 107, 125, 0.08);
+
+  transform: translateY(-1px);
+}
+
+
+/* =========================================================
+   LOGIN BUTTON
+   ========================================================= */
+
+.login-card button {
+  width: 100%;
+  height: 52px;
+
+  margin-top: 5px;
+
+  border: none;
+  border-radius: 14px;
+
+  cursor: pointer;
+
+  color: #ffffff;
+
+  font-family: "Segoe UI", Arial, sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+
+  background:
+    linear-gradient(
+      135deg,
+      #036b7d,
+      #0097a7
+    );
+
+  box-shadow:
+    0 10px 25px rgba(3, 107, 125, 0.25);
+
+  transition:
+    transform 0.25s ease,
+    box-shadow 0.25s ease,
+    filter 0.25s ease;
+}
+
+
+/* Button hover */
+
+.login-card button:hover {
+  transform: translateY(-3px);
+
+  box-shadow:
+    0 15px 30px rgba(3, 107, 125, 0.32);
+
+  filter: brightness(1.05);
+}
+
+
+/* Button click */
+
+.login-card button:active {
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 7px 15px rgba(3, 107, 125, 0.22);
+}
+
+
+/* =========================================================
+   ERROR MESSAGE
+   ========================================================= */
+
+.login-card .error {
+  margin: 18px 0 0;
+
+  padding: 12px 14px;
+
+  border-radius: 12px;
+
+  text-align: center;
+
+  color: #a53b3b;
+
+  font-size: 13px;
+  font-weight: 600;
+
+  background: rgba(255, 235, 235, 0.75);
+
+  border: 1px solid rgba(220, 100, 100, 0.20);
+}
+
+
+/* =========================================================
+   REGISTER LINK
+   ========================================================= */
+
+.register-link {
+  margin: 25px 0 0;
+
+  text-align: center;
+
+  font-size: 13px;
+
+  color: #718994;
+}
+
+.register-link a {
+  margin-left: 4px;
+
+  color: #036b7d;
+
+  font-weight: 700;
+
+  text-decoration: none;
+
+  transition: all 0.25s ease;
+}
+
+.register-link a:hover {
+  color: #008fa3;
+
+  text-decoration: underline;
+}
+
+
+/* =========================================================
+   CARD ANIMATION
+   ========================================================= */
+
+@keyframes loginCardAppear {
+
+  from {
+    opacity: 0;
+    transform: translateY(25px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+
+}
+
+
+/* =========================================================
+   MOBILE RESPONSIVE
+   ========================================================= */
+
+@media (max-width: 600px) {
+
+  .login-container {
+    padding: 20px 15px;
+  }
+
+  .login-card {
+    max-width: 100%;
+
+    padding: 35px 25px;
+
+    border-radius: 22px;
+  }
+
+  .login-card h3 {
+    font-size: 28px;
+
+    margin-bottom: 25px;
+  }
+
+  .login-card input,
+  .login-card button {
+    height: 50px;
+  }
+
+}
+
+
+/* =========================================================
+   SMALL MOBILE
+   ========================================================= */
+
+@media (max-width: 380px) {
+
+  .login-card {
+    padding: 30px 20px;
+  }
+
+  .login-card h3 {
+    font-size: 25px;
+  }
+
+}

@@ -1,0 +1,348 @@
+<div class="profile-page">
+
+  <!-- HEADER -->
+
+  <div class="page-header">
+
+    <button
+      type="button"
+      class="back-btn"
+      (click)="goToDashboard()">
+
+      ← Back to Dashboard
+
+    </button>
+
+    <div class="heading-content">
+
+      <h1>
+        Operator Profile
+      </h1>
+
+      <p>
+        View and manage your operator account
+      </p>
+
+    </div>
+
+  </div>
+
+
+  <!-- ERROR -->
+
+  <div
+    *ngIf="!loading && errorMessage"
+    class="error-box">
+
+    {{ errorMessage }}
+
+  </div>
+
+
+  <!-- LOADING -->
+
+  <div
+    *ngIf="loading"
+    class="loading">
+
+    <div class="loader"></div>
+
+    <p>
+      Loading profile...
+    </p>
+
+  </div>
+
+
+  <!-- PROFILE -->
+
+  <div
+    *ngIf="!loading && !errorMessage"
+    class="profile-card">
+
+
+    <!-- PROFILE HEADER -->
+
+    <div class="profile-top">
+
+      <div class="profile-icon">
+        👤
+      </div>
+
+      <div>
+
+        <h2>
+          {{ fullName || username }}
+        </h2>
+
+        <p>
+          {{ companyName || 'Bus Operator' }}
+        </p>
+
+      </div>
+
+    </div>
+
+
+    <div class="divider"></div>
+
+
+    <!-- PERSONAL INFORMATION -->
+
+    <h3 class="section-title">
+      Personal Information
+    </h3>
+
+    <div class="profile-grid">
+
+      <div class="profile-field">
+
+        <label>
+          Username
+        </label>
+
+        <div class="value">
+          {{ username || 'Not available' }}
+        </div>
+
+      </div>
+
+
+      <div class="profile-field">
+
+        <label>
+          Email
+        </label>
+
+        <div class="value">
+          {{ email || 'Not available' }}
+        </div>
+
+      </div>
+
+
+      <div class="profile-field">
+
+        <label>
+          Full Name
+        </label>
+
+        <div class="value">
+          {{ fullName || 'Not available' }}
+        </div>
+
+      </div>
+
+
+      <div class="profile-field">
+
+        <label>
+          Phone
+        </label>
+
+        <div class="value">
+          {{ phone || 'Not available' }}
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- BUSINESS INFORMATION -->
+
+    <h3 class="section-title">
+      Business Information
+    </h3>
+
+    <div class="profile-grid">
+
+      <div class="profile-field">
+
+        <label>
+          Company Name
+        </label>
+
+        <div class="value">
+          {{ companyName || 'Not available' }}
+        </div>
+
+      </div>
+
+
+      <div class="profile-field">
+
+        <label>
+          Operator Type
+        </label>
+
+        <div class="value">
+          {{ operatorType || 'Not available' }}
+        </div>
+
+      </div>
+
+
+      <div class="profile-field">
+
+        <label>
+          Business Phone
+        </label>
+
+        <div class="value">
+          {{ businessPhone || 'Not available' }}
+        </div>
+
+      </div>
+
+
+      <div class="profile-field">
+
+        <label>
+          Business Email
+        </label>
+
+        <div class="value">
+          {{ businessEmail || 'Not available' }}
+        </div>
+
+      </div>
+
+
+      <div class="profile-field">
+
+        <label>
+          Number of Buses
+        </label>
+
+        <div class="value">
+          {{ numberOfBuses }}
+        </div>
+
+      </div>
+
+
+      <div class="profile-field">
+
+        <label>
+          Experience
+        </label>
+
+        <div class="value">
+          {{ yearsOfExperience }} years
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ADDRESS -->
+
+    <h3 class="section-title">
+      Business Address
+    </h3>
+
+    <div class="profile-grid">
+
+      <div class="profile-field full-width">
+
+        <label>
+          Address
+        </label>
+
+        <div class="value">
+          {{ address || 'Not available' }}
+        </div>
+
+      </div>
+
+
+      <div class="profile-field">
+
+        <label>
+          City
+        </label>
+
+        <div class="value">
+          {{ city || 'Not available' }}
+        </div>
+
+      </div>
+
+
+      <div class="profile-field">
+
+        <label>
+          State
+        </label>
+
+        <div class="value">
+          {{ state || 'Not available' }}
+        </div>
+
+      </div>
+
+
+      <div class="profile-field">
+
+        <label>
+          PIN Code
+        </label>
+
+        <div class="value">
+          {{ pinCode || 'Not available' }}
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- ACCOUNT STATUS -->
+
+    <h3 class="section-title">
+      Account Status
+    </h3>
+
+    <div class="status-row">
+
+      <div class="status-item">
+
+        <span class="status-label">
+          Role
+        </span>
+
+        <span class="badge role">
+          {{ role }}
+        </span>
+
+      </div>
+
+
+      <div class="status-item">
+
+        <span class="status-label">
+          Status
+        </span>
+
+        <span
+          class="badge"
+          [ngClass]="{
+            'approved': status === 'APPROVED',
+            'pending': status === 'PENDING',
+            'rejected': status === 'REJECTED'
+          }">
+
+          {{ status }}
+
+        </span>
+
+      </div>
+
+    </div>
+
+
+  </div>
+
+</div>

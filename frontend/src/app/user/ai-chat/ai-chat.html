@@ -1,0 +1,211 @@
+<div class="ai-page">
+
+
+  <!-- ================================================= -->
+  <!-- NAVBAR -->
+  <!-- ================================================= -->
+
+  <nav class="navbar">
+
+    <div
+      class="logo">
+
+      🚌 BusGo AI
+
+    </div>
+
+
+    <div
+      class="nav-links">
+
+      <button
+        type="button"
+        (click)="goHome()">
+
+        Home
+
+      </button>
+
+    </div>
+
+  </nav>
+
+
+
+  <!-- ================================================= -->
+  <!-- MAIN -->
+  <!-- ================================================= -->
+
+  <div class="chat-container">
+
+
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
+
+    <div class="chat-header">
+
+      <div
+        class="ai-icon">
+
+        🤖
+
+      </div>
+
+
+      <div>
+
+        <h2>
+          BusGo AI Assistant
+        </h2>
+
+        <p>
+          Search, book and manage your bus tickets
+        </p>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- QUICK QUESTIONS -->
+    <!-- ================================================= -->
+
+    <div class="quick-actions">
+
+      <button
+        type="button"
+        (click)="askQuestion('Find buses')">
+
+        🚌 Search Bus
+
+      </button>
+
+
+      <button
+        type="button"
+        (click)="askQuestion('How can I book a bus ticket?')">
+
+        🎫 How to Book
+
+      </button>
+
+
+      <button
+        type="button"
+        (click)="askQuestion('Show my bookings')">
+
+        📋 My Bookings
+
+      </button>
+
+
+      <button
+        type="button"
+        (click)="askQuestion('How can I pay for my ticket?')">
+
+        💳 Payment Help
+
+      </button>
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- CHAT BODY -->
+    <!-- ================================================= -->
+
+    <div
+      class="chat-body">
+
+
+      <div
+        *ngFor="let msg of messages"
+
+        class="message-row"
+
+        [class.user-row]="msg.sender === 'user'"
+
+        [class.ai-row]="msg.sender === 'ai'">
+
+
+        <div
+          class="message"
+
+          [class.user-message]="msg.sender === 'user'"
+
+          [class.ai-message]="msg.sender === 'ai'">
+
+          {{ msg.text }}
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ================================================= -->
+      <!-- LOADING -->
+      <!-- ================================================= -->
+
+      <div
+        *ngIf="loading"
+        class="message-row ai-row">
+
+        <div
+          class="message ai-message">
+
+          🤖 Thinking...
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- INPUT -->
+    <!-- ================================================= -->
+
+    <div
+      class="chat-input">
+
+
+      <textarea
+
+        [(ngModel)]="message"
+
+        (keydown)="onEnter($event)"
+
+        placeholder="Ask me about buses, booking, seats or payment..."
+
+        rows="1">
+
+      </textarea>
+
+
+      <button
+
+        type="button"
+
+        (click)="sendMessage()"
+
+        [disabled]="loading || !message.trim()">
+
+        ➤
+
+      </button>
+
+
+    </div>
+
+
+  </div>
+
+</div>

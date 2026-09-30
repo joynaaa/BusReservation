@@ -1,0 +1,773 @@
+<div class="admin-page">
+
+  <!-- ==============================
+       SIDEBAR
+  =============================== -->
+
+  <aside class="sidebar">
+
+    <div class="logo">
+      🚌 BusGo
+    </div>
+
+    <div class="admin-title">
+      Admin Panel
+    </div>
+
+
+    <nav>
+
+      <a
+        routerLink="/admin/dashboard"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+      >
+        🏠 Dashboard
+      </a>
+
+
+      <a
+        routerLink="/admin/users"
+        routerLinkActive="active"
+      >
+        👥 Manage Users
+      </a>
+
+
+      <a
+        routerLink="/admin/operators"
+        routerLinkActive="active"
+      >
+        🚌 Manage Operators
+      </a>
+
+
+      <a
+        routerLink="/admin/buses"
+        routerLinkActive="active"
+      >
+        🚍 Manage Buses
+      </a>
+
+
+      <a
+        routerLink="/admin/routes"
+        routerLinkActive="active"
+      >
+        🛣️ Manage Routes
+      </a>
+
+
+      <a
+        routerLink="/admin/cities"
+        routerLinkActive="active"
+      >
+        📍 Manage Cities
+      </a>
+
+
+      <a
+        routerLink="/admin/schedules"
+        routerLinkActive="active"
+      >
+        📅 Manage Schedules
+      </a>
+
+
+      <a
+        routerLink="/admin/bookings"
+        routerLinkActive="active"
+      >
+        🎫 Manage Bookings
+      </a>
+
+
+      <a
+        routerLink="/admin/payments"
+        routerLinkActive="active"
+      >
+        💳 Payments
+      </a>
+
+
+      <a
+        routerLink="/admin/reviews"
+        routerLinkActive="active"
+      >
+        ⭐ Reviews
+      </a>
+
+
+      <a
+        routerLink="/admin/reports"
+        routerLinkActive="active"
+      >
+        📊 Reports
+      </a>
+
+    </nav>
+
+
+    <!-- LOGOUT -->
+
+    <button
+      class="logout-btn"
+      (click)="logout()"
+    >
+      🚪 Logout
+    </button>
+
+  </aside>
+
+
+
+  <!-- ==============================
+       MAIN CONTENT
+  =============================== -->
+
+  <main class="main-content">
+
+
+    <!-- HEADER -->
+
+  <div class="page-header">
+
+  <div>
+
+    <h1>
+      Admin Dashboard
+    </h1>
+
+    <p>
+      Welcome back, {{ username }} 👋
+    </p>
+
+  </div>
+
+
+  <div class="header-actions">
+
+    <!-- NOTIFICATION -->
+
+    <button
+      class="notification-btn"
+      type="button"
+      (click)="goToNotifications()"
+      title="Notifications"
+    >
+
+      🔔
+
+      <span
+        class="notification-badge"
+        *ngIf="unreadCount > 0"
+      >
+        {{ unreadCount > 99 ? '99+' : unreadCount }}
+      </span>
+
+    </button>
+
+
+    <!-- REFRESH -->
+
+    <button
+      class="refresh-btn"
+      type="button"
+      (click)="loadDashboard()"
+    >
+      🔄 Refresh
+    </button>
+
+  </div>
+
+</div>
+
+
+    <!-- LOADING -->
+
+    <div
+      *ngIf="loading"
+      class="loading"
+    >
+
+      <div class="loader"></div>
+
+      <p>
+        Loading dashboard...
+      </p>
+
+    </div>
+
+
+
+    <!-- ERROR -->
+
+    <div
+      *ngIf="!loading && errorMessage"
+      class="error-box"
+    >
+
+      {{ errorMessage }}
+
+    </div>
+
+
+
+    <!-- DASHBOARD -->
+
+    <div
+      *ngIf="!loading && !errorMessage"
+    >
+
+
+      <!-- ==============================
+           STATISTICS
+      =============================== -->
+
+      <div class="stats-grid">
+
+
+        <!-- USERS -->
+
+        <div class="stat-card">
+
+          <div class="icon">
+            👥
+          </div>
+
+          <div>
+
+            <h3>
+              Total Users
+            </h3>
+
+            <h2>
+              {{ totalUsers }}
+            </h2>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- OPERATORS -->
+
+        <div class="stat-card">
+
+          <div class="icon">
+            🚌
+          </div>
+
+          <div>
+
+            <h3>
+              Bus Operators
+            </h3>
+
+            <h2>
+              {{ totalOperators }}
+            </h2>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- BUSES -->
+
+        <div class="stat-card">
+
+          <div class="icon">
+            🚍
+          </div>
+
+          <div>
+
+            <h3>
+              Total Buses
+            </h3>
+
+            <h2>
+              {{ totalBuses }}
+            </h2>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- ROUTES -->
+
+        <div class="stat-card">
+
+          <div class="icon">
+            🛣️
+          </div>
+
+          <div>
+
+            <h3>
+              Total Routes
+            </h3>
+
+            <h2>
+              {{ totalRoutes }}
+            </h2>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- SCHEDULES -->
+
+        <div class="stat-card">
+
+          <div class="icon">
+            📅
+          </div>
+
+          <div>
+
+            <h3>
+              Active Schedules
+            </h3>
+
+            <h2>
+              {{ totalSchedules }}
+            </h2>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- BOOKINGS -->
+
+        <div class="stat-card">
+
+          <div class="icon">
+            🎫
+          </div>
+
+          <div>
+
+            <h3>
+              Total Bookings
+            </h3>
+
+            <h2>
+              {{ totalBookings }}
+            </h2>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- REVENUE -->
+
+        <div class="stat-card revenue">
+
+          <div class="icon">
+            💰
+          </div>
+
+          <div>
+
+            <h3>
+              Total Revenue
+            </h3>
+
+            <h2>
+              ₹{{ totalRevenue | number:'1.0-0' }}
+            </h2>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- REVIEWS -->
+
+        <div class="stat-card">
+
+          <div class="icon">
+            ⭐
+          </div>
+
+          <div>
+
+            <h3>
+              Total Reviews
+            </h3>
+
+            <h2>
+              {{ totalReviews }}
+            </h2>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- PENDING OPERATORS -->
+
+        <div class="stat-card pending">
+
+          <div class="icon">
+            ⏳
+          </div>
+
+          <div>
+
+            <h3>
+              Pending Operators
+            </h3>
+
+            <h2>
+              {{ pendingOperators }}
+            </h2>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ==============================
+           QUICK ACTIONS
+      =============================== -->
+
+      <div class="section-card">
+
+        <h2>
+          Quick Actions
+        </h2>
+
+
+        <div class="quick-actions">
+
+
+          <a routerLink="/admin/operators">
+
+            <span>
+              🚌
+            </span>
+
+            <strong>
+              Manage Operators
+            </strong>
+
+          </a>
+
+
+          <a routerLink="/admin/buses">
+
+            <span>
+              🚍
+            </span>
+
+            <strong>
+              Manage Buses
+            </strong>
+
+          </a>
+
+
+          <a routerLink="/admin/routes">
+
+            <span>
+              🛣️
+            </span>
+
+            <strong>
+              Manage Routes
+            </strong>
+
+          </a>
+
+
+          <a routerLink="/admin/cities">
+
+            <span>
+              📍
+            </span>
+
+            <strong>
+              Manage Cities
+            </strong>
+
+          </a>
+
+
+          <a routerLink="/admin/schedules">
+
+            <span>
+              📅
+            </span>
+
+            <strong>
+              Manage Schedules
+            </strong>
+
+          </a>
+
+
+          <a routerLink="/admin/bookings">
+
+            <span>
+              🎫
+            </span>
+
+            <strong>
+              View Bookings
+            </strong>
+
+          </a>
+
+
+          <a routerLink="/admin/payments">
+
+            <span>
+              💳
+            </span>
+
+            <strong>
+              View Payments
+            </strong>
+
+          </a>
+
+
+          <a routerLink="/admin/reviews">
+
+            <span>
+              ⭐
+            </span>
+
+            <strong>
+              Manage Reviews
+            </strong>
+
+          </a>
+
+
+          <a routerLink="/admin/reports">
+
+            <span>
+              📊
+            </span>
+
+            <strong>
+              View Reports
+            </strong>
+
+          </a>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ==============================
+           ADMIN OVERVIEW
+      =============================== -->
+
+      <div class="overview-grid">
+
+
+        <!-- BOOKING OVERVIEW -->
+
+        <div class="section-card">
+
+          <h2>
+            Booking Overview
+          </h2>
+
+
+          <div class="overview-item">
+
+            <span>
+              Total Bookings
+            </span>
+
+            <strong>
+              {{ totalBookings }}
+            </strong>
+
+          </div>
+
+
+          <div class="overview-item">
+
+            <span>
+              Total Revenue
+            </span>
+
+            <strong>
+              ₹{{ totalRevenue | number:'1.0-0' }}
+            </strong>
+
+          </div>
+
+
+          <div class="overview-item">
+
+            <span>
+              Total Reviews
+            </span>
+
+            <strong>
+              {{ totalReviews }}
+            </strong>
+
+          </div>
+
+        </div>
+
+
+
+        <!-- SYSTEM OVERVIEW -->
+
+        <div class="section-card">
+
+          <h2>
+            System Overview
+          </h2>
+
+
+          <div class="overview-item">
+
+            <span>
+              Users
+            </span>
+
+            <strong>
+              {{ totalUsers }}
+            </strong>
+
+          </div>
+
+
+          <div class="overview-item">
+
+            <span>
+              Operators
+            </span>
+
+            <strong>
+              {{ totalOperators }}
+            </strong>
+
+          </div>
+
+
+          <div class="overview-item">
+
+            <span>
+              Buses
+            </span>
+
+            <strong>
+              {{ totalBuses }}
+            </strong>
+
+          </div>
+
+
+          <div class="overview-item">
+
+            <span>
+              Routes
+            </span>
+
+            <strong>
+              {{ totalRoutes }}
+            </strong>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+      <!-- ==============================
+           RECENT ACTIVITY
+      =============================== -->
+
+      <div class="section-card">
+
+        <h2>
+          Recent Activity
+        </h2>
+
+
+        <div
+          *ngIf="recentBookings.length === 0"
+          class="empty-message"
+        >
+
+          No recent activity available.
+
+        </div>
+
+
+        <div
+          *ngIf="recentBookings.length > 0"
+          class="activity-list"
+        >
+
+          <div
+            class="activity-item"
+            *ngFor="let booking of recentBookings"
+          >
+
+            <div class="activity-icon">
+              🎫
+            </div>
+
+
+            <div class="activity-info">
+
+              <strong>
+                Booking #{{ booking.id }}
+              </strong>
+
+              <span>
+                {{ booking.username }}
+              </span>
+
+            </div>
+
+
+            <div class="activity-amount">
+
+              ₹{{ booking.amount | number:'1.0-0' }}
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
